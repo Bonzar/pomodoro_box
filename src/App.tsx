@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Link, Route, Routes } from "react-router-dom";
+import viteLogo from "./assets/vite.svg";
+import reactLogo from "./assets/react.svg";
+import "./App.css";
+import { ReactCounter } from "./Counter/ReactCounter.tsx";
+import { ReduxCounter } from "./Counter/ReduxCounter.tsx";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <div>
@@ -16,11 +16,14 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>
+        Vite + <Link to="react">React</Link> + <Link to="redux">Redux</Link>
+      </h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        <Routes>
+          <Route path="react" element={<ReactCounter />} />
+          <Route path="redux" element={<ReduxCounter />} />
+        </Routes>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
@@ -29,7 +32,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
