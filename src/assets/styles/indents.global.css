@@ -1,0 +1,33 @@
+:root {
+  --indent-var-07: 0.7rem;
+  --indent-var-10: 1rem;
+  --indent-var-15: 1.5rem;
+  --indent-var-19: 1.9rem;
+  --indent-var-25: 2.5rem;
+  --indent-var-32: 3.2rem;
+  --indent-var-50: 5rem;
+  --indent-var-80: 8rem;
+  --indent-var-100: 10rem;
+
+  --indent-10: var(--indent-var-07);
+  --indent-15: var(--indent-var-10);
+  --indent-19: var(--indent-var-15);
+  --indent-25: var(--indent-var-19);
+  --indent-32: var(--indent-var-25);
+  --indent-50: var(--indent-var-32);
+  --indent-80: var(--indent-var-50);
+  --indent-100: var(--indent-var-80);
+}
+
+@media (--tablet-viewport) {
+  :root {
+    --indent-10: var(--indent-var-10);
+    --indent-15: var(--indent-var-15);
+    --indent-19: var(--indent-var-19);
+    --indent-25: var(--indent-var-25);
+    --indent-32: var(--indent-var-32);
+    --indent-50: var(--indent-var-50);
+    --indent-80: var(--indent-var-80);
+    --indent-100: var(--indent-var-100);
+  }
+}

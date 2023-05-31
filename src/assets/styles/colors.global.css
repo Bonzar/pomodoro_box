@@ -1,0 +1,28 @@
+:root {
+  --black: hsl(0, 0%, 20%);
+  --white: hsl(0, 0%, 100%);
+
+  --gray-F5: #f5f5f5;
+  --gray-ED: #ededed;
+  --gray-E6: #e6e6e6;
+  --gray-E3: #e3e3e3;
+  --gray-C4: #c4c4c4;
+  --gray-99: #999999;
+
+  --green-light: #a8b64f;
+  --green: #899441;
+
+  --red-light: #ea8979;
+  --red-semi-light: #ee735d;
+  --red: #dc3e22;
+  --red-dark: #b7280f;
+
+  --orange: #ffae35;
+  --orange-light: #ffdda9;
+
+  --lavender: #9c97d7;
+  --lavender-light: #dfdcfe;
+
+  --blue: #7fc2d7;
+  --blue-light: #c5f1ff;
+}

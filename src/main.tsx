@@ -4,8 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { createStore } from "./store";
 import { Provider as ReduxProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import "./index.css";
-import App from "./App.tsx";
+import { App } from "./App.tsx";
 
 const { persistor, store } = createStore();
 

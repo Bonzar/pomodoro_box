@@ -1,0 +1,49 @@
+.button {
+  padding: var(--indent-19) var(--indent-50);
+  border: 2px solid;
+  transition: background-color cubic-bezier(0.18, 0.89, 0.32, 1.28) 1ms,
+    color cubic-bezier(0.18, 0.89, 0.32, 1.28) 1ms,
+    border-color cubic-bezier(0.18, 0.89, 0.32, 1.28) 1ms;
+}
+
+/* Button colors */
+.c-green {
+  border-color: var(--green);
+  color: var(--green);
+}
+.c-green.filled {
+  border-color: var(--green-light);
+  background-color: var(--green-light);
+  color: var(--white);
+}
+
+.c-red {
+  border-color: var(--red);
+  color: var(--red);
+}
+.c-red.filled {
+  border-color: var(--red-light);
+  background-color: var(--red-light);
+  color: var(--white);
+}
+
+@media (pointer: fine) {
+  .c-green:hover {
+    color: var(--white);
+    background-color: var(--green);
+    border-color: var(--green);
+  }
+
+  .c-red:hover {
+    color: var(--white);
+    background-color: var(--red);
+    border-color: var(--red);
+  }
+}
+
+.button:is(.c-red, .c-green):disabled {
+  background-color: transparent;
+  border-color: var(--gray-C4);
+  color: var(--gray-C4);
+  cursor: default;
+}

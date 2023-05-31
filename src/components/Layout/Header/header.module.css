@@ -1,0 +1,19 @@
+.headerContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--indent-80);
+  height: 7rem;
+}
+
+.header {
+  box-shadow: var(--shadow);
+  background-color: var(--white);
+}
+
+.logo {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}

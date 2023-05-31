@@ -1,0 +1,118 @@
+.text {
+}
+
+/*
+  Font Size
+*/
+
+.s-12 {
+  font-size: var(--font-size-12);
+}
+.s-16 {
+  font-size: var(--font-size-16);
+}
+.s-24 {
+  font-size: var(--font-size-24);
+}
+
+/*
+  Font Line Height
+*/
+
+.lh-17 {
+  line-height: var(--font-line-height-17);
+}
+.lh-24 {
+  line-height: var(--font-line-height-24);
+}
+.lh-28 {
+  line-height: var(--font-line-height-28);
+}
+.lh-33 {
+  line-height: var(--font-line-height-33);
+}
+
+/*
+  Font Weight
+*/
+
+.w-200 {
+  font-weight: var(--font-weight-200);
+}
+.w-300 {
+  font-weight: var(--font-weight-300);
+}
+.w-400 {
+  font-weight: var(--font-weight-400);
+}
+.w-500 {
+  font-weight: var(--font-weight-500);
+}
+.w-700 {
+  font-weight: var(--font-weight-700);
+}
+
+/*
+  Font Color
+*/
+
+.c-black {
+  color: hsl(0, 0%, 20%);
+}
+.c-white {
+  color: hsl(0, 0%, 100%);
+}
+.c-gray96 {
+  color: hsl(0, 0%, 96%);
+}
+.c-gray93 {
+  color: hsl(0, 0%, 93%);
+}
+.c-gray90 {
+  color: hsl(0, 0%, 90%);
+}
+.c-gray89 {
+  color: hsl(0, 0%, 89%);
+}
+.c-gray77 {
+  color: hsl(0, 0%, 77%);
+}
+.c-gray60 {
+  color: hsl(0, 0%, 60%);
+}
+.c-green-light {
+  color: #a8b64f;
+}
+.c-green {
+  color: #899441;
+}
+.c-red-light {
+  color: #ea8979;
+}
+.c-red-semi-light {
+  color: #ee735d;
+}
+.c-red {
+  color: #dc3e22;
+}
+.c-red-dark {
+  color: #b7280f;
+}
+.c-orange {
+  color: #ffae35;
+}
+.c-orange-light {
+  color: #ffdda9;
+}
+.c-lavender {
+  color: #9c97d7;
+}
+.c-lavender-light {
+  color: #dfdcfe;
+}
+.c-blue {
+  color: #7fc2d7;
+}
+.c-blue-light {
+  color: #c5f1ff;
+}

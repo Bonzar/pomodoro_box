@@ -1,0 +1,25 @@
+/* Font Family */
+:root {
+  --font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Font size */
+:root {
+  --font-size-12: 1.2rem;
+  --font-size-16: 1.6rem;
+  --font-size-24: 2.4rem;
+
+  --font-line-height-17: 1.7rem;
+  --font-line-height-24: 2.4rem;
+  --font-line-height-28: 2.8rem;
+  --font-line-height-33: 3.3rem;
+}
+
+/* Font wight */
+:root {
+  --font-weight-200: 200;
+  --font-weight-300: 300;
+  --font-weight-400: 400;
+  --font-weight-500: 500;
+  --font-weight-700: 700;
+}
