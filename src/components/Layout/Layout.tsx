@@ -1,15 +1,13 @@
-import type { ReactNode } from "react";
 import styles from "./layout.module.css";
 import { Content } from "./Content";
 import { Header } from "./Header";
+import { Outlet } from "react-router-dom";
 
-interface ILayoutProps {
-  children: ReactNode;
-}
-
-export const Layout = ({ children }: ILayoutProps) => (
+export const Layout = () => (
   <div className={styles.layout}>
     <Header />
-    <Content>{children}</Content>
+    <Content>
+      <Outlet />
+    </Content>
   </div>
 );

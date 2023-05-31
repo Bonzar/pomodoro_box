@@ -1,5 +1,5 @@
 import type { ElementType, ReactNode } from "react";
-import type { PolymorphicComponentProps } from "../../types/PolymorphicComponent";
+import type { PolymorphicComponentProps } from "../../../assets/types/PolymorphicComponent.ts";
 
 interface IListItem {
   key: string | number;

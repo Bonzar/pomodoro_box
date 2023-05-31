@@ -2,7 +2,7 @@ import styles from "./button.module.css";
 import type { TextProps } from "../Text";
 import { Text } from "../Text";
 import { getClassName } from "../../../helpers/react/getClassName.ts";
-import type { ExtendableProps } from "../../types/PolymorphicComponent";
+import type { ExtendableProps } from "../../../assets/types/PolymorphicComponent.ts";
 
 interface IButtonProps {
   btnColor: "green" | "red";

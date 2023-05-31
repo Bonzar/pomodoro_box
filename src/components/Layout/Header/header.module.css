@@ -12,7 +12,7 @@
   background-color: var(--white);
 }
 
-.logo {
+.navLink {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;

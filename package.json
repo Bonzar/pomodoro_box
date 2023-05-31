@@ -20,7 +20,8 @@
     "react-router-dom": "^6.11.2",
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
-    "the-new-css-reset": "^1.8.4"
+    "the-new-css-reset": "^1.8.4",
+    "vite-plugin-svgr": "^3.2.0"
   },
   "devDependencies": {
     "@types/ramda": "^0.29.2",

@@ -1,9 +1,12 @@
 import styles from "./divider.module.css";
 import { getClassName } from "../../../helpers/react/getClassName.ts";
 import type { CSSProperties } from "react";
-import type { TColor } from "../../types/TColor";
-import type { InheritableElementProps } from "../../types/PolymorphicComponent";
-import type { TTextLineHeight, TTextSize } from "../../types/TText.ts";
+import type { TColor } from "../../../assets/types/TColor.ts";
+import type {
+  TTextLineHeight,
+  TTextSize,
+} from "../../../assets/types/TText.ts";
+import type { InheritableElementProps } from "../../../assets/types/PolymorphicComponent.ts";
 
 interface IDividerProps {
   dividerColor?: TColor;

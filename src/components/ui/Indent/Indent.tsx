@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import type { TIndent } from "../../types/TIndent.ts";
+import type { TIndent } from "../../../assets/types/TIndent.ts";
 
 type TIndentProps = {
   size: TIndent;
