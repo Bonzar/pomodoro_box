@@ -3,8 +3,8 @@ import "./assets/styles/main.global.css";
 import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import { Main } from "./pages/Main/Main.tsx";
-import { Stats } from "./pages/Stats/Stats.tsx";
+import { Main } from "./pages/Main";
+import { Stats } from "./pages/Stats";
 
 const MainRedirect = () => {
   const navigate = useNavigate();
