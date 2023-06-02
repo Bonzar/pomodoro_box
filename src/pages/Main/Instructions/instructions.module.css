@@ -1,0 +1,14 @@
+.instructions {
+  list-style: disc;
+  padding-left: var(--indent-15);
+}
+
+.instructions li {
+  padding-left: var(--indent-10);
+}
+
+.instructions li::marker {
+  content: revert;
+  color: var(--red-dark);
+  font-size: var(--font-size-16);
+}

@@ -1,0 +1,96 @@
+.header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--gray-C4);
+  padding: var(--indent-19) var(--indent-40);
+}
+
+.timer {
+  background-color: var(--gray-F4);
+  padding: var(--indent-32) var(--indent-25);
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  column-gap: var(--indent-25);
+  grid-template-columns: auto auto;
+  grid-template-areas:
+    "time time"
+    "describe describe"
+    "actions addButton";
+}
+
+.timerTime {
+  grid-area: time;
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.actionsBlock {
+  justify-self: flex-end;
+  grid-area: actions;
+}
+
+.actions {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  column-gap: var(--indent-25);
+  row-gap: var(--indent-15);
+}
+
+.timerTaskDescribe {
+  grid-area: describe;
+}
+
+.addButton {
+  justify-self: flex-start;
+  grid-area: addButton;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 100vw;
+  align-self: center;
+}
+
+@media (--tablet-viewport) {
+  .timer {
+    padding: var(--indent-32) var(--indent-25);
+  }
+
+  .timerTime {
+    font-size: 10rem;
+  }
+}
+
+@media (--netbook-viewport) {
+  .timer {
+    grid-template-columns: minmax(5rem, 1fr) auto minmax(5rem, 1fr);
+    padding: var(--indent-80) var(--indent-40);
+    grid-template-areas:
+      ". time addButton"
+      ". describe ."
+      ". actions .";
+  }
+
+  .actions {
+    flex-flow: row nowrap;
+  }
+
+  .timerTime {
+    font-size: 15rem;
+  }
+
+  .actionsBlock {
+    justify-self: center;
+  }
+}
+
+@media (--desktop-viewport) {
+  .timer {
+    padding: var(--indent-100) var(--indent-50);
+  }
+}

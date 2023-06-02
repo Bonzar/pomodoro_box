@@ -20,7 +20,7 @@ export type TextProps<E extends ElementType> = PropsWithChildren<
   PolymorphicComponentProps<E, ITextProps>
 >;
 
-export const Text = <E extends ElementType = "span">({
+export const TextEl = <E extends ElementType = "span">({
   as,
   children,
   textColor,

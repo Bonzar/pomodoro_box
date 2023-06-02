@@ -1,15 +1,20 @@
-import { Text } from "../../components/ui/Text";
+import styles from "./main.module.css";
+import { Header } from "../../components/ui/Header";
 import { Indent } from "../../components/ui/Indent";
-import { Button } from "../../components/ui/Button";
+import { Instructions } from "./Instructions";
+import { TasksBlock } from "./TasksBlock";
+import { Timer } from "./Timer";
 
 export const Main = () => {
   return (
-    <>
-      <Text as="h1" textSize={24} textWeight={700}>
-        Pomodoro timer
-      </Text>
-      <Indent size={25} />
-      <Button btnColor="red">Кнопка</Button>
-    </>
+    <div className={styles.main}>
+      <Timer />
+      <div className={styles.tasks}>
+        <Header>Ура! Теперь можно начать работать:</Header>
+        <Instructions />
+        <Indent size={25} />
+        <TasksBlock />
+      </div>
+    </div>
   );
 };

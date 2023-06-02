@@ -1,1 +1,1 @@
-export type TIndent = 10 | 15 | 19 | 25 | 32 | 50 | 80 | 100;
+export type TIndent = 10 | 15 | 19 | 25 | 32 | 40 | 50 | 80 | 100;

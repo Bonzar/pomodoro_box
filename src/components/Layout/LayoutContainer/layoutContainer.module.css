@@ -2,4 +2,17 @@
   max-width: 1440px;
   margin: 0 auto;
   width: 100%;
+  padding-inline: var(--indent-32);
+}
+
+@media (--netbook-viewport) {
+  .container {
+    padding-inline: var(--indent-50);
+  }
+}
+
+@media (--desktop-viewport) {
+  .container {
+    padding-inline: var(--indent-80);
+  }
 }

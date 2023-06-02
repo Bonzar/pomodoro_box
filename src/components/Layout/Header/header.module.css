@@ -3,8 +3,17 @@
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--indent-80);
   height: 7rem;
+}
+
+.navLinkText {
+  display: none;
+}
+
+@media (--tablet-viewport) {
+  .navLinkText {
+    display: initial;
+  }
 }
 
 .header {
@@ -14,6 +23,6 @@
 
 .navLink {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   align-items: center;
 }

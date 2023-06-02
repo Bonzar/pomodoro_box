@@ -12,5 +12,5 @@ type IconProps = InheritableElementProps<"svg", IIconProps>;
 
 export const Icon = ({ iconName, iconColor, ...other }: IconProps) => {
   const Icon = icons[iconName];
-  return <Icon fill={iconColor} {...other} />;
+  return <Icon fill={iconColor && `var(--${iconColor})`} {...other} />;
 };

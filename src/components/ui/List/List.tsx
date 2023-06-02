@@ -1,5 +1,6 @@
 import type { ElementType, ReactNode } from "react";
 import type { PolymorphicComponentProps } from "../../../assets/types/PolymorphicComponent.ts";
+import { intersperse } from "ramda";
 
 interface IListItem {
   key: string | number;
@@ -10,13 +11,32 @@ type ListItemProps<C extends ElementType = ElementType> =
   PolymorphicComponentProps<C, IListItem>;
 
 interface IListProps {
-  list: Array<ListItemProps>;
+  list: ListItemProps[];
+  divider?: ElementType;
 }
 
-export const List = ({ list }: IListProps) => {
+export type ListItem<C extends ElementType> = Omit<ListItemProps<C>, "as"> &
+  Required<Pick<ListItemProps<C>, "as">>;
+
+export const List = ({ list, divider }: IListProps) => {
+  let currentList = list;
+  if (divider) {
+    currentList = intersperse<
+      Omit<(typeof list)[number], "key"> | Omit<ListItem<typeof divider>, "key">
+    >({ as: divider }, list).map((item, index, array) => {
+      const key =
+        index % 2 === 1 // check on divider
+          ? // if divider -> use key from prev item + "_divider"
+            (array[index - 1] as (typeof list)[number]).key + "_divider"
+          : (item as (typeof list)[number]).key;
+
+      return { ...item, key };
+    });
+  }
+
   return (
     <>
-      {list.map(({ key, as, children, ...other }) => {
+      {currentList.map(({ key, as, children, ...other }) => {
         const Component = as || "div";
 
         return (
@@ -28,6 +48,3 @@ export const List = ({ list }: IListProps) => {
     </>
   );
 };
-
-export type ListItem<C extends ElementType> = Omit<ListItemProps<C>, "as"> &
-  Required<Pick<ListItemProps<C>, "as">>;

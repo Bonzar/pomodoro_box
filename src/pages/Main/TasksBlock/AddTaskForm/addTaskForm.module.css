@@ -1,0 +1,10 @@
+.taskInput {
+  display: block;
+  width: 100%;
+  background-color: var(--gray-F4);
+  padding: var(--indent-19) var(--indent-15);
+}
+
+.taskInput::placeholder {
+  color: var(--gray-99);
+}

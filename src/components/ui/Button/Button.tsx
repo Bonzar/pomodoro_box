@@ -1,8 +1,8 @@
 import styles from "./button.module.css";
-import type { TextProps } from "../Text";
-import { Text } from "../Text";
 import { getClassName } from "../../../helpers/react/getClassName.ts";
 import type { ExtendableProps } from "../../../assets/types/PolymorphicComponent.ts";
+import type { TextProps } from "../TextEl";
+import { TextEl } from "../TextEl";
 
 interface IButtonProps {
   btnColor: "green" | "red";
@@ -27,8 +27,8 @@ export const Button = ({
   ]);
 
   return (
-    <Text textWeight={textWeight} as="button" className={classes} {...other}>
+    <TextEl textWeight={textWeight} as="button" className={classes} {...other}>
       {children}
-    </Text>
+    </TextEl>
   );
 };

@@ -1,0 +1,14 @@
+.main {
+  display: grid;
+  gap: var(--indent-25);
+}
+
+@media (--desktop-viewport) {
+  .main {
+    grid-template-columns: 2fr 3fr;
+  }
+
+  .tasks {
+    order: -1;
+  }
+}

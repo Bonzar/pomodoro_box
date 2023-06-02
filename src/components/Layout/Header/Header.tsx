@@ -1,6 +1,6 @@
 import styles from "./header.module.css";
 import { LayoutContainer } from "../LayoutContainer";
-import { Text } from "../../ui/Text";
+import { TextEl } from "../../ui/TextEl";
 import { Indent } from "../../ui/Indent";
 import { Link } from "react-router-dom";
 import { Icon } from "../../ui/Icon/Icon.tsx";
@@ -11,20 +11,22 @@ export const Header = () => (
       <Link to="/main" className={styles.navLink}>
         <Icon iconName="logo" />
         <Indent size={10} inline />
-        <Text
+        <TextEl
           textSize={24}
           textLineHeight={24}
           textWeight={300}
           textColor="red"
         >
           pomodoro_box
-        </Text>
+        </TextEl>
       </Link>
       <nav>
         <Link to="stats" className={styles.navLink}>
           <Icon iconName="stats" iconColor="red" />
           <Indent size={10} inline />
-          <Text textColor="red">Статистка</Text>
+          <TextEl textColor="red" className={styles.navLinkText}>
+            Статистка
+          </TextEl>
         </Link>
       </nav>
     </LayoutContainer>

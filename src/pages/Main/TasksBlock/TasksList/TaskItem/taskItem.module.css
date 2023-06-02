@@ -1,0 +1,32 @@
+.task {
+  padding: var(--indent-15) 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pomodoroCount {
+  flex: 0 0 auto;
+  border: 0.1rem solid var(--gray-C4);
+  border-radius: 100vw;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.name {
+  word-break: break-all;
+}
+
+@media (--tablet-viewport) {
+  .name {
+    word-break: initial;
+  }
+}
+
+.menuBtn {
+  flex: 0 0 auto;
+  margin-left: auto;
+}

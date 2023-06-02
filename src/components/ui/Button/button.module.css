@@ -1,9 +1,15 @@
 .button {
-  padding: var(--indent-19) var(--indent-50);
+  padding: var(--indent-19) var(--indent-40);
   border: 2px solid;
   transition: background-color cubic-bezier(0.18, 0.89, 0.32, 1.28) 1ms,
     color cubic-bezier(0.18, 0.89, 0.32, 1.28) 1ms,
     border-color cubic-bezier(0.18, 0.89, 0.32, 1.28) 1ms;
+}
+
+@media (--tablet-viewport) {
+  .button {
+    padding: var(--indent-19) var(--indent-50);
+  }
 }
 
 /* Button colors */
