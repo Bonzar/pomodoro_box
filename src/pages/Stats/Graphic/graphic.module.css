@@ -1,0 +1,126 @@
+.graphic {
+  overflow: hidden;
+  height: 100%;
+  display: grid;
+  padding-inline: calc(var(--indent-19) + var(--indent-15));
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 0.5fr repeat(4, 1fr) 0.5fr 5.1rem;
+  grid-template-areas:
+    "column-1 column-2 column-3 column-4 column-5 column-6 column-7"
+    "column-1 column-2 column-3 column-4 column-5 column-6 column-7"
+    "column-1 column-2 column-3 column-4 column-5 column-6 column-7"
+    "column-1 column-2 column-3 column-4 column-5 column-6 column-7"
+    "column-1 column-2 column-3 column-4 column-5 column-6 column-7"
+    "column-1 column-2 column-3 column-4 column-5 column-6 column-7"
+    "weekday-1 weekday-2 weekday-3 weekday-4 weekday-5 weekday-6 weekday-7";
+  column-gap: var(--indent-15);
+  justify-items: center;
+  align-items: center;
+}
+
+@media (--tablet-viewport) {
+  .graphic {
+    column-gap: var(--indent-19);
+  }
+}
+
+@media (--netbook-viewport) {
+  .graphic {
+    grid-template-columns: repeat(7, 1fr) 2.5rem auto;
+    grid-template-rows: 0.5fr repeat(4, 1fr) 0.5fr 5.1rem;
+    grid-template-areas:
+      "column-1 column-2 column-3 column-4 column-5 column-6 column-7 . ."
+      "column-1 column-2 column-3 column-4 column-5 column-6 column-7 . legendName-1"
+      "column-1 column-2 column-3 column-4 column-5 column-6 column-7 . legendName-2"
+      "column-1 column-2 column-3 column-4 column-5 column-6 column-7 . legendName-3"
+      "column-1 column-2 column-3 column-4 column-5 column-6 column-7 . legendName-4"
+      "column-1 column-2 column-3 column-4 column-5 column-6 column-7 . ."
+      "weekday-1 weekday-2 weekday-3 weekday-4 weekday-5 weekday-6 weekday-7 . .";
+    padding-right: var(--indent-19);
+    padding-left: calc(var(--indent-32) + var(--indent-25));
+    column-gap: var(--indent-32);
+  }
+}
+
+.legendName {
+  white-space: nowrap;
+  display: none;
+}
+
+@media (--netbook-viewport) {
+  .legendName {
+    display: initial;
+  }
+}
+
+.weekday {
+  z-index: 1;
+  font-size: var(--font-size-16);
+}
+
+@media (--netbook-viewport) {
+  .weekday {
+    font-size: var(--font-size-24);
+  }
+}
+
+.column {
+  align-self: flex-end;
+  height: 70%;
+  width: 100%;
+  background-color: var(--red-light);
+  z-index: 1;
+}
+
+.column.active {
+  background-color: var(--red);
+}
+
+@media (pointer: fine) {
+  .column:not(.active):hover {
+    background-color: var(--red-semi-light);
+  }
+}
+
+.footerBackground {
+  width: 200%;
+  height: 100%;
+  grid-column: 1 / 8;
+  grid-row: -1 / -2;
+  background-color: var(--gray-EC);
+}
+
+@media (--netbook-viewport) {
+  .footerBackground {
+    grid-column: 1 / 10;
+  }
+}
+
+.gridLine {
+  grid-column: 1 / 8;
+  opacity: 0.2;
+  width: 200%;
+}
+
+@media (--netbook-viewport) {
+  .gridLine {
+    grid-column: 1 / 9;
+    justify-self: flex-end;
+  }
+}
+
+.gridLine-1 {
+  grid-row: 2 / 3;
+}
+
+.gridLine-2 {
+  grid-row: 3 / 4;
+}
+
+.gridLine-3 {
+  grid-row: 4 / 5;
+}
+
+.gridLine-4 {
+  grid-row: 5 / 6;
+}

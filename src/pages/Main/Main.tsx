@@ -1,5 +1,5 @@
 import styles from "./main.module.css";
-import { Header } from "../../components/ui/Header";
+import { Heading } from "../../components/ui/Header";
 import { Indent } from "../../components/ui/Indent";
 import { Instructions } from "./Instructions";
 import { TasksBlock } from "./TasksBlock";
@@ -10,7 +10,7 @@ export const Main = () => {
     <div className={styles.main}>
       <Timer />
       <div className={styles.tasks}>
-        <Header>Ура! Теперь можно начать работать:</Header>
+        <Heading as="h1">Ура! Теперь можно начать работать:</Heading>
         <Instructions />
         <Indent size={25} />
         <TasksBlock />

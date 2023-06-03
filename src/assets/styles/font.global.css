@@ -8,7 +8,10 @@
   --font-size-12: 1.2rem;
   --font-size-16: 1.6rem;
   --font-size-24: 2.4rem;
+}
 
+/* Font line-height */
+:root {
   --font-line-height-17: 1.7rem;
   --font-line-height-24: 2.4rem;
   --font-line-height-28: 2.8rem;

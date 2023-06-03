@@ -1,0 +1,28 @@
+.indicator {
+  padding: var(--indent-25);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  height: 100%;
+}
+
+.value {
+  grid-row: 2 / 3;
+  font-size: 4.8rem;
+  line-height: 1.1875;
+  align-self: end;
+}
+
+@media (--netbook-viewport) {
+  font-size: 6.4rem;
+}
+
+.icon {
+  grid-row: span 2;
+  width: 10rem;
+}
+
+@media (--tablet-viewport) {
+  .icon {
+    width: unset;
+  }
+}

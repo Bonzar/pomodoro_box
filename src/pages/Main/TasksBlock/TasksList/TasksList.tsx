@@ -6,23 +6,9 @@ import { TaskItem } from "./TaskItem";
 import { mergeLeft, objOf, pipe } from "ramda";
 import { List } from "../../../../components/ui/List";
 import { assocKeyAsId } from "../../../../helpers/react/assocKeyAsId.ts";
+import { formatTime } from "../../../../helpers/js/formatTime.ts";
 
 const FOCUS_TIME = 25;
-
-const formatTime = (minutes: number) => {
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-
-  if (hours <= 0) {
-    return `${remainingMinutes} мин`;
-  }
-
-  if (remainingMinutes <= 0) {
-    return `${hours} час`;
-  }
-
-  return `${hours} час ${remainingMinutes} мин`;
-};
 
 export const TasksList = () => {
   const tasks = ["1", "2", "3"].map(
@@ -36,7 +22,7 @@ export const TasksList = () => {
       <Divider dividerColor="gray-E4" />
       <Indent size={19} />
       <TextEl textWeight={300} textColor="gray-99">
-        {formatTime(tasks.length * FOCUS_TIME)}
+        {formatTime(tasks.length * FOCUS_TIME, { trimTimeNames: true })}
       </TextEl>
     </div>
   );

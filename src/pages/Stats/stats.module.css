@@ -1,0 +1,79 @@
+.stats {
+  display: grid;
+  grid-template-rows: auto auto 2fr repeat(4, 1fr);
+  gap: var(--indent-32);
+  grid-template-areas:
+    "header"
+    "weekDay"
+    "graphic"
+    "pomoCount"
+    "statFocus"
+    "statPause"
+    "statStop";
+}
+
+@media (--netbook-viewport) {
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 2fr 1fr 1fr;
+    gap: var(--indent-32);
+    grid-template-areas:
+      "header header"
+      "weekDay pomoCount"
+      "graphic graphic"
+      "statFocus statFocus"
+      "statPause statStop";
+  }
+}
+
+@media (--desktop-viewport) {
+  .stats {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto repeat(7, 1fr);
+    gap: var(--indent-32);
+    grid-template-areas:
+      "header header header header header header header header header header header header"
+      "weekDay weekDay weekDay graphic graphic graphic graphic graphic graphic graphic graphic graphic"
+      "weekDay weekDay weekDay graphic graphic graphic graphic graphic graphic graphic graphic graphic"
+      "weekDay weekDay weekDay graphic graphic graphic graphic graphic graphic graphic graphic graphic"
+      "pomoCount pomoCount pomoCount graphic graphic graphic graphic graphic graphic graphic graphic graphic"
+      "pomoCount pomoCount pomoCount graphic graphic graphic graphic graphic graphic graphic graphic graphic"
+      "statFocus statFocus statFocus statFocus statPause statPause statPause statPause statStop statStop statStop statStop"
+      "statFocus statFocus statFocus statFocus statPause statPause statPause statPause statStop statStop statStop statStop";
+  }
+}
+
+.header {
+  grid-area: header;
+}
+
+.summary {
+  grid-area: weekDay;
+  background-color: var(--gray-F4);
+  padding: var(--indent-25);
+}
+
+.pomoCount {
+  grid-area: pomoCount;
+  background-color: var(--gray-F4);
+}
+
+.graphic {
+  grid-area: graphic;
+  background-color: var(--gray-F4);
+}
+
+.statFocus {
+  grid-area: statFocus;
+  background-color: var(--gray-F4);
+}
+
+.statPause {
+  grid-area: statPause;
+  background-color: var(--gray-F4);
+}
+
+.statStop {
+  grid-area: statStop;
+  background-color: var(--gray-F4);
+}

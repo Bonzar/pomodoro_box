@@ -10,7 +10,13 @@ interface IIconProps {
 
 type IconProps = InheritableElementProps<"svg", IIconProps>;
 
-export const Icon = ({ iconName, iconColor, ...other }: IconProps) => {
+export const Icon = ({ iconName, iconColor, style, ...other }: IconProps) => {
   const Icon = icons[iconName];
-  return <Icon fill={iconColor && `var(--${iconColor})`} {...other} />;
+
+  let iconStyle = style ?? {};
+  if (iconColor) {
+    iconStyle = { ...iconStyle, color: `var(--${iconColor})` };
+  }
+
+  return <Icon style={iconStyle} {...other} />;
 };

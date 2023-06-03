@@ -33,7 +33,6 @@ export const Divider = ({
 
   if (!column) {
     dividerStyles.height = dividerThickness;
-    dividerStyles.marginBottom = dividerThickness * -1;
   } else {
     if (dividerColumnHeight === "100%") {
       dividerStyles.height = "100%";
@@ -41,7 +40,6 @@ export const Divider = ({
       dividerStyles.height = `var(--font-size-${dividerColumnHeight})`;
     }
     dividerStyles.width = dividerThickness;
-    dividerStyles.marginRight = dividerThickness * -1;
   }
 
   return (

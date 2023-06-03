@@ -1,15 +1,15 @@
 .content {
-  padding-top: var(--indent-32)
+  padding-block: var(--indent-32);
 }
 
 @media (--netbook-viewport) {
   .content {
-    padding-top: var(--indent-50)
+    padding-block: var(--indent-50);
   }
 }
 
 @media (--desktop-viewport) {
   .content {
-    padding-top: var(--indent-100)
+    padding-block: var(--indent-100);
   }
 }
