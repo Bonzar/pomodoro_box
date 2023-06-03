@@ -54,6 +54,17 @@
   height: 5rem;
   border-radius: 100vw;
   align-self: center;
+  color: var(--gray-C4);
+}
+
+.addButton[disabled] {
+  cursor: default;
+}
+
+@media (pointer: fine) {
+  .addButton:not([disabled]):hover {
+    color: var(--green);
+  }
 }
 
 @media (--tablet-viewport) {

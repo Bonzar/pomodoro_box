@@ -8,7 +8,12 @@ import { Timer } from "./Timer";
 export const Main = () => {
   return (
     <div className={styles.main}>
-      <Timer />
+      <div // timer wrapper for position sticky
+      >
+        <div className={styles.timer}>
+          <Timer />
+        </div>
+      </div>
       <div className={styles.tasks}>
         <Heading as="h1">Ура! Теперь можно начать работать:</Heading>
         <Instructions />

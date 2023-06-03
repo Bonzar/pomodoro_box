@@ -11,4 +11,9 @@
   .tasks {
     order: -1;
   }
+
+  .timer {
+    position: sticky;
+    top: var(--indent-25);
+  }
 }
