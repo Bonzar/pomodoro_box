@@ -29,7 +29,7 @@ export const PomoCount = ({ count }: IPomoCountProps) => (
         textWeight={700}
         textColor="white"
       >
-        {count} {caseByNum(["помидор", "помидора", "помидор"])(count)}
+        {count} {caseByNum(["помидор", "помидора", "помидоров"])(count)}
       </TextEl>
     </div>
   </div>

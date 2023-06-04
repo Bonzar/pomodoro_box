@@ -1,7 +1,7 @@
 import styles from "./taskItem.module.css";
 import { TextEl } from "../../../../../components/ui/TextEl";
 import { Indent } from "../../../../../components/ui/Indent";
-import { Icon } from "../../../../../components/ui/Icon/Icon.tsx";
+import { Actions } from "./Actions";
 
 interface ITaskItemProps {
   id: string;
@@ -16,6 +16,8 @@ export const TaskItem = ({ id }: ITaskItemProps) => (
     <TextEl className={styles.name} textWeight={300}>
       Task name - {id}
     </TextEl>
-    <Icon iconName="threeDots" iconColor="gray-C4" className={styles.menuBtn} />
+    <div className={styles.actions}>
+      <Actions id={id} />
+    </div>
   </div>
 );
