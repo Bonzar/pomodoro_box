@@ -1,0 +1,31 @@
+.weekChanger {
+  position: relative;
+  max-width: 37rem;
+  width: 100%;
+}
+
+.weekChangerItems {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.weekChangerItem {
+  padding: var(--indent-19) var(--indent-15);
+  background-color: var(--gray-F4);
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.weekChangerActive {
+  filter: drop-shadow(var(--shadow));
+}
+
+.weekChangerActive .weekChangerIcon {
+  transform: rotate(180deg);
+}

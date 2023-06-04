@@ -4,11 +4,11 @@ export type TColor =
   | "white"
   | "gray-F5"
   | "gray-F4"
-  | "gray-ED"
   | "gray-EC"
   | "gray-E6"
   | "gray-E4"
   | "gray-E3"
+  | "gray-DE"
   | "gray-C4"
   | "gray-99"
   // green

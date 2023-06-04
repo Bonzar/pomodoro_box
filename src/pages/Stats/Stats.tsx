@@ -4,11 +4,13 @@ import { Summary } from "./Summary";
 import { StatsIndicator } from "./StatsIndicator";
 import { Graphic } from "./Graphic";
 import { PomoCount } from "./PomoCount";
+import { WeekChanger } from "./WeekChanger";
 
 export const Stats = () => (
   <div className={styles.stats}>
     <div className={styles.header}>
       <Heading as="h1">Ваша активность</Heading>
+      <WeekChanger />
     </div>
     <div className={styles.summary}>
       <Summary weekday={1} focusMinutes={1245} />

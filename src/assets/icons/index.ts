@@ -9,6 +9,7 @@ import { ReactComponent as plusAction } from "./plusAction.svg";
 import { ReactComponent as minusAction } from "./minusAction.svg";
 import { ReactComponent as penAction } from "./penAction.svg";
 import { ReactComponent as basketAction } from "./basketAction.svg";
+import { ReactComponent as arrowDown } from "./arrowDown.svg";
 
 export {
   stats,
@@ -22,4 +23,5 @@ export {
   minusAction,
   penAction,
   basketAction,
+  arrowDown,
 };

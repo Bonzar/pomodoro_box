@@ -46,7 +46,7 @@ const getLegendNamesElements = (legendNames: string[]) => {
   const legendGridRows = legendElements.map((_, index) => ({
     as: Divider,
     className: getClassName([styles.gridLine, styles[`gridLine-${index + 1}`]]),
-    key: legendElements[index] + "_gridRow",
+    key: legendElements[index].key + "_gridRow",
   }));
 
   return [...legendElements, ...legendGridRows];

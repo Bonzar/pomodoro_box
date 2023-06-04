@@ -44,6 +44,11 @@
 }
 
 .header {
+  display: flex;
+  flex-flow: row wrap;
+  gap: var(--indent-32);
+  align-items: center;
+  justify-content: space-between;
   grid-area: header;
 }
 

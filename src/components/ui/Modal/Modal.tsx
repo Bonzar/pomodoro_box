@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import styles from "./modal.module.css";
 import { createPortal } from "react-dom";
 import { useIsMounted } from "../../../hooks/useIsMounted.ts";
+import { useOutsideClick } from "../../../hooks/useOutsideClick.ts";
 
 interface IModalProps {
   children: ReactNode;
@@ -13,22 +14,7 @@ export function Modal({ children, onOutsideClick }: IModalProps) {
   const isMounted = useIsMounted();
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (
-        event.target instanceof Node &&
-        !ref.current?.contains(event.target)
-      ) {
-        onOutsideClick?.(event);
-      }
-    };
-
-    document.addEventListener("click", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
-  }, [onOutsideClick]);
+  useOutsideClick(ref, onOutsideClick);
 
   if (!isMounted) {
     return null;

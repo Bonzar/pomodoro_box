@@ -23,8 +23,8 @@ export const Header = () => (
       <nav>
         <Link to="stats" className={styles.navLink}>
           <Icon iconName="stats" iconColor="red" />
-          <Indent size={10} inline />
           <TextEl textColor="red" className={styles.navLinkText}>
+            <Indent size={10} inline />
             Статистка
           </TextEl>
         </Link>

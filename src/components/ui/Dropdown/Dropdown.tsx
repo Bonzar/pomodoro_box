@@ -9,9 +9,9 @@ interface IDropdownButtonProps {
 }
 
 interface IDropdownProps {
-  className: string;
   button: (props: IDropdownButtonProps) => React.ReactElement;
   children: ReactNode;
+  className?: string;
   onOpen?: () => void;
   onClose?: () => void;
 }
