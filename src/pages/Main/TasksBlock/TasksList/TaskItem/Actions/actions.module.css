@@ -77,6 +77,10 @@
   }
 }
 
+.actionsBtn {
+  position: relative;
+}
+
 .actionsBtn:before {
   content: "";
   height: calc(100% + var(--indent-10) * 2);

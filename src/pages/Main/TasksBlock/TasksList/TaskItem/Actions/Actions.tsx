@@ -6,6 +6,8 @@ import { Indent } from "../../../../../../components/ui/Indent";
 import { List } from "../../../../../../components/ui/List";
 import { mergeLeft, pipe } from "ramda";
 import type { TIcons } from "../../../../../../assets/types/TIcons.ts";
+import { useState } from "react";
+import { DeleteTaskModal } from "./DeleteTaskModal";
 
 interface IActionsProps {
   id: string;
@@ -35,6 +37,8 @@ const ActionItem = ({ iconName, name, onClick, id }: IActionItemProps) => {
 };
 
 export const Actions = ({ id }: IActionsProps) => {
+  const [isDeleteTaskModalOpen, setIsDeleteTaskModalOpen] = useState(false);
+
   const actions = [
     {
       name: "Увеличить",
@@ -51,24 +55,30 @@ export const Actions = ({ id }: IActionsProps) => {
     {
       name: "Удалить",
       iconName: "basketAction" as const,
+      onClick: () => setIsDeleteTaskModalOpen(true),
     },
   ].map(
-    pipe(
-      mergeLeft({ as: ActionItem, onClick: () => console.log(id) }),
-      (item) => ({ ...item, key: item.name })
-    )
+    pipe(mergeLeft({ as: ActionItem }), (item) => ({ ...item, key: item.name }))
   );
 
   return (
-    <Dropdown
-      className={styles.dropdown}
-      button={({ onClick }) => (
-        <button onClick={onClick} className={styles.actionsBtn}>
-          <Icon iconName="threeDots" iconColor="gray-C4" />
-        </button>
+    <>
+      <Dropdown
+        className={styles.dropdown}
+        button={({ onClick }) => (
+          <button onClick={onClick} className={styles.actionsBtn}>
+            <Icon iconName="threeDots" iconColor="gray-C4" />
+          </button>
+        )}
+      >
+        <List list={actions} />
+      </Dropdown>
+      {isDeleteTaskModalOpen && (
+        <DeleteTaskModal
+          onClose={() => setIsDeleteTaskModalOpen(false)}
+          id={id}
+        />
       )}
-    >
-      <List list={actions} />
-    </Dropdown>
+    </>
   );
 };
