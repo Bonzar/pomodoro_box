@@ -16,17 +16,25 @@
   justify-content: center;
 }
 
-.name {
-  word-break: break-all;
+.nameWrapper {
+  word-break: break-word;
+  align-self: stretch;
+  padding-inline: 0.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
-@media (--tablet-viewport) {
-  .name {
-    word-break: initial;
-  }
+.nameField {
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.nameForm {
+  width: 100%;
+  background-color: var(--gray-F4);
 }
 
 .actions {
   flex: 0 0 auto;
-  margin-left: auto;
 }

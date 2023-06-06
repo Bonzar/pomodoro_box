@@ -1,5 +1,5 @@
-import { CounterSliceReducer } from "./counterSlice.ts";
+import { tasksSliceReducer } from "./tasksSlice.ts";
 
 export const reducer = {
-  counter: CounterSliceReducer,
+  tasks: tasksSliceReducer,
 };

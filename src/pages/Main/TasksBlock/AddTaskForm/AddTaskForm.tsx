@@ -3,11 +3,28 @@ import { preventDefault } from "../../../../helpers/react/preventDefault.ts";
 import { Indent } from "../../../../components/ui/Indent";
 import { Button } from "../../../../components/ui/Button";
 import { TextEl } from "../../../../components/ui/TextEl";
+import { useAppDispatch } from "../../../../store/hooks.ts";
+import type { ChangeEvent, FormEvent } from "react";
+import { useState } from "react";
+import { addTask } from "../../../../store/tasksSlice.ts";
 
 export const AddTaskForm = () => {
-  const handleSubmit = () => {
-    /* empty */
-    console.log("hi");
+  const [taskTitle, setTaskTitle] = useState("");
+  const dispatch = useAppDispatch();
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const newTitle = taskTitle.trim();
+    if (!newTitle) {
+      event.currentTarget
+        .querySelector("input")
+        ?.setCustomValidity("Название задачи не может быть пустым.");
+
+      event.currentTarget.reportValidity();
+      return;
+    }
+
+    dispatch(addTask(newTitle));
+    setTaskTitle("");
   };
 
   return (
@@ -17,10 +34,17 @@ export const AddTaskForm = () => {
       </TextEl>
       <TextEl
         as="input"
-        id="task-name"
+        value={taskTitle}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+          const input = event.currentTarget;
+          input.setCustomValidity("");
+
+          setTaskTitle(input.value);
+        }}
         textWeight={300}
-        type="text"
         className={styles.taskInput}
+        id="task-name"
+        type="text"
         placeholder="Название задачи"
       />
       <Indent size={25} />

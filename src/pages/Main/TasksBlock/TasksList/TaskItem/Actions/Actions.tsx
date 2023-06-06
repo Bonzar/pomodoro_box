@@ -8,13 +8,19 @@ import { mergeLeft, pipe } from "ramda";
 import type { TIcons } from "../../../../../../assets/types/TIcons.ts";
 import { useState } from "react";
 import { DeleteTaskModal } from "./DeleteTaskModal";
+import { useAppDispatch } from "../../../../../../store/hooks.ts";
+import {
+  decrementPredictedPomo,
+  incrementPredictedPomo,
+} from "../../../../../../store/tasksSlice.ts";
 
 interface IActionsProps {
-  id: string;
+  id: string | number;
+  onEditClick: VoidFunction;
 }
 
 interface IActionItemProps {
-  id: string;
+  id: string | number;
   name: string;
   iconName: TIcons;
   onClick?: VoidFunction;
@@ -36,26 +42,39 @@ const ActionItem = ({ iconName, name, onClick, id }: IActionItemProps) => {
   );
 };
 
-export const Actions = ({ id }: IActionsProps) => {
+export const Actions = ({ id, onEditClick }: IActionsProps) => {
+  const dispatch = useAppDispatch();
+
   const [isDeleteTaskModalOpen, setIsDeleteTaskModalOpen] = useState(false);
+
+  const handleDeleteTask = () => setIsDeleteTaskModalOpen(true);
+
+  const handleIncrementPredictPomo = () =>
+    dispatch(incrementPredictedPomo({ id }));
+
+  const handleDecrementPredictPomo = () =>
+    dispatch(decrementPredictedPomo({ id }));
 
   const actions = [
     {
       name: "Увеличить",
       iconName: "plusAction" as const,
+      onClick: handleIncrementPredictPomo,
     },
     {
       name: "Уменьшить",
       iconName: "minusAction" as const,
+      onClick: handleDecrementPredictPomo,
     },
     {
       name: "Редактировать",
       iconName: "penAction" as const,
+      onClick: onEditClick,
     },
     {
       name: "Удалить",
       iconName: "basketAction" as const,
-      onClick: () => setIsDeleteTaskModalOpen(true),
+      onClick: handleDeleteTask,
     },
   ].map(
     pipe(mergeLeft({ as: ActionItem }), (item) => ({ ...item, key: item.name }))
