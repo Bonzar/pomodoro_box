@@ -10,11 +10,11 @@ import { assocKeyAsId } from "../../../../helpers/react/assocKeyAsId.ts";
 import { formatTime } from "../../../../helpers/js/formatTime.ts";
 import { useAppSelector } from "../../../../store/hooks.ts";
 import { selectAllTasks } from "../../../../store/tasksSlice.ts";
-
-const FOCUS_TIME = 25;
+import { selectTimer } from "../../../../store/timerSlice.ts";
 
 export const TasksList = () => {
   const allTasks = useAppSelector(selectAllTasks);
+  const { focusDuration } = useAppSelector(selectTimer);
 
   const tasksList: ListItem<typeof TaskItem>[] = allTasks.map(
     pipe(({ id }) => id, objOf("id"), mergeLeft({ as: TaskItem }), assocKeyAsId)
@@ -25,8 +25,13 @@ export const TasksList = () => {
     0
   );
 
+  if (tasksList.length <= 0) {
+    return null;
+  }
+
   return (
     <div className={styles.style}>
+      <Indent size={25} />
       <Divider dividerColor="gray-E4" />
       <List // tasks list
         list={tasksList}
@@ -35,7 +40,7 @@ export const TasksList = () => {
       <Divider dividerColor="gray-E4" />
       <Indent size={19} />
       <TextEl textWeight={300} textColor="gray-99">
-        {formatTime(predictedPomoSum * FOCUS_TIME, { trimTimeNames: true })}
+        {formatTime(predictedPomoSum * focusDuration, { trimTimeNames: true })}
       </TextEl>
     </div>
   );
