@@ -20,24 +20,29 @@ import { addStatNote } from "../../../store/statsSlice.ts";
 export const useTimer = () => {
   const dispatch = useAppDispatch();
 
-  const { state, type, startPointAt, stoppedAt, startRunningAt, ...timer } =
-    useAppSelector(selectTimer);
-
-  const isTypeFocus = type === "FOCUS";
-
   const currentTask = useAppSelector(selectFirstTask);
 
-  const timerDuration = isTypeFocus
-    ? timer.focusDuration
-    : timer.breakDurationShort;
+  const {
+    state,
+    type: timerType,
+    startPointAt,
+    stoppedAt,
+    runningAt,
+    ...timer
+  } = useAppSelector(selectTimer);
+
+  const isTypeFocus = timerType === "FOCUS";
 
   const isTypeFocusAndTaskExist = isTypeFocus && currentTask?.id;
+
+  const timerDurationMilliseconds =
+    1000 * 60 * (isTypeFocus ? timer.focusDuration : timer.breakDurationShort);
 
   const getCurrentTime = useCallback(() => {
     let time;
     switch (state) {
       case "IDLE": {
-        time = timerDuration * 60 * 1000;
+        time = timerDurationMilliseconds;
         break;
       }
       case "RUN": {
@@ -48,9 +53,7 @@ export const useTimer = () => {
           break;
         }
 
-        const timerEndsAt = startPointAt + timerDuration * 60 * 1000;
-
-        time = timerEndsAt - Date.now();
+        time = startPointAt + timerDurationMilliseconds - Date.now();
         break;
       }
       case "PAUSE": {
@@ -66,7 +69,7 @@ export const useTimer = () => {
           break;
         }
 
-        time = timerDuration * 60 * 1000 - (stoppedAt - startPointAt);
+        time = timerDurationMilliseconds - (stoppedAt - startPointAt);
         break;
       }
       default:
@@ -82,7 +85,7 @@ export const useTimer = () => {
     const timeSeconds = getTimeWithZero(timerDate.getSeconds());
 
     return timeMinutes + ":" + timeSeconds;
-  }, [startPointAt, state, stoppedAt, timerDuration]);
+  }, [startPointAt, state, stoppedAt, timerDurationMilliseconds]);
 
   const [timeString, setTimeString] = useState(getCurrentTime());
 
@@ -94,18 +97,11 @@ export const useTimer = () => {
       case "RUN": {
         dispatch(stopTimer());
 
-        const lastTimerActivePeriodStartPoint = startRunningAt ?? startPointAt;
+        if (!runningAt) break;
 
-        if (!lastTimerActivePeriodStartPoint) break;
+        const duration = Date.now() - runningAt;
 
-        const passedMilliseconds = Date.now() - lastTimerActivePeriodStartPoint;
-
-        dispatch(
-          addStatNote({
-            type: isTypeFocus ? "TIMER_FOCUS" : "TIMER_BREAK",
-            milliseconds: passedMilliseconds,
-          })
-        );
+        dispatch(addStatNote({ type: timerType, duration }));
         break;
       }
       case "PAUSE": {
@@ -113,11 +109,9 @@ export const useTimer = () => {
 
         if (!stoppedAt) break;
 
-        const passedMilliseconds = Date.now() - stoppedAt;
+        const duration = Date.now() - stoppedAt;
 
-        dispatch(
-          addStatNote({ type: "PAUSE", milliseconds: passedMilliseconds })
-        );
+        dispatch(addStatNote({ type: "PAUSE", duration }));
         break;
       }
       default:
@@ -140,17 +134,11 @@ export const useTimer = () => {
           dispatch(addStatNote({ type: "STOP" }));
         }
 
-        const lastTimerActivePeriodStartPoint = startRunningAt ?? startPointAt;
-        if (!lastTimerActivePeriodStartPoint) return;
+        if (!runningAt) return;
 
-        const passedMilliseconds = Date.now() - lastTimerActivePeriodStartPoint;
+        const duration = Date.now() - runningAt;
 
-        dispatch(
-          addStatNote({
-            type: isTypeFocus ? "TIMER_FOCUS" : "TIMER_BREAK",
-            milliseconds: passedMilliseconds,
-          })
-        );
+        dispatch(addStatNote({ type: timerType, duration }));
 
         break;
       }
@@ -180,8 +168,9 @@ export const useTimer = () => {
       const interval = setInterval(() => {
         setTimeString(getCurrentTime());
 
-        const timerExceedAt =
-          startPointAt && startPointAt + timerDuration * 60 * 1000;
+        if (!startPointAt) return;
+
+        const timerExceedAt = startPointAt + timerDurationMilliseconds;
 
         // Finish the timer when the time is exceeded
         if (timerExceedAt && Date.now() > timerExceedAt) {
@@ -189,19 +178,11 @@ export const useTimer = () => {
             dispatch(addStatNote({ type: "POMO" }));
           }
 
-          const lastTimerActivePeriodStartPoint =
-            startRunningAt ?? startPointAt;
-          if (!lastTimerActivePeriodStartPoint) return;
+          if (runningAt) {
+            const duration = timerExceedAt - runningAt;
 
-          const passedMilliseconds =
-            timerExceedAt - lastTimerActivePeriodStartPoint;
-
-          dispatch(
-            addStatNote({
-              type: isTypeFocus ? "TIMER_FOCUS" : "TIMER_BREAK",
-              milliseconds: passedMilliseconds,
-            })
-          );
+            dispatch(addStatNote({ type: timerType, duration }));
+          }
 
           dispatch(endTimer());
         }
@@ -210,17 +191,18 @@ export const useTimer = () => {
       return () => {
         clearInterval(interval);
       };
+    } else {
+      setTimeString(getCurrentTime());
     }
-
-    setTimeString(getCurrentTime());
   }, [
     dispatch,
     getCurrentTime,
     isTypeFocus,
-    startRunningAt,
+    runningAt,
     startPointAt,
     state,
-    timerDuration,
+    timerDurationMilliseconds,
+    timerType,
   ]);
 
   return {
@@ -230,6 +212,6 @@ export const useTimer = () => {
     handleAddTimeButtonClick,
     handleRightButtonClick,
     timerState: state,
-    timerType: type,
+    timerType: timerType,
   };
 };

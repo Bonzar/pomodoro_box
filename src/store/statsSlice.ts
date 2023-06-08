@@ -1,9 +1,10 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "./store.ts";
+import { getCurrentWeekCornerDays } from "../helpers/getCurrentWeekCornerDays.ts";
 
 export type IStatNoteDuration = {
-  type: "TIMER_FOCUS" | "TIMER_BREAK" | "PAUSE";
-  milliseconds: number;
+  type: "FOCUS" | "BREAK" | "PAUSE";
+  duration: number;
 };
 
 export type IStatNoteStop = {
@@ -43,54 +44,29 @@ const statsSlice = createSlice({
 
 export const { addStatNote } = statsSlice.actions;
 
-export const {
-  selectById: selectStatNoteByTimestamp,
-  selectAll: selectAllStatistic,
-} = statsAdapter.getSelectors((state: RootState) => state.stats);
-
-const getCurrentWeekCorners = (weekShift = 0) => {
-  const todayWithoutShift = new Date();
-  const today = new Date(
-    todayWithoutShift.setDate(todayWithoutShift.getDate() - 7 * weekShift)
-  );
-
-  const firstDayOfCurrentWeekInMonth = today.getDate() - today.getDay() + 1;
-  const lastDayOfCurrentWeekInMonth = firstDayOfCurrentWeekInMonth + 7;
-
-  const firstWeekDayDate = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    firstDayOfCurrentWeekInMonth,
-    0,
-    0,
-    0,
-    0
-  );
-
-  const lastWeekDayDate = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    lastDayOfCurrentWeekInMonth,
-    0,
-    0,
-    0,
-    0
-  );
-
-  return { firstWeekDayDate, lastWeekDayDate };
-};
+export const { selectAll: selectAllStatistic } = statsAdapter.getSelectors(
+  (state: RootState) => state.stats
+);
 
 export const selectStatsByWeek = (state: RootState, weekShift: 0 | -1 | -2) => {
   const stats = selectAllStatistic(state);
-  const { lastWeekDayDate, firstWeekDayDate } =
-    getCurrentWeekCorners(weekShift);
+  const { firstWeekDayDate, lastWeekDayDate } = getCurrentWeekCornerDays();
+
+  const millisecondsInDay = 24 * 60 * 60 * 1000;
+  const millisecondsInWeek = millisecondsInDay * 7;
+
+  const firstWeekDayTimestampWithShift =
+    firstWeekDayDate.getTime() - millisecondsInWeek * Math.abs(weekShift);
+
+  const lastWeekDayTimestampWithShift =
+    lastWeekDayDate.getTime() - millisecondsInWeek * Math.abs(weekShift);
 
   const lastWeekDayEndOfDayTimestamp =
-    lastWeekDayDate.getTime() + 24 * 60 * 60 * 1000 - 1;
+    lastWeekDayTimestampWithShift + millisecondsInDay - 1;
 
   return stats.filter(
     (statItem) =>
-      statItem.createdAt >= firstWeekDayDate.getTime() &&
+      statItem.createdAt >= firstWeekDayTimestampWithShift &&
       statItem.createdAt <= lastWeekDayEndOfDayTimestamp
   );
 };

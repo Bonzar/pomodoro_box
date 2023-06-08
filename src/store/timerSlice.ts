@@ -5,7 +5,7 @@ interface ITimer {
   type: "FOCUS" | "BREAK";
   state: "IDLE" | "RUN" | "PAUSE";
   startPointAt: number | null; // timestamp
-  startRunningAt: number | null; // timestamp
+  runningAt: number | null; // timestamp
   stoppedAt: number | null; // timestamp
   focusDuration: number; // min
   breakDurationShort: number; // min
@@ -17,7 +17,7 @@ const initialState: ITimer = {
   type: "FOCUS",
   state: "IDLE",
   startPointAt: null,
-  startRunningAt: null,
+  runningAt: null,
   stoppedAt: null,
   focusDuration: 25,
   breakDurationShort: 5,
@@ -32,13 +32,13 @@ const timerSlice = createSlice({
     startTimer: (state) => {
       state.state = "RUN";
       state.startPointAt = Date.now();
-      state.startRunningAt = Date.now();
+      state.runningAt = Date.now();
       state.stoppedAt = null;
     },
     stopTimer: (state) => {
       state.state = "PAUSE";
       state.stoppedAt = Date.now();
-      state.startRunningAt = null;
+      state.runningAt = null;
     },
     resumeTimer: (state) => {
       state.state = "RUN";
@@ -50,7 +50,7 @@ const timerSlice = createSlice({
       // new start point, that represent time from now, without already passed timer time
       // subtract difference between start and stop from now
       state.startPointAt = Date.now() - (state.stoppedAt - state.startPointAt);
-      state.startRunningAt = Date.now();
+      state.runningAt = Date.now();
       state.stoppedAt = null;
     },
     addTimeToTimer: (state) => {
@@ -62,7 +62,7 @@ const timerSlice = createSlice({
       state.state = "IDLE";
       state.startPointAt = null;
       state.stoppedAt = null;
-      state.startRunningAt = null;
+      state.runningAt = null;
       state.type = state.type === "FOCUS" ? "BREAK" : "FOCUS";
     },
   },
