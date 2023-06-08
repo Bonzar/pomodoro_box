@@ -1,11 +1,6 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "./store.ts";
 
-/* todo
--  change milliseconds to seconds with round
--  add separated types for timer Focus time and timer Break time
-*/
-
 export type IStatNoteDuration = {
   type: "TIMER_FOCUS" | "TIMER_BREAK" | "PAUSE";
   milliseconds: number;
