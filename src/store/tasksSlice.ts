@@ -1,12 +1,12 @@
 import type { RootState } from "./store.ts";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createEntityAdapter, createSlice, nanoid } from "@reduxjs/toolkit";
-import type { PrepareResult } from "./types.ts";
 
 interface ITask {
   id: string | number;
   title: string;
   predictedPomo: number;
+  completedPomo: number;
 }
 
 const tasksAdapter = createEntityAdapter<ITask>();
@@ -19,10 +19,11 @@ const tasksSlice = createSlice({
   reducers: {
     addTask: {
       reducer: tasksAdapter.addOne,
-      prepare: (title: string): PrepareResult<ITask> => ({
-        payload: { id: nanoid(), title, predictedPomo: 1 },
+      prepare: (title: string) => ({
+        payload: { id: nanoid(), title, predictedPomo: 1, completedPomo: 0 },
       }),
     },
+    updateTask: tasksAdapter.upsertOne,
     editTask: (
       state,
       action: PayloadAction<{ id: string | number; title: string }>
@@ -30,14 +31,20 @@ const tasksSlice = createSlice({
       const task = state.entities[action.payload.id];
 
       if (task) {
-        tasksAdapter.upsertOne(state, {
-          ...action.payload,
-          predictedPomo: task.predictedPomo,
-        });
+        tasksAdapter.upsertOne(state, { ...task, ...action.payload });
       }
     },
     deleteTask: tasksAdapter.removeOne,
-    incrementPredictedPomo: (
+    incrementTaskCompletedPomo: (
+      state,
+      action: PayloadAction<{ id: string | number }>
+    ) => {
+      const task = state.entities[action.payload.id];
+      if (task) {
+        task.completedPomo++;
+      }
+    },
+    incrementTaskPredictedPomo: (
       state,
       action: PayloadAction<{ id: string | number }>
     ) => {
@@ -46,7 +53,7 @@ const tasksSlice = createSlice({
         task.predictedPomo++;
       }
     },
-    decrementPredictedPomo: (
+    decrementTaskPredictedPomo: (
       state,
       action: PayloadAction<{ id: string | number }>
     ) => {
@@ -62,8 +69,9 @@ export const {
   addTask,
   editTask,
   deleteTask,
-  incrementPredictedPomo,
-  decrementPredictedPomo,
+  incrementTaskPredictedPomo,
+  decrementTaskPredictedPomo,
+  incrementTaskCompletedPomo,
 } = tasksSlice.actions;
 
 export const {
@@ -71,5 +79,12 @@ export const {
   selectById: selectTaskById,
   selectIds: selectTasksIds,
 } = tasksAdapter.getSelectors((state: RootState) => state.tasks);
+
+export const selectFirstTask = (state: RootState) => {
+  const lastTaskId = selectTasksIds(state).at(-1);
+  if (!lastTaskId) return;
+
+  return selectTaskById(state, lastTaskId);
+};
 
 export const tasksSliceReducer = tasksSlice.reducer;

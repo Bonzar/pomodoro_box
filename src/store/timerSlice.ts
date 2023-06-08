@@ -1,25 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "./store.ts";
 
-interface ITimerState {
-  type: "FOCUS" | "PAUSE";
-  state: "IDLE" | "STARTED" | "STOPPED";
+export interface ITimer {
+  type: "FOCUS" | "BREAK";
+  state: "IDLE" | "RUN" | "PAUSE";
   startedAt: number | null; // timestamp
   stoppedAt: number | null; // timestamp
+  resumedAt: number | null; // timestamp
   focusDuration: number; // min
-  pauseDurationShort: number; // min
-  pauseDurationLong: number; // min
+  breakDurationShort: number; // min
+  breakDurationLong: number; // min
   addTimeDuration: number; // min
 }
 
-const initialState: ITimerState = {
+const initialState: ITimer = {
   type: "FOCUS",
   state: "IDLE",
   startedAt: null,
   stoppedAt: null,
+  resumedAt: null,
   focusDuration: 1,
-  pauseDurationShort: 5,
-  pauseDurationLong: 20,
+  breakDurationShort: 5,
+  breakDurationLong: 20,
   addTimeDuration: 1,
 };
 
@@ -28,16 +30,18 @@ const timerSlice = createSlice({
   initialState,
   reducers: {
     startTimer: (state) => {
-      state.state = "STARTED";
+      state.state = "RUN";
       state.startedAt = Date.now();
       state.stoppedAt = null;
+      state.resumedAt = null;
     },
     stopTimer: (state) => {
-      state.state = "STOPPED";
+      state.state = "PAUSE";
       state.stoppedAt = Date.now();
+      state.resumedAt = null;
     },
     resumeTimer: (state) => {
-      state.state = "STARTED";
+      state.state = "RUN";
 
       if (!state.startedAt || !state.stoppedAt) {
         return;
@@ -46,7 +50,10 @@ const timerSlice = createSlice({
       // new start point, that represent time from now, without already passed timer time
       // subtract difference between start and stop from now
       state.startedAt = Date.now() - (state.stoppedAt - state.startedAt);
+      state.resumedAt = Date.now();
       state.stoppedAt = null;
+      // Disabled for test saving stats
+      // state.stoppedAt = null;
     },
     addTimeToTimer: (state) => {
       if (!state.startedAt) return;
@@ -57,7 +64,8 @@ const timerSlice = createSlice({
       state.state = "IDLE";
       state.startedAt = null;
       state.stoppedAt = null;
-      state.type = state.type === "FOCUS" ? "PAUSE" : "FOCUS";
+      state.resumedAt = null;
+      state.type = state.type === "FOCUS" ? "BREAK" : "FOCUS";
     },
   },
 });

@@ -7,6 +7,22 @@
   padding: var(--indent-19) var(--indent-40);
 }
 
+.headerFocus {
+  background-color: var(--red);
+}
+
+.headerBreak {
+  background-color: var(--green);
+}
+
+.header__taskName {
+  display: none;
+}
+
+.header__pomoCounter {
+  flex-shrink: 0;
+}
+
 .timer {
   background-color: var(--gray-F4);
   padding: var(--indent-32) var(--indent-25);
@@ -16,32 +32,35 @@
   column-gap: var(--indent-25);
   grid-template-columns: auto auto;
   grid-template-areas:
-    "time time"
+    "time addButton"
     "describe describe"
-    "actions addButton";
+    "actions actions";
 }
 
 .timerTime {
+  justify-self: flex-end;
   grid-area: time;
   font-size: 6rem;
   line-height: 1;
 }
 
-.actionsBlock {
-  justify-self: flex-end;
-  grid-area: actions;
-}
-
 .actions {
+  grid-area: actions;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   column-gap: var(--indent-25);
   row-gap: var(--indent-15);
+  width: 100%;
+}
+
+.actionsBtn {
+  flex-grow: 1;
 }
 
 .timerTaskDescribe {
   grid-area: describe;
+  text-align: center;
 }
 
 .addButton {
@@ -68,6 +87,10 @@
 }
 
 @media (--tablet-viewport) {
+  .header__taskName {
+    display: initial;
+  }
+
   .timer {
     padding: var(--indent-32) var(--indent-25);
   }
@@ -83,8 +106,12 @@
     padding: var(--indent-80) var(--indent-40);
     grid-template-areas:
       ". time addButton"
-      ". describe ."
-      ". actions .";
+      "describe describe describe"
+      "actions actions actions";
+  }
+
+  .actionsBtn {
+    flex-grow: 0;
   }
 
   .actions {

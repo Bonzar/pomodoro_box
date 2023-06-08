@@ -10,8 +10,8 @@ import { useState } from "react";
 import { DeleteTaskModal } from "./DeleteTaskModal";
 import { useAppDispatch } from "../../../../../../store/hooks.ts";
 import {
-  decrementPredictedPomo,
-  incrementPredictedPomo,
+  decrementTaskPredictedPomo,
+  incrementTaskPredictedPomo,
 } from "../../../../../../store/tasksSlice.ts";
 
 interface IActionsProps {
@@ -50,10 +50,10 @@ export const Actions = ({ id, onEditClick }: IActionsProps) => {
   const handleDeleteTask = () => setIsDeleteTaskModalOpen(true);
 
   const handleIncrementPredictPomo = () =>
-    dispatch(incrementPredictedPomo({ id }));
+    dispatch(incrementTaskPredictedPomo({ id }));
 
   const handleDecrementPredictPomo = () =>
-    dispatch(decrementPredictedPomo({ id }));
+    dispatch(decrementTaskPredictedPomo({ id }));
 
   const actions = [
     {
