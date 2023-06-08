@@ -7,9 +7,12 @@ interface ITask {
   title: string;
   predictedPomo: number;
   completedPomo: number;
+  createdAt: number;
 }
 
-const tasksAdapter = createEntityAdapter<ITask>();
+const tasksAdapter = createEntityAdapter<ITask>({
+  sortComparer: (a, b) => a.createdAt - b.createdAt,
+});
 
 const initialState = tasksAdapter.getInitialState();
 
@@ -20,7 +23,13 @@ const tasksSlice = createSlice({
     addTask: {
       reducer: tasksAdapter.addOne,
       prepare: (title: string) => ({
-        payload: { id: nanoid(), title, predictedPomo: 1, completedPomo: 0 },
+        payload: {
+          id: nanoid(),
+          title,
+          predictedPomo: 1,
+          completedPomo: 0,
+          createdAt: Date.now(),
+        },
       }),
     },
     updateTask: tasksAdapter.upsertOne,
@@ -81,7 +90,7 @@ export const {
 } = tasksAdapter.getSelectors((state: RootState) => state.tasks);
 
 export const selectFirstTask = (state: RootState) => {
-  const lastTaskId = selectTasksIds(state).at(-1);
+  const lastTaskId = selectTasksIds(state).at(0);
   if (!lastTaskId) return;
 
   return selectTaskById(state, lastTaskId);

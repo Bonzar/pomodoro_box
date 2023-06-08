@@ -16,6 +16,7 @@ import { exhaustiveCheck } from "../../../helpers/js/exhaustiveCheck.ts";
 import { getTimeWithZero } from "../../../helpers/js/getTimeWithZero.ts";
 import { useCallback, useEffect, useState } from "react";
 import { addStatNote } from "../../../store/statsSlice.ts";
+import { MILLISECONDS_IN_MINUTE } from "../../../helpers/constants.ts";
 
 export const useTimer = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +37,8 @@ export const useTimer = () => {
   const isTypeFocusAndTaskExist = isTypeFocus && currentTask?.id;
 
   const timerDurationMilliseconds =
-    1000 * 60 * (isTypeFocus ? timer.focusDuration : timer.breakDurationShort);
+    MILLISECONDS_IN_MINUTE *
+    (isTypeFocus ? timer.focusDuration : timer.breakDurationShort);
 
   const getCurrentTime = useCallback(() => {
     let time;

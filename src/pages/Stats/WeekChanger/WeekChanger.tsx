@@ -1,49 +1,76 @@
 import styles from "./weekChanger.module.css";
 import { TextEl } from "../../../components/ui/TextEl";
 import { Icon } from "../../../components/ui/Icon/Icon.tsx";
-import type { MouseEvent, PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { useRef, useState } from "react";
 import { getClassName } from "../../../helpers/react/getClassName.ts";
 import { Divider } from "../../../components/ui/Divider";
 import { stopPropagation } from "../../../helpers/react/stopPropagation.ts";
 import { useOutsideClick } from "../../../hooks/useOutsideClick.ts";
+import type { ListItem } from "../../../components/ui/List";
 import { List } from "../../../components/ui/List";
 import { mergeLeft, pipe } from "ramda";
 
+export type WeekShift = 0 | -1 | -2;
+
 interface IWeekChangerItemProps {
-  onClick?: (event: MouseEvent) => void;
+  weekShift: WeekShift;
+  onWeekItemClick?: (weekShift: WeekShift) => void;
 }
 
 const WeekChangerItem = ({
   children,
-  onClick,
+  onWeekItemClick,
+  weekShift,
 }: PropsWithChildren<IWeekChangerItemProps>) => (
-  <button onClick={onClick} className={styles.weekChangerItem}>
+  <button
+    onClick={() => onWeekItemClick?.(weekShift)}
+    className={styles.weekChangerItem}
+  >
     {children}
   </button>
 );
 
-export const WeekChanger = () => {
+interface IWeekChangerProps {
+  currentWeekShift: WeekShift;
+  onWeekShiftChange: (weekShift: WeekShift) => void;
+}
+
+export const WeekChanger = ({
+  currentWeekShift,
+  onWeekShiftChange,
+}: IWeekChangerProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const changerRef = useRef<HTMLDivElement>(null);
 
   useOutsideClick(changerRef, () => setIsOpen(false));
 
-  const handleChangeWeek = (weekIndent: number) => {
-    console.log(weekIndent);
+  const handleChangeWeek = (weekShift: WeekShift) => {
+    onWeekShiftChange(weekShift);
   };
 
-  const weeksList = [
-    { children: <TextEl>Эта неделя</TextEl>, weekIndent: 0 },
-    { children: <TextEl>Прошлая неделя</TextEl>, weekIndent: 1 },
-    { children: <TextEl>Две недели назад</TextEl>, weekIndent: 2 },
+  const weeksList: ListItem<typeof WeekChangerItem>[] = [
+    { children: <TextEl>Эта неделя</TextEl>, weekShift: 0 as const },
+    { children: <TextEl>Прошлая неделя</TextEl>, weekShift: -1 as const },
+    { children: <TextEl>Две недели назад</TextEl>, weekShift: -2 as const },
   ].map(
-    pipe(mergeLeft({ as: WeekChangerItem }), ({ weekIndent, ...item }) => ({
+    pipe(mergeLeft({ as: WeekChangerItem }), (item) => ({
       ...item,
-      key: weekIndent,
-      onClick: () => handleChangeWeek(weekIndent),
+      key: item.weekShift,
+      onWeekItemClick: handleChangeWeek,
     }))
   );
+
+  const selectedWeek = weeksList.find(
+    (item) => item.weekShift === currentWeekShift
+  );
+
+  const otherWeeksToSelect = weeksList.filter(
+    (item) => item.weekShift !== currentWeekShift
+  );
+
+  if (!selectedWeek) return null;
 
   return (
     <div
@@ -54,8 +81,8 @@ export const WeekChanger = () => {
         isOpen && styles.weekChangerActive,
       ])}
     >
-      <WeekChangerItem>
-        {weeksList.at(0)?.children}
+      <WeekChangerItem weekShift={selectedWeek.weekShift}>
+        {selectedWeek.children}
         <Icon
           className={styles.weekChangerIcon}
           iconName="arrowDown"
@@ -66,8 +93,8 @@ export const WeekChanger = () => {
         <div className={getClassName([styles.weekChangerItems])}>
           <Divider dividerColor="gray-DE" />
           <List
-            divider={() => <Divider dividerColor="gray-DE" />}
-            list={weeksList.slice(1)}
+            divider={<Divider dividerColor="gray-DE" />}
+            list={otherWeeksToSelect}
           />
         </div>
       )}

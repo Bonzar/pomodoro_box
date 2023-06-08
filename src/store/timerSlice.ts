@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "./store.ts";
+import { MILLISECONDS_IN_MINUTE } from "../helpers/constants.ts";
 
 interface ITimer {
   type: "FOCUS" | "BREAK";
@@ -56,7 +57,7 @@ const timerSlice = createSlice({
     addTimeToTimer: (state) => {
       if (!state.startPointAt) return;
 
-      state.startPointAt += state.addTimeDuration * 60 * 1000;
+      state.startPointAt += state.addTimeDuration * MILLISECONDS_IN_MINUTE;
     },
     endTimer: (state) => {
       state.state = "IDLE";

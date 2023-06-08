@@ -66,18 +66,23 @@
 
 .column {
   align-self: flex-end;
-  height: 70%;
   width: 100%;
+  height: 0.5rem;
   background-color: var(--red-light);
   z-index: 1;
+  cursor: pointer;
 }
 
-.column.active {
+.columnEmpty {
+  background-color: var(--gray-C4);
+}
+
+.columnSelected {
   background-color: var(--red);
 }
 
 @media (pointer: fine) {
-  .column:not(.active):hover {
+  .column:not(.columnSelected):hover {
     background-color: var(--red-semi-light);
   }
 }

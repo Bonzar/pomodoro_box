@@ -2,12 +2,13 @@
   position: fixed;
   display: flex;
   flex-flow: column nowrap;
-  align-items: center;
   top: 50%;
-  transform: translate(-50%, -50%);
   left: 50%;
-  background-color: var(--white);
+  transform: translate(-50%, -50%);
   padding: var(--indent-25) var(--indent-80);
+  background-color: var(--white);
+  align-items: center;
+  text-align: center;
 }
 
 .modalWrapper {

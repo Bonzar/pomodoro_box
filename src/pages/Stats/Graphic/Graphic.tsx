@@ -5,8 +5,20 @@ import { List } from "../../../components/ui/List";
 import { mergeLeft, objOf, pipe } from "ramda";
 import { assocKeyAsChildren } from "../../../helpers/react/assocKeyAsChildren.ts";
 import { Divider } from "../../../components/ui/Divider";
+import { useAppSelector } from "../../../store/hooks.ts";
+import { selectWeekStats } from "../../../store/statsSlice.ts";
+import type { WeekShift } from "../WeekChanger";
+import { formatTime } from "../../../helpers/js/formatTime.ts";
+import { useMemo } from "react";
+import { joinStats } from "../joinStats.ts";
+import { selectTimer } from "../../../store/timerSlice.ts";
+import type { WeekDayIndex } from "../../../helpers/constants.ts";
+import {
+  MILLISECONDS_IN_MINUTE,
+  WEEKDAY_SHORT_DICT,
+} from "../../../helpers/constants.ts";
 
-const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+const weekDays = Object.values(WEEKDAY_SHORT_DICT)
   .map(
     pipe(
       objOf("children"),
@@ -19,14 +31,6 @@ const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     style: { gridArea: `weekday-${index + 1}` },
     className: styles.weekday,
   }));
-
-const graphicColumns = weekDays.map((_, index) => (
-  <div
-    key={index}
-    className={getClassName([styles.column])}
-    style={{ gridArea: `column-${index + 1}` }}
-  />
-));
 
 const getLegendNamesElements = (legendNames: string[]) => {
   const legendElements = legendNames
@@ -52,13 +56,104 @@ const getLegendNamesElements = (legendNames: string[]) => {
   return [...legendElements, ...legendGridRows];
 };
 
-export const Graphic = () => {
-  const legendNames = getLegendNamesElements([
-    "1 ч 40 мин",
-    "1 ч 15 мин",
-    "50 мин",
-    "25 мин",
-  ]);
+interface IGraphicProps {
+  selectedWeekDay: WeekDayIndex;
+  onSelectWeekDay: (weekDay: WeekDayIndex) => void;
+  weekShift: WeekShift;
+}
+
+const GRAPHIC_LEGEND_SEGMENTS_COUNT = 5;
+
+export const Graphic = ({
+  selectedWeekDay,
+  onSelectWeekDay,
+  weekShift,
+}: IGraphicProps) => {
+  const weekStats = useAppSelector((state) =>
+    selectWeekStats(state, weekShift)
+  );
+  const { focusDuration } = useAppSelector(selectTimer);
+
+  const maxStatsValueMilliseconds = Math.max(
+    ...weekStats.map((dayStats) => {
+      const { focusTime, pauseTime } = joinStats(dayStats);
+      return focusTime + pauseTime;
+    })
+  );
+
+  const getOneGraphicSegmentMinutesMultipleOfFocusDuration = (
+    maxStatsValueMilliseconds: number
+  ) => {
+    const segmentMinutes = Math.round(
+      Math.ceil(
+        maxStatsValueMilliseconds /
+          MILLISECONDS_IN_MINUTE /
+          focusDuration /
+          GRAPHIC_LEGEND_SEGMENTS_COUNT
+      ) * focusDuration
+    );
+
+    if (segmentMinutes === 0) {
+      return focusDuration;
+    }
+
+    return segmentMinutes;
+  };
+
+  const oneGraphicSegmentMinutes =
+    getOneGraphicSegmentMinutesMultipleOfFocusDuration(
+      maxStatsValueMilliseconds
+    );
+
+  const legendNames = useMemo(() => {
+    const legendNames = [];
+    for (
+      let legendNameIndex = 1;
+      legendNameIndex < GRAPHIC_LEGEND_SEGMENTS_COUNT;
+      legendNameIndex++
+    ) {
+      legendNames.push(
+        formatTime(oneGraphicSegmentMinutes * legendNameIndex, {
+          trimTimeNames: true,
+        }).replace("час", "ч")
+      );
+    }
+
+    return getLegendNamesElements(legendNames.reverse());
+  }, [oneGraphicSegmentMinutes]);
+
+  const graphicColumns = weekDays.map((_, index) => {
+    const { focusTime, pauseTime } = joinStats(weekStats[index]);
+
+    const dayStatsTimerDuration = focusTime + pauseTime;
+
+    const columnHeightPercentage = Math.round(
+      (dayStatsTimerDuration /
+        (oneGraphicSegmentMinutes *
+          GRAPHIC_LEGEND_SEGMENTS_COUNT *
+          MILLISECONDS_IN_MINUTE)) *
+        100
+    );
+
+    const columnHeightProp =
+      columnHeightPercentage > 0 ? columnHeightPercentage + "%" : undefined;
+
+    return (
+      <div
+        key={index}
+        className={getClassName([
+          styles.column,
+          index === selectedWeekDay && styles.columnSelected,
+          dayStatsTimerDuration === 0 && styles.columnEmpty,
+        ])}
+        style={{
+          gridArea: `column-${index + 1}`,
+          height: columnHeightProp,
+        }}
+        onClick={() => onSelectWeekDay(index as WeekDayIndex)}
+      />
+    );
+  });
 
   return (
     <div className={styles.graphic}>

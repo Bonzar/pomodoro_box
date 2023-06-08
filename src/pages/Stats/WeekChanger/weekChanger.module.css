@@ -2,6 +2,7 @@
   position: relative;
   max-width: 37rem;
   width: 100%;
+  z-index: 10;
 }
 
 .weekChangerItems {

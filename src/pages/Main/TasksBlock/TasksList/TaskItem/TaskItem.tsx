@@ -3,7 +3,7 @@ import { TextEl } from "../../../../../components/ui/TextEl";
 import { Actions } from "./Actions";
 import { useAppDispatch, useAppSelector } from "../../../../../store/hooks.ts";
 import { editTask, selectTaskById } from "../../../../../store/tasksSlice.ts";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useOutsideClick } from "../../../../../hooks/useOutsideClick.ts";
 import { preventDefault } from "../../../../../helpers/react/preventDefault.ts";
 
@@ -53,7 +53,7 @@ const TaskEditName = ({ id, initialTitle, onSave }: ITaskEditNameProps) => {
   );
 };
 
-export const TaskItem = ({ id }: ITaskItemProps) => {
+export const TaskItem = memo(function TaskItemMemo({ id }: ITaskItemProps) {
   const task = useAppSelector((state) => selectTaskById(state, id));
   const [isEditing, setIsEditing] = useState(false);
 
@@ -83,4 +83,4 @@ export const TaskItem = ({ id }: ITaskItemProps) => {
       </div>
     </div>
   );
-};
+});
