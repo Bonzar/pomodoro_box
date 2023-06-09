@@ -1,7 +1,13 @@
 import type { RootState } from "./store.ts";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { createEntityAdapter, createSlice, nanoid } from "@reduxjs/toolkit";
+import {
+  createEntityAdapter,
+  createSelector,
+  createSlice,
+  nanoid,
+} from "@reduxjs/toolkit";
 import { toast } from "sonner";
+import { deleteTaskThank } from "./deleteTaskThank.ts";
 
 interface ITask {
   id: string | number;
@@ -9,6 +15,7 @@ interface ITask {
   predictedPomo: number;
   completedPomo: number;
   createdAt: number;
+  isDeleted: boolean;
 }
 
 const tasksAdapter = createEntityAdapter<ITask>({
@@ -29,6 +36,7 @@ const tasksSlice = createSlice({
           title,
           predictedPomo: 1,
           completedPomo: 0,
+          isDeleted: false,
           createdAt: Date.now(),
         },
       }),
@@ -44,7 +52,18 @@ const tasksSlice = createSlice({
         tasksAdapter.upsertOne(state, { ...task, ...action.payload });
       }
     },
-    deleteTask: tasksAdapter.removeOne,
+    deleteTask: (state, action: PayloadAction<{ id: string | number }>) => {
+      const taskId = action.payload.id;
+
+      const task = state.entities[taskId];
+
+      if (!task) {
+        toast.error(`Не найдена задача с id - "${taskId}" для удаления`);
+        return;
+      }
+
+      task.isDeleted = true;
+    },
     incrementTaskCompletedPomo: (
       state,
       action: PayloadAction<{ id: string | number }>
@@ -79,6 +98,11 @@ const tasksSlice = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(deleteTaskThank.fulfilled, (state, action) => {
+      tasksAdapter.removeOne(state, action.meta.arg.id);
+    });
+  },
 });
 
 export const {
@@ -90,17 +114,19 @@ export const {
   incrementTaskCompletedPomo,
 } = tasksSlice.actions;
 
-export const {
-  selectAll: selectAllTasks,
-  selectById: selectTaskById,
-  selectIds: selectTasksIds,
-} = tasksAdapter.getSelectors((state: RootState) => state.tasks);
+export const { selectAll: selectAllTasks, selectById: selectTaskById } =
+  tasksAdapter.getSelectors((state: RootState) => state.tasks);
+
+export const selectAllNotDeletedTasks = createSelector(
+  [selectAllTasks],
+  (allTasks) => allTasks.filter((task) => task.isDeleted === false)
+);
 
 export const selectFirstTask = (state: RootState) => {
-  const lastTaskId = selectTasksIds(state).at(0);
+  const lastTaskId = selectAllNotDeletedTasks(state).at(0);
   if (!lastTaskId) return;
 
-  return selectTaskById(state, lastTaskId);
+  return selectTaskById(state, lastTaskId.id);
 };
 
 export const tasksSliceReducer = tasksSlice.reducer;

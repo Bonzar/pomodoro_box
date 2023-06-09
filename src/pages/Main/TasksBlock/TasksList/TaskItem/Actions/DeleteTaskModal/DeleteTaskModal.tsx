@@ -5,7 +5,7 @@ import { TextEl } from "../../../../../../../components/ui/TextEl";
 import { Indent } from "../../../../../../../components/ui/Indent";
 import { Button } from "../../../../../../../components/ui/Button";
 import { useAppDispatch } from "../../../../../../../store/hooks.ts";
-import { deleteTask } from "../../../../../../../store/tasksSlice.ts";
+import { deleteTaskThank } from "../../../../../../../store/deleteTaskThank.ts";
 
 interface IDeleteTaskModalProps {
   id: string | number;
@@ -15,7 +15,7 @@ interface IDeleteTaskModalProps {
 export const DeleteTaskModal = ({ id, onClose }: IDeleteTaskModalProps) => {
   const dispatch = useAppDispatch();
 
-  const handleConfirmDeleting = () => dispatch(deleteTask(id));
+  const handleConfirmDeleting = () => dispatch(deleteTaskThank({ id }));
 
   return (
     <Modal onOutsideClick={onClose}>

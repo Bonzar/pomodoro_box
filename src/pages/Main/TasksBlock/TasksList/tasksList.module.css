@@ -1,0 +1,14 @@
+.taskEnter {
+  opacity: 0;
+}
+.taskEnterActive {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.taskExit {
+  opacity: 1;
+}
+.taskExitActive {
+  opacity: 0;
+  transition: opacity 500ms ease-out;
+}

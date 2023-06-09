@@ -8,7 +8,6 @@ import {
   stopTimer,
 } from "../../../store/timerSlice.ts";
 import {
-  deleteTask,
   incrementTaskCompletedPomo,
   selectFirstTask,
 } from "../../../store/tasksSlice.ts";
@@ -22,6 +21,7 @@ import {
 import { getTimeWithZero } from "../../../helpers/js/getTimeWithZero.ts";
 import { joinStats } from "../../Stats/joinStats.ts";
 import { toast } from "sonner";
+import { deleteTaskThank } from "../../../store/deleteTaskThank.ts";
 
 export const useTimer = () => {
   const dispatch = useAppDispatch();
@@ -169,7 +169,7 @@ export const useTimer = () => {
         dispatch(endTimer());
 
         if (isTypeFocusAndTaskExist) {
-          dispatch(deleteTask(currentTask.id));
+          dispatch(deleteTaskThank({ id: currentTask.id }));
         }
 
         if (isTypeFocus) {
