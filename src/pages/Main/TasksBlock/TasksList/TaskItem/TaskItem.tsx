@@ -4,7 +4,6 @@ import { Actions } from "./Actions";
 import { useAppDispatch, useAppSelector } from "../../../../../store/hooks.ts";
 import { editTask, selectTaskById } from "../../../../../store/tasksSlice.ts";
 import { memo, useEffect, useRef, useState } from "react";
-import { useOutsideClick } from "../../../../../hooks/useOutsideClick.ts";
 import { preventDefault } from "../../../../../helpers/react/preventDefault.ts";
 import { toast } from "sonner";
 
@@ -39,10 +38,12 @@ const TaskEditName = ({ id, initialTitle, onSave }: ITaskEditNameProps) => {
     dispatch(editTask({ id, title: newTitle }));
   };
 
-  useOutsideClick(inputRef, saveTask);
-
   return (
-    <form onSubmit={preventDefault(saveTask)} className={styles.nameForm}>
+    <form
+      onSubmit={preventDefault(saveTask)}
+      onBlur={saveTask}
+      className={styles.nameForm}
+    >
       <input
         className={styles.nameField}
         ref={inputRef}
