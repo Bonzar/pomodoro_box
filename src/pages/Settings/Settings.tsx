@@ -24,9 +24,9 @@ const SettingsItem = ({ name, value, settingsProp }: ISettingsItemProps) => {
 
   return (
     <div className={styles.parameter}>
-      <p className={styles.parameterName}>
+      <span className={styles.parameterName}>
         <Heading as={"p"}>{name}</Heading>
-      </p>
+      </span>
 
       <ButtonCircle
         btnType="minus"
