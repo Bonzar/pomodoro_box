@@ -7,6 +7,14 @@ import { TextEl } from "../../components/ui/TextEl";
 import { ButtonCircle } from "../../components/ui/ButtonCircle";
 import { Heading } from "../../components/ui/Header";
 import { Divider } from "../../components/ui/Divider";
+import type { ListItem } from "../../components/ui/List";
+import { List } from "../../components/ui/List";
+import { useMemo } from "react";
+import { mergeLeft, pipe } from "ramda";
+import {
+  SETTINGS_CHANGE_STEP,
+  SETTINGS_MIN_VALUE,
+} from "../../helpers/constants.ts";
 
 interface ISettingsItemProps {
   name: string;
@@ -16,11 +24,16 @@ interface ISettingsItemProps {
   onDecrease?: VoidFunction;
 }
 
-const SETTINGS_CHANGE_STEP = 5;
-
 const SettingsItem = ({ name, value, settingsProp }: ISettingsItemProps) => {
   const timer = useAppSelector(selectTimer);
   const dispatch = useAppDispatch();
+
+  const decreaseNewValue = timer[settingsProp] - SETTINGS_CHANGE_STEP;
+
+  const increaseNewValue =
+    timer[settingsProp] === SETTINGS_MIN_VALUE
+      ? SETTINGS_CHANGE_STEP
+      : timer[settingsProp] + SETTINGS_CHANGE_STEP;
 
   return (
     <div className={styles.parameter}>
@@ -31,11 +44,7 @@ const SettingsItem = ({ name, value, settingsProp }: ISettingsItemProps) => {
       <ButtonCircle
         btnType="minus"
         onClick={() =>
-          dispatch(
-            updateSettings({
-              [settingsProp]: timer[settingsProp] - SETTINGS_CHANGE_STEP,
-            })
-          )
+          dispatch(updateSettings({ [settingsProp]: decreaseNewValue }))
         }
       />
 
@@ -44,14 +53,7 @@ const SettingsItem = ({ name, value, settingsProp }: ISettingsItemProps) => {
       <ButtonCircle
         btnType="plus"
         onClick={() =>
-          dispatch(
-            updateSettings({
-              [settingsProp]:
-                timer[settingsProp] === 1
-                  ? SETTINGS_CHANGE_STEP
-                  : timer[settingsProp] + SETTINGS_CHANGE_STEP,
-            })
-          )
+          dispatch(updateSettings({ [settingsProp]: increaseNewValue }))
         }
       />
     </div>
@@ -59,57 +61,58 @@ const SettingsItem = ({ name, value, settingsProp }: ISettingsItemProps) => {
 };
 
 export const Settings = () => {
-  const timer = useAppSelector(selectTimer);
+  const {
+    focusDuration,
+    breakDurationShort,
+    breakDurationLong,
+    addTimeDuration,
+  } = useAppSelector(selectTimer);
+
+  const settingsList: ListItem<typeof SettingsItem>[] = useMemo(
+    () =>
+      [
+        {
+          name: "Сеанс",
+          value: `${focusDuration} минут`,
+          settingsProp: "focusDuration" as const,
+        },
+        {
+          name: "Короткий перерыв",
+          value: `${breakDurationShort} минут`,
+          settingsProp: "breakDurationShort" as const,
+        },
+        {
+          name: "Длинный перерыв",
+          value: `${breakDurationLong} минут`,
+          settingsProp: "breakDurationLong" as const,
+        },
+        {
+          name: "Кнопка добавления времени",
+          value: `${addTimeDuration} минут`,
+          settingsProp: "addTimeDuration" as const,
+        },
+      ].map(
+        pipe(mergeLeft({ as: SettingsItem }), (item) => ({
+          ...item,
+          key: item.name,
+        }))
+      ),
+    [addTimeDuration, breakDurationLong, breakDurationShort, focusDuration]
+  );
+
+  const divider = (
+    <>
+      <Indent size={19} />
+      <div className={styles.divider}>
+        <Divider dividerColor="gray-C4" />
+      </div>
+      <Indent size={15} />
+    </>
+  );
 
   return (
     <div className={styles.settings}>
-      <SettingsItem
-        name="Сеанс"
-        value={`${timer.focusDuration} минут`}
-        settingsProp="focusDuration"
-      />
-
-      <Indent size={19} />
-
-      <div className={styles.divider}>
-        <Divider dividerColor="gray-C4" />
-      </div>
-
-      <Indent size={19} />
-
-      <SettingsItem
-        name="Короткий перерыв"
-        value={`${timer.breakDurationShort} минут`}
-        settingsProp="breakDurationShort"
-      />
-
-      <Indent size={19} />
-
-      <div className={styles.divider}>
-        <Divider dividerColor="gray-C4" />
-      </div>
-
-      <Indent size={15} />
-
-      <SettingsItem
-        name="Длинный перерыв"
-        value={`${timer.breakDurationLong} минут`}
-        settingsProp="breakDurationLong"
-      />
-
-      <Indent size={19} />
-
-      <div className={styles.divider}>
-        <Divider dividerColor="gray-C4" />
-      </div>
-
-      <Indent size={15} />
-
-      <SettingsItem
-        name="Кнопка добавления времени"
-        value={`${timer.addTimeDuration} минут`}
-        settingsProp="addTimeDuration"
-      />
+      <List list={settingsList} divider={divider} />
     </div>
   );
 };

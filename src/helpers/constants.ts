@@ -29,3 +29,7 @@ export const WEEKDAY_SHORT_DICT = {
   5: "Сб",
   6: "Вс",
 } as const;
+
+export const SETTINGS_CHANGE_STEP = 5;
+
+export const SETTINGS_MIN_VALUE = 1;

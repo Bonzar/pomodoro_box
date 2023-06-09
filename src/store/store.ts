@@ -30,10 +30,10 @@ export const createStore = () => {
   });
 
   if (import.meta.hot) {
-    import.meta.hot.accept(["./reducer.ts"], ([mod]) => {
+    import.meta.hot.accept("./reducer.ts", (mod) => {
       if (!mod) return;
 
-      const nextReducer = combineReducers(mod.default as typeof reducer);
+      const nextReducer = combineReducers(mod.reducer as typeof reducer);
       store.replaceReducer(persistReducer(persistConfig, nextReducer));
     });
   }

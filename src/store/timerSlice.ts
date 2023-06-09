@@ -1,7 +1,10 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "./store.ts";
-import { MILLISECONDS_IN_MINUTE } from "../helpers/constants.ts";
+import {
+  MILLISECONDS_IN_MINUTE,
+  SETTINGS_MIN_VALUE,
+} from "../helpers/constants.ts";
 import { exhaustiveCheck } from "../helpers/js/exhaustiveCheck.ts";
 
 interface ITimerControlFields {
@@ -82,7 +85,7 @@ const timerSlice = createSlice({
           case "addTimeDuration":
           case "breakDurationLong":
           case "breakDurationShort":
-            state[settingProp] = newValue > 0 ? newValue : 1;
+            state[settingProp] = newValue > 0 ? newValue : SETTINGS_MIN_VALUE;
             break;
           default:
             exhaustiveCheck(settingProp);
