@@ -15,6 +15,11 @@ import {
   SETTINGS_CHANGE_STEP,
   SETTINGS_MIN_VALUE,
 } from "../../helpers/constants.ts";
+import { Button } from "../../components/ui/Button";
+import {
+  selectInstructionsVisibility,
+  toggleInstructionsVisibility,
+} from "../../store/tasksSlice.ts";
 
 interface ISettingsItemProps {
   name: string;
@@ -24,7 +29,11 @@ interface ISettingsItemProps {
   onDecrease?: VoidFunction;
 }
 
-const SettingsItem = ({ name, value, settingsProp }: ISettingsItemProps) => {
+const TimerSettingsItem = ({
+  name,
+  value,
+  settingsProp,
+}: ISettingsItemProps) => {
   const timer = useAppSelector(selectTimer);
   const dispatch = useAppDispatch();
 
@@ -63,6 +72,8 @@ const SettingsItem = ({ name, value, settingsProp }: ISettingsItemProps) => {
 };
 
 export const Settings = () => {
+  const dispatch = useAppDispatch();
+
   const {
     focusDuration,
     breakDurationShort,
@@ -70,7 +81,9 @@ export const Settings = () => {
     addTimeDuration,
   } = useAppSelector(selectTimer);
 
-  const settingsList: ListItem<typeof SettingsItem>[] = useMemo(
+  const instructionsVisible = useAppSelector(selectInstructionsVisibility);
+
+  const timerSettingsList: ListItem<typeof TimerSettingsItem>[] = useMemo(
     () =>
       [
         {
@@ -94,7 +107,7 @@ export const Settings = () => {
           settingsProp: "addTimeDuration" as const,
         },
       ].map(
-        pipe(mergeLeft({ as: SettingsItem }), (item) => ({
+        pipe(mergeLeft({ as: TimerSettingsItem }), (item) => ({
           ...item,
           key: item.name,
         }))
@@ -114,7 +127,15 @@ export const Settings = () => {
 
   return (
     <div className={styles.settings}>
-      <List list={settingsList} divider={divider} />
+      <List list={timerSettingsList} divider={divider} />
+      {divider}
+      <Button
+        className={styles.instructionsSetting}
+        btnColor="red"
+        onClick={() => dispatch(toggleInstructionsVisibility())}
+      >
+        {instructionsVisible ? "Скрыть инструкции" : "Показать инструкции"}
+      </Button>
     </div>
   );
 };

@@ -96,7 +96,6 @@ const timerSlice = createSlice({
               : "Перерыв завершен, пора поработать!",
             icon: logoIconSrc,
             badge: logoIconSrc,
-            renotify: true,
             vibrate: 1,
           });
         });

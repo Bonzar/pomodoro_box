@@ -20,6 +20,10 @@
   white-space: nowrap;
 }
 
+.instructionsSetting {
+  width: 100%;
+}
+
 @media (--tablet-viewport) {
   .settings {
     text-align: left;

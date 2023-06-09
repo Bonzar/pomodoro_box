@@ -22,7 +22,13 @@ const tasksAdapter = createEntityAdapter<ITask>({
   sortComparer: (a, b) => a.createdAt - b.createdAt,
 });
 
-const initialState = tasksAdapter.getInitialState();
+interface ITasksState {
+  showInstructions: boolean;
+}
+
+const initialState = tasksAdapter.getInitialState<ITasksState>({
+  showInstructions: true,
+});
 
 const tasksSlice = createSlice({
   name: "tasks",
@@ -97,6 +103,9 @@ const tasksSlice = createSlice({
         }
       }
     },
+    toggleInstructionsVisibility: (state) => {
+      state.showInstructions = !state.showInstructions;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(deleteTaskThank.fulfilled, (state, action) => {
@@ -112,6 +121,7 @@ export const {
   incrementTaskPredictedPomo,
   decrementTaskPredictedPomo,
   incrementTaskCompletedPomo,
+  toggleInstructionsVisibility,
 } = tasksSlice.actions;
 
 export const { selectAll: selectAllTasks, selectById: selectTaskById } =
@@ -128,5 +138,8 @@ export const selectFirstTask = (state: RootState) => {
 
   return selectTaskById(state, lastTaskId.id);
 };
+
+export const selectInstructionsVisibility = (state: RootState) =>
+  state.tasks.showInstructions;
 
 export const tasksSliceReducer = tasksSlice.reducer;
