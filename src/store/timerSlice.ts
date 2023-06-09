@@ -6,6 +6,7 @@ import {
   SETTINGS_MIN_VALUE,
 } from "../helpers/constants.ts";
 import { exhaustiveCheck } from "../helpers/js/exhaustiveCheck.ts";
+import { toast } from "sonner";
 
 interface ITimerControlFields {
   type: "FOCUS" | "BREAK";
@@ -54,7 +55,11 @@ const timerSlice = createSlice({
     resumeTimer: (state) => {
       state.state = "RUN";
 
-      if (!state.startPointAt || !state.stoppedAt) {
+      if (!state.startPointAt) {
+        toast.error("Отсутствует стартовая отметка времени таймера!");
+        return;
+      } else if (!state.stoppedAt) {
+        toast.error("Отсутствует время остановки таймера!");
         return;
       }
 
@@ -65,7 +70,10 @@ const timerSlice = createSlice({
       state.stoppedAt = null;
     },
     addTimeToTimer: (state) => {
-      if (!state.startPointAt) return;
+      if (!state.startPointAt) {
+        toast.error("Отсутствует стартовая отметка времени таймера!");
+        return;
+      }
 
       state.startPointAt += state.addTimeDuration * MILLISECONDS_IN_MINUTE;
     },

@@ -26,21 +26,15 @@ interface IActionItemProps {
   onClick?: VoidFunction;
 }
 
-const ActionItem = ({ iconName, name, onClick, id }: IActionItemProps) => {
-  return (
-    <button className={styles.dropdownItem} onClick={onClick}>
-      <Icon iconName={iconName} iconColor="green-light" />
-      <Indent size={10} inline />
-      <TextEl
-        textWeight={300}
-        textColor="gray-99"
-        className={styles.actionText}
-      >
-        {name} {id}
-      </TextEl>
-    </button>
-  );
-};
+const ActionItem = ({ iconName, name, onClick, id }: IActionItemProps) => (
+  <button className={styles.dropdownItem} onClick={onClick}>
+    <Icon iconName={iconName} iconColor="green-light" />
+    <Indent size={10} inline />
+    <TextEl textWeight={300} textColor="gray-99" className={styles.actionText}>
+      {name} {id}
+    </TextEl>
+  </button>
+);
 
 export const Actions = ({ id, onEditClick }: IActionsProps) => {
   const dispatch = useAppDispatch();

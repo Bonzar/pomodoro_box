@@ -6,6 +6,7 @@ import { editTask, selectTaskById } from "../../../../../store/tasksSlice.ts";
 import { memo, useEffect, useRef, useState } from "react";
 import { useOutsideClick } from "../../../../../hooks/useOutsideClick.ts";
 import { preventDefault } from "../../../../../helpers/react/preventDefault.ts";
+import { toast } from "sonner";
 
 interface ITaskItemProps {
   id: string | number;
@@ -58,7 +59,8 @@ export const TaskItem = memo(function TaskItemMemo({ id }: ITaskItemProps) {
   const [isEditing, setIsEditing] = useState(false);
 
   if (!task) {
-    return <TextEl textColor="red-dark">Задача с id - {id} не найдена</TextEl>;
+    toast.error(`Задача с id - ${id} не найдена`);
+    return null;
   }
 
   return (

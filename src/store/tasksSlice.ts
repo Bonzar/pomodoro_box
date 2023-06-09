@@ -1,6 +1,7 @@
 import type { RootState } from "./store.ts";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createEntityAdapter, createSlice, nanoid } from "@reduxjs/toolkit";
+import { toast } from "sonner";
 
 interface ITask {
   id: string | number;
@@ -67,8 +68,14 @@ const tasksSlice = createSlice({
       action: PayloadAction<{ id: string | number }>
     ) => {
       const task = state.entities[action.payload.id];
-      if (task && !(task.predictedPomo <= 1)) {
-        task.predictedPomo--;
+      if (task) {
+        if (task.predictedPomo > 1) {
+          task.predictedPomo--;
+        } else {
+          toast.error(
+            "Предварительное кол-во помидоров не может быть меньше 1"
+          );
+        }
       }
     },
   },

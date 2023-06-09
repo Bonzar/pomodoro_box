@@ -21,6 +21,7 @@ import {
 } from "../../../helpers/constants.ts";
 import { getTimeWithZero } from "../../../helpers/js/getTimeWithZero.ts";
 import { joinStats } from "../../Stats/joinStats.ts";
+import { toast } from "sonner";
 
 export const useTimer = () => {
   const dispatch = useAppDispatch();
@@ -61,9 +62,7 @@ export const useTimer = () => {
       }
       case "RUN": {
         if (!startPointAt) {
-          console.error(
-            "Таймер был начат, но время начало не было установлено!"
-          );
+          toast.error("Таймер был начат, но время начало не было установлено!");
           break;
         }
 
@@ -71,14 +70,11 @@ export const useTimer = () => {
         break;
       }
       case "PAUSE": {
-        if (!startPointAt) {
-          console.error(
-            "Таймер был остановлен, но время когда таймер был начат - отсутствует!"
-          );
-          break;
-        } else if (!stoppedAt) {
-          console.error(
-            "Таймер был остановлен, но время когда таймер был остановлен - отсутствует!"
+        if (!startPointAt || !stoppedAt) {
+          toast.error(
+            `Таймер был остановлен, но время когда таймер был ${
+              !startPointAt ? "начат" : "остановлен"
+            } - отсутствует!`
           );
           break;
         }
@@ -115,7 +111,10 @@ export const useTimer = () => {
       case "RUN": {
         dispatch(stopTimer());
 
-        if (!runningAt) break;
+        if (!runningAt) {
+          toast.error("Отсутствует время запуска таймера!");
+          break;
+        }
 
         const duration = Date.now() - runningAt;
 
@@ -125,7 +124,10 @@ export const useTimer = () => {
       case "PAUSE": {
         dispatch(resumeTimer());
 
-        if (!stoppedAt) break;
+        if (!stoppedAt) {
+          toast.error("Отсутствует время остановки таймера!");
+          break;
+        }
 
         const duration = Date.now() - stoppedAt;
 
@@ -152,7 +154,10 @@ export const useTimer = () => {
           dispatch(addStatNote({ type: "STOP" }));
         }
 
-        if (!runningAt) return;
+        if (!runningAt) {
+          toast.error("Отсутствует время запуска таймера!");
+          return;
+        }
 
         const duration = Date.now() - runningAt;
 
@@ -186,7 +191,10 @@ export const useTimer = () => {
       const interval = setInterval(() => {
         setTimeString(getCurrentTime());
 
-        if (!startPointAt) return;
+        if (!startPointAt) {
+          toast.error("Отсутствует стартовая отметка времени таймера!");
+          return;
+        }
 
         const timerExceedAt = startPointAt + timerDurationMilliseconds;
 
@@ -200,6 +208,8 @@ export const useTimer = () => {
             const duration = timerExceedAt - runningAt;
 
             dispatch(addStatNote({ type: timerType, duration }));
+          } else {
+            toast.error("Отсутствует время запуска таймера!");
           }
 
           dispatch(endTimer());

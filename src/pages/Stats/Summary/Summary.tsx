@@ -12,21 +12,19 @@ interface ISummaryProps {
   focusMinutes: number;
 }
 
-export const Summary = ({ weekday, focusMinutes }: ISummaryProps) => {
-  return (
-    <>
-      <Heading as="h2">{WEEKDAY_DICT[weekday]}</Heading>
-      <Indent size={15} />
-      <TextEl textLineHeight={28}>
-        Вы работали над задачами в течение{" "}
-        <TextEl
-          textWeight={700}
-          textLineHeight={28}
-          className={styles.weekDayFocusTime}
-        >
-          {formatTime(focusMinutes, { genitiveCase: true })}
-        </TextEl>
+export const Summary = ({ weekday, focusMinutes }: ISummaryProps) => (
+  <>
+    <Heading as="h2">{WEEKDAY_DICT[weekday]}</Heading>
+    <Indent size={15} />
+    <TextEl textLineHeight={28}>
+      Вы работали над задачами в течение{" "}
+      <TextEl
+        textWeight={700}
+        textLineHeight={28}
+        className={styles.weekDayFocusTime}
+      >
+        {formatTime(focusMinutes, { genitiveCase: true })}
       </TextEl>
-    </>
-  );
-};
+    </TextEl>
+  </>
+);

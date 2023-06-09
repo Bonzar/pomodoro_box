@@ -2686,6 +2686,7 @@ __metadata:
     react-router-dom: ^6.11.2
     redux: ^4.2.1
     redux-persist: ^6.0.0
+    sonner: ^0.4.0
     the-new-css-reset: ^1.8.4
     typescript: ^5.0.2
     vite: ^4.3.9
@@ -3082,6 +3083,16 @@ __metadata:
     ip: ^2.0.0
     smart-buffer: ^4.2.0
   checksum: 259d9e3e8e1c9809a7f5c32238c3d4d2a36b39b83851d0f573bfde5f21c4b1288417ce1af06af1452569cd1eb0841169afd4998f0e04ba04656f6b7f0e46d748
+  languageName: node
+  linkType: hard
+
+"sonner@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "sonner@npm:0.4.0"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  checksum: ae1a0594c03e0f195c50733c68e84823ca0994ebdd102bee9cf078a2d6802c53e21c58b9c0d783c01406438e1ec3f8a7e84dd2e588c3cfd45c1ff219fbf5d953
   languageName: node
   linkType: hard
 

@@ -3,11 +3,11 @@ import { exhaustiveCheck } from "../../helpers/js/exhaustiveCheck.ts";
 
 export const joinStats = (stats: IStatNote[]) => {
   const joinedStats = {
-    completedPomo: 0,
-    focusTime: 0,
-    breakTime: 0,
-    pauseTime: 0,
-    stopsCount: 0,
+    completedPomo: 0, // count
+    focusTime: 0, // milliseconds
+    breakTime: 0, // milliseconds
+    pauseTime: 0, // milliseconds
+    stopsCount: 0, // count
   };
 
   for (const statItem of stats) {

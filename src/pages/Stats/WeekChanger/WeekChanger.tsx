@@ -10,6 +10,7 @@ import { useOutsideClick } from "../../../hooks/useOutsideClick.ts";
 import type { ListItem } from "../../../components/ui/List";
 import { List } from "../../../components/ui/List";
 import { mergeLeft, pipe } from "ramda";
+import { toast } from "sonner";
 
 export type WeekShift = 0 | -1 | -2;
 
@@ -66,11 +67,14 @@ export const WeekChanger = ({
     (item) => item.weekShift === currentWeekShift
   );
 
+  if (!selectedWeek) {
+    toast.error(`Неделя со сдвигом "${currentWeekShift}" не найдена`);
+    return null;
+  }
+
   const otherWeeksToSelect = weeksList.filter(
     (item) => item.weekShift !== currentWeekShift
   );
-
-  if (!selectedWeek) return null;
 
   return (
     <div
