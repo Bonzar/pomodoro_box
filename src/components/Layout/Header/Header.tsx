@@ -8,7 +8,7 @@ import { Icon } from "../../ui/Icon/Icon.tsx";
 export const Header = () => (
   <header className={styles.header}>
     <LayoutContainer className={styles.headerContainer}>
-      <Link to="/main" className={styles.navLink}>
+      <Link to="/" className={styles.navLink}>
         <Icon iconName="logo" width={40} height={40} />
         <Indent size={10} inline />
         <TextEl

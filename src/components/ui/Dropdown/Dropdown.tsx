@@ -53,7 +53,7 @@ export const Dropdown = ({
     if (!isDropdownOpen) {
       const buttonCoors = e.currentTarget.getBoundingClientRect();
       setPosition({
-        top: buttonCoors.top + buttonCoors.height + window.scrollY,
+        top: buttonCoors.top + window.scrollY,
         left: buttonCoors.left + buttonCoors.width / 2,
       });
     } else {

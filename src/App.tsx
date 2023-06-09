@@ -11,7 +11,7 @@ const MainRedirect = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate("/main");
+    navigate("/");
   }, [navigate]);
 
   return null;
@@ -20,8 +20,8 @@ const MainRedirect = () => {
 export const App = () => (
   <Routes>
     <Route path="*" element={<MainRedirect />} />
-    <Route element={<Layout />}>
-      <Route path="/main" element={<Main />} />
+    <Route path="/" element={<Layout />}>
+      <Route index element={<Main />} />
       <Route path="/stats" element={<Stats />} />
       <Route path="/settings" element={<Settings />} />
     </Route>
