@@ -58,6 +58,33 @@ export const { selectAll: selectAllStatistic } = statsAdapter.getSelectors(
   (state: RootState) => state.stats
 );
 
+const selectStatsBetweenTimestamps = createSelector(
+  [
+    selectAllStatistic,
+    (_, startTimestamp: number) => startTimestamp,
+    (_, __, endTimestamp: number) => endTimestamp,
+  ],
+  (stats, startTimestamp, endTimestamp) => {
+    return stats.filter(
+      (statItem) =>
+        statItem.createdAt >= startTimestamp &&
+        statItem.createdAt < endTimestamp
+    );
+  }
+);
+
+export const selectTodayStats = (state: RootState) => {
+  const todayTimestamp = Date.now();
+  const todayStartTimestamp =
+    Math.trunc(todayTimestamp / MILLISECONDS_IN_DAY) * MILLISECONDS_IN_DAY;
+
+  return selectStatsBetweenTimestamps(
+    state,
+    todayStartTimestamp,
+    todayStartTimestamp + MILLISECONDS_IN_DAY
+  );
+};
+
 export const selectWeekStats = createSelector(
   [selectAllStatistic, (_, weekShift: WeekShift) => weekShift],
   (stats, weekShift) => {

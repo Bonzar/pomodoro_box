@@ -15,6 +15,7 @@ export const Timer = () => {
     currentTask,
     timerType: type,
     timerState: state,
+    isLongBreak,
   } = useTimer();
 
   return (
@@ -35,7 +36,16 @@ export const Timer = () => {
         </TextEl>
 
         <TextEl className={styles.header__pomoCounter} textColor="white">
-          Помидор {(currentTask?.completedPomo ?? 0) + 1}
+          {type === "FOCUS" ? (
+            <TextEl>
+              Помидор
+              {currentTask && <TextEl> {currentTask.completedPomo + 1}</TextEl>}
+            </TextEl>
+          ) : !isLongBreak ? (
+            "Перерыв"
+          ) : (
+            "Длинный перерыв"
+          )}
         </TextEl>
       </div>
 

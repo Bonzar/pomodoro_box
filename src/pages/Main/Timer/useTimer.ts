@@ -14,12 +14,13 @@ import {
 } from "../../../store/tasksSlice.ts";
 import { exhaustiveCheck } from "../../../helpers/js/exhaustiveCheck.ts";
 import { useCallback, useEffect, useState } from "react";
-import { addStatNote } from "../../../store/statsSlice.ts";
+import { addStatNote, selectTodayStats } from "../../../store/statsSlice.ts";
 import {
   MILLISECONDS_IN_MINUTE,
   MILLISECONDS_IN_SECOND,
 } from "../../../helpers/constants.ts";
 import { getTimeWithZero } from "../../../helpers/js/getTimeWithZero.ts";
+import { joinStats } from "../../Stats/joinStats.ts";
 
 export const useTimer = () => {
   const dispatch = useAppDispatch();
@@ -35,13 +36,21 @@ export const useTimer = () => {
     ...timer
   } = useAppSelector(selectTimer);
 
+  const todayStats = useAppSelector(selectTodayStats);
+  const { completedPomo, stopsCount } = joinStats(todayStats);
+
   const isTypeFocus = timerType === "FOCUS";
+  const isLongBreak = !isTypeFocus && (completedPomo + stopsCount) % 4 === 0;
 
   const isTypeFocusAndTaskExist = isTypeFocus && currentTask?.id;
 
   const timerDurationMilliseconds =
     MILLISECONDS_IN_MINUTE *
-    (isTypeFocus ? timer.focusDuration : timer.breakDurationShort);
+    (isTypeFocus
+      ? timer.focusDuration
+      : isLongBreak
+      ? timer.breakDurationLong
+      : timer.breakDurationShort);
 
   const getCurrentTime = useCallback(() => {
     let time;
@@ -222,5 +231,6 @@ export const useTimer = () => {
     handleRightButtonClick,
     timerState: state,
     timerType: timerType,
+    isLongBreak,
   };
 };
