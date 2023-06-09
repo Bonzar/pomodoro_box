@@ -43,6 +43,7 @@ const SettingsItem = ({ name, value, settingsProp }: ISettingsItemProps) => {
 
       <ButtonCircle
         btnType="minus"
+        aria-label={`Уменьшить значение параметра ${name}`}
         onClick={() =>
           dispatch(updateSettings({ [settingsProp]: decreaseNewValue }))
         }
@@ -52,6 +53,7 @@ const SettingsItem = ({ name, value, settingsProp }: ISettingsItemProps) => {
 
       <ButtonCircle
         btnType="plus"
+        aria-label={`Увеличить значение параметра ${name}`}
         onClick={() =>
           dispatch(updateSettings({ [settingsProp]: increaseNewValue }))
         }

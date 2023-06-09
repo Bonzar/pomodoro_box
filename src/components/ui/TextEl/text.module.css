@@ -57,68 +57,65 @@
 */
 
 .c-black {
-  color: hsl(0, 0%, 20%);
+  color: var(--black);
 }
 .c-white {
-  color: hsl(0, 0%, 100%);
+  color: var(--white);
 }
 .c-gray-F5 {
-  color: #f5f5f5;
+  color: var(--gray-F5);
 }
 .c-gray-F4 {
-  color: #f4f4f4;
-}
-.c-gray-ED {
-  color: #ededed;
+  color: var(--gray-F4);
 }
 .c-gray-E6 {
-  color: #e6e6e6;
+  color: var(--gray-E6);
 }
 .c-gray-E4 {
-  color: #e4e4e4;
+  color: var(--gray-E4);
 }
 .c-gray-E3 {
-  color: #e3e3e3;
+  color: var(--gray-E3);
 }
 .c-gray-C4 {
-  color: #c4c4c4;
+  color: var(--gray-C4);
 }
 .c-gray-99 {
-  color: #999999;
+  color: var(--gray-99);
 }
 .c-green-light {
-  color: #a8b64f;
+  color: var(--green-light);
 }
 .c-green {
-  color: #899441;
+  color: var(--green);
 }
 .c-red-light {
-  color: #ea8979;
+  color: var(--red-light);
 }
 .c-red-semi-light {
-  color: #ee735d;
+  color: var(--red-semi-light);
 }
 .c-red {
-  color: #dc3e22;
+  color: var(--red);
 }
 .c-red-dark {
-  color: #b7280f;
+  color: var(--red-dark);
 }
 .c-orange {
-  color: #ffae35;
+  color: var(--orange);
 }
 .c-orange-light {
-  color: #ffdda9;
+  color: var(--orange-light);
 }
 .c-lavender {
-  color: #9c97d7;
+  color: var(--lavender);
 }
 .c-lavender-light {
-  color: #dfdcfe;
+  color: var(--lavender-light);
 }
 .c-blue {
-  color: #7fc2d7;
+  color: var(--blue);
 }
 .c-blue-light {
-  color: #c5f1ff;
+  color: var(--blue-light);
 }

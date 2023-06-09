@@ -129,3 +129,11 @@ dist
 .pnp.*
 
 .idea
+
+# Auto generated icons
+/public/apple-touch-icon-180x180.png
+/public/favicon.ico
+/public/maskable-icon-512x512.png
+/public/pwa-192x192.png
+/public/pwa-64x64.png
+/public/pwa-512x512.png

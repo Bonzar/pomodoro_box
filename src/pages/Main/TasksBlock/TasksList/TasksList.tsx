@@ -66,7 +66,7 @@ export const TasksList = () => {
         </TransitionGroup>
         <Divider dividerColor="gray-E4" />
         <Indent size={19} />
-        <TextEl textWeight={300} textColor="gray-99">
+        <TextEl textWeight={300} className={styles.predictedPomoTime}>
           {formatTime(predictedPomoSum * focusDuration, {
             trimTimeNames: true,
           })}

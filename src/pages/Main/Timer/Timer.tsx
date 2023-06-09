@@ -60,11 +60,7 @@ export const Timer = () => {
           {timeString ? timeString : "Ошибка"}
           <Indent size={10} />
         </TextEl>
-        <TextEl
-          as="div"
-          textColor="gray-99"
-          className={styles.timerTaskDescribe}
-        >
+        <TextEl as="div" className={styles.timerTaskDescribe}>
           {currentTask && (
             <TextEl>
               Задача - <TextEl textColor="black">{currentTask.title}</TextEl>
@@ -97,6 +93,7 @@ export const Timer = () => {
         </div>
 
         <ButtonCircle
+          aria-label="Добавить время к таймеру"
           btnType="plus"
           className={styles.addButton}
           onClick={handleAddTimeButtonClick}

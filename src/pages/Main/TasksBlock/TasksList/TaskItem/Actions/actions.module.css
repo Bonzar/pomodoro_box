@@ -1,5 +1,10 @@
 .actionText {
   white-space: nowrap;
+  color: var(--gray-99);
+}
+
+.icon {
+  color: var(--gray-C4);
 }
 
 .dropdown {
@@ -11,12 +16,12 @@
   border: var(--dropdown__border-width) solid var(--gray-C4);
   transform: translateX(
       calc(
-          -100% + var(--dropdown__arrow-indent) + var(--dropdown__arrow-height) + var(
-          --dropdown__border-width
+        -100% + var(--dropdown__arrow-indent) + var(--dropdown__arrow-height) + var(
+            --dropdown__border-width
           ) * 2
       )
-  )
-  translateY(calc(var(--dropdown__arrow-height) + var(--indent-10)));
+    )
+    translateY(calc(var(--dropdown__arrow-height) + var(--indent-10)));
 }
 
 .dropdown:before,
@@ -34,27 +39,45 @@
 .dropdown:before {
   transform: translateX(calc(-100% - var(--dropdown__arrow-indent)));
   border-width: calc(
-      var(--dropdown__arrow-height) + var(--dropdown__border-width)
+    var(--dropdown__arrow-height) + var(--dropdown__border-width)
   );
   border-bottom-color: var(--gray-C4);
 }
 
 .dropdown:after {
   transform: translateX(
-      calc(
-          -100% - var(--dropdown__arrow-indent) - var(--dropdown__border-width) * 1.5
-      )
+    calc(
+      -100% - var(--dropdown__arrow-indent) - var(--dropdown__border-width) * 1.5
+    )
   );
   border-width: calc(
-      var(--dropdown__arrow-height) - var(--dropdown__border-width) * 0.5
+    var(--dropdown__arrow-height) - var(--dropdown__border-width) * 0.5
   );
   border-bottom-color: var(--white);
+}
+
+@media (prefers-color-scheme: dark) {
+  .actionText {
+    color: var(--color-var-white);
+  }
+
+  .icon {
+    color: var(--color-var-gray-99);
+  }
+
+  .dropdown {
+    border-color: var(--color-var-white);
+  }
+
+  .dropdown:before {
+    border-bottom-color: var(--color-var-white);
+  }
 }
 
 @media (--desktop-viewport) {
   .dropdown {
     transform: translateX(-50%)
-    translateY(calc(var(--dropdown__arrow-height) + var(--indent-10)));
+      translateY(calc(var(--dropdown__arrow-height) + var(--indent-10)));
   }
 
   .dropdown:before,

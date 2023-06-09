@@ -61,6 +61,22 @@
 .timerTaskDescribe {
   grid-area: describe;
   text-align: center;
+  color: var(--gray-99);
+}
+
+@media (prefers-color-scheme: dark) {
+  .timerTaskDescribe {
+    color: var(--color-var-white);
+  }
+
+  .header__taskName {
+    color: var(--color-var-white);
+  }
+
+  .header__pomoCounter {
+    color: var(--color-var-white);
+  }
+
 }
 
 @media (--tablet-viewport) {

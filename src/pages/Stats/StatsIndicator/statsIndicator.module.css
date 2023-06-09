@@ -13,7 +13,9 @@
 }
 
 @media (--netbook-viewport) {
-  font-size: 6.4rem;
+  .value {
+    font-size: 6.4rem;
+  }
 }
 
 .icon {

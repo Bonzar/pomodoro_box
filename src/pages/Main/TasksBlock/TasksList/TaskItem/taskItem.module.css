@@ -16,6 +16,12 @@
   justify-content: center;
 }
 
+@media (prefers-color-scheme: dark) {
+  .pomodoroCount {
+    border-color: var(--color-var-gray-99);
+  }
+}
+
 .nameWrapper {
   word-break: break-word;
   align-self: stretch;
