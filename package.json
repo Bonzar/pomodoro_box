@@ -1,14 +1,17 @@
 {
+  "homepage": "https://Bonzar.github.io/pomodoro_box",
   "name": "pomodoro_box",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "rm -rf dist && yarn generate-pwa-assets && vite build && shx cp dist/index.html dist/404.html",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "type": "tsc --noEmit",
     "preview": "vite preview",
-    "generate-pwa-assets": "pwa-assets-generator"
+    "generate-pwa-assets": "pwa-assets-generator",
+    "predeploy": "yarn type && yarn lint && yarn build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@csstools/postcss-global-data": "^1.0.3",
@@ -39,7 +42,9 @@
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "gh-pages": "^5.0.0",
     "prettier": "2.8.8",
+    "shx": "^0.3.4",
     "typescript": "^5.0.2",
     "vite": "^4.3.9",
     "vite-plugin-pwa": "^0.16.3"
