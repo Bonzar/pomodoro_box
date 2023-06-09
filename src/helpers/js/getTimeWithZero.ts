@@ -1,1 +1,2 @@
-export const getTimeWithZero = (time: number) => ("0" + time).slice(-2);
+export const getTimeWithZero = (time: number) =>
+  time < 10 ? `0${time}` : time;

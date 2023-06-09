@@ -2,9 +2,9 @@ import styles from "./timer.module.css";
 import { TextEl } from "../../../components/ui/TextEl";
 import { Indent } from "../../../components/ui/Indent";
 import { Button } from "../../../components/ui/Button";
-import { Icon } from "../../../components/ui/Icon/Icon.tsx";
 import { getClassName } from "../../../helpers/react/getClassName.ts";
 import { useTimer } from "./useTimer.ts";
+import { ButtonCircle } from "../../../components/ui/ButtonCircle";
 
 export const Timer = () => {
   const {
@@ -86,13 +86,12 @@ export const Timer = () => {
           </Button>
         </div>
 
-        <button
+        <ButtonCircle
+          btnType="plus"
           className={styles.addButton}
           onClick={handleAddTimeButtonClick}
           disabled={state === "IDLE"}
-        >
-          <Icon iconName="plus" />
-        </button>
+        />
       </div>
     </div>
   );

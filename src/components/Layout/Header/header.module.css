@@ -6,11 +6,15 @@
   height: 7rem;
 }
 
+.navLinks {
+  display: flex;
+}
+
 .navLinkText {
   display: none;
 }
 
-@media (--tablet-viewport) {
+@media (--netbook-viewport) {
   .navLinkText {
     display: initial;
   }
@@ -25,4 +29,9 @@
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+}
+
+.navLinkIcon {
+  width: 1.6rem;
+  height: 1.6rem;
 }

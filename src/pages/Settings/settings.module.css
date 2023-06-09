@@ -1,0 +1,41 @@
+.settings {
+  margin: 0 auto;
+  width: fit-content;
+  text-align: center;
+}
+
+.parameter {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--indent-25);
+}
+
+.parameterName {
+  //width: 100%;
+  flex: 0 0 100%;
+}
+
+.value {
+  white-space: nowrap;
+}
+
+@media (--tablet-viewport) {
+  .settings {
+    text-align: left;
+  }
+
+  .parameter {
+    flex-flow: row nowrap;
+  }
+
+  .parameterName {
+    flex: initial;
+    margin-right: auto;
+  }
+
+  .divider {
+    padding-right: var(--indent-10);
+  }
+}

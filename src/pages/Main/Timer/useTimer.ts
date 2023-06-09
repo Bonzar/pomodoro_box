@@ -13,10 +13,13 @@ import {
   selectFirstTask,
 } from "../../../store/tasksSlice.ts";
 import { exhaustiveCheck } from "../../../helpers/js/exhaustiveCheck.ts";
-import { getTimeWithZero } from "../../../helpers/js/getTimeWithZero.ts";
 import { useCallback, useEffect, useState } from "react";
 import { addStatNote } from "../../../store/statsSlice.ts";
-import { MILLISECONDS_IN_MINUTE } from "../../../helpers/constants.ts";
+import {
+  MILLISECONDS_IN_MINUTE,
+  MILLISECONDS_IN_SECOND,
+} from "../../../helpers/constants.ts";
+import { getTimeWithZero } from "../../../helpers/js/getTimeWithZero.ts";
 
 export const useTimer = () => {
   const dispatch = useAppDispatch();
@@ -82,11 +85,15 @@ export const useTimer = () => {
 
     if (time < 0) return "00:00";
 
-    const timerDate = new Date(time);
-    const timeMinutes = getTimeWithZero(timerDate.getMinutes());
-    const timeSeconds = getTimeWithZero(timerDate.getSeconds());
+    const minutes = Math.trunc(time / MILLISECONDS_IN_MINUTE);
+    const seconds = Math.trunc(
+      (time - minutes * MILLISECONDS_IN_MINUTE) / MILLISECONDS_IN_SECOND
+    );
 
-    return timeMinutes + ":" + timeSeconds;
+    const minutesWithZero = getTimeWithZero(minutes);
+    const secondsWithZero = getTimeWithZero(seconds);
+
+    return minutesWithZero + ":" + secondsWithZero;
   }, [startPointAt, state, stoppedAt, timerDurationMilliseconds]);
 
   const [timeString, setTimeString] = useState(getCurrentTime());

@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react";
 import { TextEl } from "../TextEl";
 
 interface IHeaderProps {
-  as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
 }
 
 export const Heading = ({ children, as }: PropsWithChildren<IHeaderProps>) => {

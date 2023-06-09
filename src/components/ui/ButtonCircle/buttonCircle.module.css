@@ -1,0 +1,22 @@
+.buttonCircle {
+  justify-self: flex-start;
+  grid-area: addButton;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 100vw;
+  align-self: center;
+  color: var(--gray-C4);
+}
+
+.buttonCircle[disabled] {
+  cursor: default;
+}
+
+@media (pointer: fine) {
+  .buttonCircle:not([disabled]):hover {
+    color: var(--green);
+  }
+}

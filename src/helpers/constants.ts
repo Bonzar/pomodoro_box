@@ -2,7 +2,9 @@ export const WEEK_DAYS_INDEXES = [0, 1, 2, 3, 4, 5, 6] as const;
 
 export type WeekDayIndex = (typeof WEEK_DAYS_INDEXES)[number];
 
-export const MILLISECONDS_IN_MINUTE = 1000 * 60;
+export const MILLISECONDS_IN_SECOND = 1000;
+
+export const MILLISECONDS_IN_MINUTE = MILLISECONDS_IN_SECOND * 60;
 
 export const MILLISECONDS_IN_DAY = MILLISECONDS_IN_MINUTE * 60 * 24;
 

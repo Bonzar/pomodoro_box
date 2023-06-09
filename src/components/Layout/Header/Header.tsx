@@ -20,7 +20,19 @@ export const Header = () => (
           pomodoro_box
         </TextEl>
       </Link>
-      <nav>
+      <nav className={styles.navLinks}>
+        <Link to="settings" className={styles.navLink}>
+          <Icon
+            className={styles.navLinkIcon}
+            iconName="settings"
+            iconColor="red"
+          />
+          <TextEl textColor="red" className={styles.navLinkText}>
+            <Indent size={10} inline />
+            Настройки
+          </TextEl>
+        </Link>
+        <Indent size={19} inline />
         <Link to="stats" className={styles.navLink}>
           <Icon iconName="stats" iconColor="red" />
           <TextEl textColor="red" className={styles.navLinkText}>

@@ -5,6 +5,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Main } from "./pages/Main";
 import { Stats } from "./pages/Stats";
+import { Settings } from "./pages/Settings";
 
 const MainRedirect = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export const App = () => (
     <Route element={<Layout />}>
       <Route path="/main" element={<Main />} />
       <Route path="/stats" element={<Stats />} />
+      <Route path="/settings" element={<Settings />} />
     </Route>
   </Routes>
 );

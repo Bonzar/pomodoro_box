@@ -1,18 +1,25 @@
+import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "./store.ts";
 import { MILLISECONDS_IN_MINUTE } from "../helpers/constants.ts";
+import { exhaustiveCheck } from "../helpers/js/exhaustiveCheck.ts";
 
-interface ITimer {
+interface ITimerControlFields {
   type: "FOCUS" | "BREAK";
   state: "IDLE" | "RUN" | "PAUSE";
   startPointAt: number | null; // timestamp
   runningAt: number | null; // timestamp
   stoppedAt: number | null; // timestamp
+}
+
+export interface ITimerSettings {
   focusDuration: number; // min
   breakDurationShort: number; // min
   breakDurationLong: number; // min
   addTimeDuration: number; // min
 }
+
+type ITimer = ITimerControlFields & ITimerSettings;
 
 const initialState: ITimer = {
   type: "FOCUS",
@@ -66,11 +73,33 @@ const timerSlice = createSlice({
       state.runningAt = null;
       state.type = state.type === "FOCUS" ? "BREAK" : "FOCUS";
     },
+    updateSettings: (state, action: PayloadAction<Partial<ITimerSettings>>) => {
+      for (const [propName, newValue] of Object.entries(action.payload)) {
+        const settingProp = propName as keyof ITimerSettings;
+
+        switch (settingProp) {
+          case "focusDuration":
+          case "addTimeDuration":
+          case "breakDurationLong":
+          case "breakDurationShort":
+            state[settingProp] = newValue > 0 ? newValue : 1;
+            break;
+          default:
+            exhaustiveCheck(settingProp);
+        }
+      }
+    },
   },
 });
 
-export const { startTimer, stopTimer, resumeTimer, endTimer, addTimeToTimer } =
-  timerSlice.actions;
+export const {
+  startTimer,
+  stopTimer,
+  resumeTimer,
+  endTimer,
+  addTimeToTimer,
+  updateSettings,
+} = timerSlice.actions;
 
 export const selectTimer = (state: RootState) => state.timer;
 
