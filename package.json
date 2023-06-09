@@ -1,7 +1,7 @@
 {
   "homepage": "https://Bonzar.github.io/pomodoro_box",
   "name": "pomodoro_box",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
