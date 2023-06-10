@@ -33,9 +33,7 @@ jobs:
           yarn --immutable
           yarn generate-pwa-assets
           yarn build
-        # Client routing workaround for gh-pages
           yarn shx cp dist/index.html dist/404.html
-
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
