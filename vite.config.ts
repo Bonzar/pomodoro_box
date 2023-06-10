@@ -11,13 +11,11 @@ export default defineConfig({
     svgr(),
     VitePWA({
       registerType: "autoUpdate",
-      base: "pomodoro_box",
       manifest: {
         name: "Pomodoro_box - Таймер-помидор и трекер задач",
         short_name: "Pomodoro_box",
         description: 'Таймер по технике "Помидор"',
         theme_color: "#dc3e22",
-        background_color: "#dc3e22",
         icons: [
           {
             src: "pwa-64x64.png",

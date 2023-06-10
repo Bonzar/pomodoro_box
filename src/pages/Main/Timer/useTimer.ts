@@ -22,7 +22,10 @@ import { getTimeWithZero } from "../../../helpers/js/getTimeWithZero.ts";
 import { joinStats } from "../../Stats/joinStats.ts";
 import { toast } from "sonner";
 import { deleteTaskThank } from "../../../store/deleteTaskThank.ts";
-import { withNotificationPermission } from "../../../helpers/js/withNotificationPermission.ts";
+import {
+  requestNotificationPermission,
+  withNotificationPermission,
+} from "../../../helpers/js/withNotificationPermission.ts";
 import logoIconSrc from "../../../assets/icons/logo.svg";
 
 export const useTimer = () => {
@@ -106,6 +109,8 @@ export const useTimer = () => {
   const [timeString, setTimeString] = useState(getCurrentTime());
 
   const handleLeftButtonClick = () => {
+    requestNotificationPermission();
+
     switch (state) {
       case "IDLE":
         dispatch(startTimer());

@@ -1,20 +1,13 @@
 export const withNotificationPermission = (
   notificationCallback: VoidFunction
 ) => {
-  if (!("Notification" in window)) {
-    return;
+  if ("Notification" in window && Notification.permission === "granted") {
+    return notificationCallback();
   }
+};
 
-  let isCallbackUsed = false;
-
-  Notification.requestPermission((permission) => {
-    isCallbackUsed = true;
-    if (permission === "granted") {
-      notificationCallback();
-    }
-  }).then((permission) => {
-    if (!isCallbackUsed && permission === "granted") {
-      notificationCallback();
-    }
-  });
+export const requestNotificationPermission = () => {
+  if ("Notification" in window && Notification.permission === "default") {
+    Notification.requestPermission().catch(console.error);
+  }
 };
