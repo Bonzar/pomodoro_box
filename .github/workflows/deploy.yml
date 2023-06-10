@@ -29,5 +29,7 @@ jobs:
       - name: Build and deploy
         run: |
           yarn --immutable
+          yarn generate-pwa-assets
           yarn build
+          yarn shx cp dist/index.html dist/404.html
           yarn deploy
