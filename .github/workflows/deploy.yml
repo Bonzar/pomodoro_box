@@ -30,7 +30,6 @@ jobs:
           node-version: 16
       - name: Build
         run: |
-          git remote set-url origin https://git:${{ secrets.GITHUB_TOKEN }}@github.com/Bonzar/pomodoro_box.git
           yarn --immutable
           yarn generate-pwa-assets
           yarn build
