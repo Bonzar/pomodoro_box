@@ -1,0 +1,33 @@
+name: Deploy to GitHub Pages
+run-name: ${{ github.actor }} is deploying 🚀
+on:
+  push:
+    branches: [ main ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Type and lint checks
+        run: |
+          yarn --immutable
+          yarn type
+          yarn lint
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Build and deploy
+        run: |
+          yarn --immutable
+          yarn build
+          yarn deploy
