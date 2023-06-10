@@ -9,6 +9,8 @@
   background-color: var(--white);
   align-items: center;
   text-align: center;
+  width: max-content;
+  max-width: 90%;
 }
 
 .modalWrapper {

@@ -116,13 +116,11 @@ export const Settings = () => {
   );
 
   const divider = (
-    <>
+    <div className={styles.divider}>
       <Indent size={19} />
-      <div className={styles.divider}>
-        <Divider dividerColor="gray-C4" />
-      </div>
-      <Indent size={15} />
-    </>
+      <Divider dividerColor="gray-C4" />
+      <Indent size={19} />
+    </div>
   );
 
   return (

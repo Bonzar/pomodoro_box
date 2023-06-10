@@ -22,6 +22,8 @@ import { getTimeWithZero } from "../../../helpers/js/getTimeWithZero.ts";
 import { joinStats } from "../../Stats/joinStats.ts";
 import { toast } from "sonner";
 import { deleteTaskThank } from "../../../store/deleteTaskThank.ts";
+import { withNotificationPermission } from "../../../helpers/js/withNotificationPermission.ts";
+import logoIconSrc from "../../../assets/icons/logo.svg";
 
 export const useTimer = () => {
   const dispatch = useAppDispatch();
@@ -211,6 +213,16 @@ export const useTimer = () => {
           } else {
             toast.error("Отсутствует время запуска таймера!");
           }
+
+          withNotificationPermission(
+            () =>
+              new Notification("Pomodoro_box", {
+                body: isTypeFocus
+                  ? "Помидор завершен, пора отдохнуть!"
+                  : "Перерыв завершен, пора поработать!",
+                icon: logoIconSrc,
+              })
+          );
 
           dispatch(endTimer());
         }

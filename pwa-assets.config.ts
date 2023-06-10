@@ -5,6 +5,6 @@ import {
 
 export default defineConfig({
   preset,
-  images: ["public/logo.svg"],
+  images: ["public/favicon.svg"],
   overrideAssets: true,
 });

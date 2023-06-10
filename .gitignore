@@ -130,10 +130,13 @@ dist
 
 .idea
 
-# Auto generated icons
+# Auto generated icons with @vite-pwa/assets-generator
 /public/apple-touch-icon-180x180.png
 /public/favicon.ico
 /public/maskable-icon-512x512.png
 /public/pwa-192x192.png
 /public/pwa-64x64.png
 /public/pwa-512x512.png
+
+# vite-plugin-pwa
+/dev-dist

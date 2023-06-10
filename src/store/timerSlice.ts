@@ -7,7 +7,6 @@ import {
 } from "../helpers/constants.ts";
 import { exhaustiveCheck } from "../helpers/js/exhaustiveCheck.ts";
 import { toast } from "sonner";
-import logoIconSrc from "../assets/icons/logo.svg";
 
 interface ITimerControlFields {
   type: "FOCUS" | "BREAK";
@@ -86,22 +85,6 @@ const timerSlice = createSlice({
       const isTypeFocus = state.type === "FOCUS";
 
       state.type = isTypeFocus ? "BREAK" : "FOCUS";
-      try {
-        Notification.requestPermission().then((permission) => {
-          if (permission === "denied") return;
-
-          new Notification("Pomodoro_box", {
-            body: isTypeFocus
-              ? "Помидор завершен, пора отдохнуть!"
-              : "Перерыв завершен, пора поработать!",
-            icon: logoIconSrc,
-            badge: logoIconSrc,
-            vibrate: 1,
-          });
-        });
-      } catch (e) {
-        console.error(e);
-      }
     },
     updateSettings: (state, action: PayloadAction<Partial<ITimerSettings>>) => {
       for (const [propName, newValue] of Object.entries(action.payload)) {
