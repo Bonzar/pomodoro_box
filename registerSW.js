@@ -1,1 +1,1 @@
-if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/pomodoro_box/sw.js', { scope: '/pomodoro_box/' })})}
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/pomodoro_boxsw.js', { scope: '/pomodoro_box' })})}
