@@ -28,11 +28,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Build and deploy
+      - name: Build
         run: |
           git remote set-url origin https://git:${{ secrets.GITHUB_TOKEN }}@github.com/Bonzar/pomodoro_box.git
           yarn --immutable
           yarn generate-pwa-assets
           yarn build
           yarn shx cp dist/index.html dist/404.html
-          yarn gh-pages -d dist -u 'github-actions-bot <support+actions@github.com>'
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
