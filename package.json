@@ -9,9 +9,7 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "type": "tsc --noEmit",
     "preview": "vite preview",
-    "generate-pwa-assets": "pwa-assets-generator",
-    "predeploy": "yarn type && yarn lint && yarn build",
-    "deploy": "gh-pages -d dist"
+    "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
     "@csstools/postcss-global-data": "^1.0.3",
