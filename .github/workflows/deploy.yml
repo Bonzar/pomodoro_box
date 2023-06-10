@@ -34,6 +34,7 @@ jobs:
           yarn generate-pwa-assets
           yarn build
           yarn shx cp dist/index.html dist/404.html
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
