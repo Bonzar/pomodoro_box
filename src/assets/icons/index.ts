@@ -13,6 +13,7 @@ import { ReactComponent as basketAction } from "./basketAction.svg";
 import { ReactComponent as arrowDown } from "./arrowDown.svg";
 import { ReactComponent as cross } from "./cross.svg";
 import { ReactComponent as settings } from "./settings.svg";
+import { ReactComponent as smilePomo } from "./smilePomo.svg";
 
 export {
   stats,
@@ -30,4 +31,5 @@ export {
   arrowDown,
   cross,
   settings,
+  smilePomo,
 };
