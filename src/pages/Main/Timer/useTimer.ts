@@ -18,7 +18,7 @@ import {
   MILLISECONDS_IN_MINUTE,
   MILLISECONDS_IN_SECOND,
 } from "../../../helpers/constants.ts";
-import { getTimeWithZero } from "../../../helpers/js/getTimeWithZero.ts";
+import { getTimeWithZero } from "../../../helpers/js/dateAndTime/getTimeWithZero.ts";
 import { joinStats } from "../../Stats/joinStats.ts";
 import { toast } from "sonner";
 import { deleteTaskThank } from "../../../store/deleteTaskThank.ts";
