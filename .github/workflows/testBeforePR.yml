@@ -1,4 +1,4 @@
-name: Test before merge to main
+name: Test before merge PR
 run-name: ${{ github.actor }} is start testing 🚀
 on:
   pull_request:
