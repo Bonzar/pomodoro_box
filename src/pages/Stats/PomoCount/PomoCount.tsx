@@ -1,7 +1,7 @@
 import styles from "./pomoCount.module.css";
 import { Icon } from "../../../components/ui/Icon/Icon.tsx";
 import { TextEl } from "../../../components/ui/TextEl";
-import { caseByNum } from "../../../helpers/js/caseByNum.ts";
+import { declensionByNum } from "../../../helpers/js/declensionByNum.ts";
 import { Indent } from "../../../components/ui/Indent";
 import { getClassName } from "../../../helpers/react/getClassName.ts";
 
@@ -40,7 +40,7 @@ export const PomoCount = ({ count, isNoData = false }: IPomoCountProps) => {
           textWeight={700}
           textColor="white"
         >
-          {count} {caseByNum(["помидор", "помидора", "помидоров"])(count)}
+          {count} {declensionByNum(["помидор", "помидора", "помидоров"])(count)}
         </TextEl>
       </div>
     </div>
