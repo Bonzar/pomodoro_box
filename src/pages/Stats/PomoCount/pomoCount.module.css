@@ -11,6 +11,10 @@
   justify-content: center;
 }
 
+.content.noData {
+  padding: var(--indent-32);
+}
+
 .footer {
   background-color: var(--red);
   display: flex;

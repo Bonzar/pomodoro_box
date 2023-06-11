@@ -10,6 +10,7 @@ interface IStatsIndicatorProps {
   value: string;
   icon: TIcons;
   color: TColorActive;
+  isNoData?: boolean;
 }
 
 export const StatsIndicator = ({
@@ -17,15 +18,22 @@ export const StatsIndicator = ({
   value,
   icon,
   color,
+  isNoData = false,
 }: IStatsIndicatorProps) => {
   return (
     <div
       className={styles.indicator}
-      style={{ backgroundColor: `var(--${color}-light)` }}
+      style={{
+        backgroundColor: isNoData ? `var(--gray-F4)` : `var(--${color}-light)`,
+      }}
     >
       <Heading as="h2">{name}</Heading>
       <TextEl className={styles.value}>{value}</TextEl>
-      <Icon className={styles.icon} iconName={icon} iconColor={color} />
+      <Icon
+        className={styles.icon}
+        iconName={icon}
+        iconColor={isNoData ? "gray-C4" : color}
+      />
     </div>
   );
 };

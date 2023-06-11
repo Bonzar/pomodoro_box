@@ -1,8 +1,9 @@
 name: Deploy to GitHub Pages
 run-name: ${{ github.actor }} is deploying 🚀
 on:
-  push:
-    branches: [ main ]
+  pull_request:
+    branches:
+     - main
 jobs:
   test:
     runs-on: ubuntu-latest
