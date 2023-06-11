@@ -56,6 +56,11 @@
 .weekday {
   z-index: 1;
   font-size: var(--font-size-16);
+  transition: color 200ms ease-in-out;
+}
+
+.weekdaySelected {
+  color: var(--red);
 }
 
 @media (--netbook-viewport) {
@@ -68,9 +73,10 @@
   align-self: flex-end;
   width: 100%;
   height: 0.5rem;
-  background-color: var(--red-light);
   z-index: 1;
   cursor: pointer;
+  background-color: var(--red-light);
+  transition: background-color 300ms ease-in-out;
 }
 
 .columnEmpty {

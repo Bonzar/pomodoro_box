@@ -16,21 +16,6 @@ import type { WeekDayIndex } from "../../../helpers/constants.ts";
 import { MILLISECONDS_IN_MINUTE } from "../../../helpers/constants.ts";
 import { useWeekdayDict } from "../../../hooks/useWeekdayDict.ts";
 
-const getWeekDaysElements = (weekdayNames: string[]) =>
-  weekdayNames
-    .map(
-      pipe(
-        objOf("children"),
-        mergeLeft({ as: TextEl, textLineHeight: 28 }),
-        assocKeyAsChildren
-      )
-    )
-    .map((item, index) => ({
-      ...item,
-      style: { gridArea: `weekday-${index + 1}` },
-      className: styles.weekday,
-    }));
-
 const getLegendNamesElements = (legendNames: string[]) => {
   const legendElements = legendNames
     .map(
@@ -122,7 +107,26 @@ export const Graphic = ({
   }, [oneGraphicSegmentMinutes]);
 
   const weekdaysDict = useWeekdayDict(true);
-  const weekDays = getWeekDaysElements(Object.values(weekdaysDict));
+  const weekDays = useMemo(
+    () =>
+      Object.values(weekdaysDict)
+        .map(
+          pipe(
+            objOf("children"),
+            mergeLeft({ as: TextEl, textLineHeight: 28 }),
+            assocKeyAsChildren
+          )
+        )
+        .map((item, index) => ({
+          ...item,
+          style: { gridArea: `weekday-${index + 1}` },
+          className: getClassName([
+            styles.weekday,
+            index === selectedWeekDay && styles.weekdaySelected,
+          ]),
+        })),
+    [selectedWeekDay, weekdaysDict]
+  );
 
   const graphicColumns = weekDays.map((_, index) => {
     const { focusTime, pauseTime } = joinStats(weekStats[index]);
