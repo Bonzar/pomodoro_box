@@ -1,5 +1,5 @@
 import styles from "./summary.module.css";
-import { Heading } from "../../../components/ui/Header";
+import { Heading } from "../../../components/ui/Heading";
 import { Indent } from "../../../components/ui/Indent";
 import { TextEl } from "../../../components/ui/TextEl";
 import { formatTime } from "../../../helpers/js/dateAndTime/formatTime.ts";

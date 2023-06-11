@@ -1,4 +1,4 @@
-import { Heading } from "../../components/ui/Header";
+import { Heading } from "../../components/ui/Heading";
 import styles from "./stats.module.css";
 import { Summary } from "./Summary";
 import { StatsIndicator } from "./StatsIndicator";
