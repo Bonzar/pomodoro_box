@@ -1,0 +1,21 @@
+name: Test before merge to main
+run-name: ${{ github.actor }} is start testing 🚀
+on:
+  pull_request:
+    branches:
+     - main
+     - deployment
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Type and lint checks
+        run: |
+          yarn --immutable
+          yarn type
+          yarn lint
