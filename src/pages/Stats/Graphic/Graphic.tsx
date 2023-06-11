@@ -114,8 +114,8 @@ export const Graphic = ({
     ) {
       legendNames.push(
         formatTime(oneGraphicSegmentMinutes * legendNameIndex, {
-          trimTimeNames: true,
-        }).replace("час", "ч")
+          timeNameSize: { hours: "short", minutes: "medium" },
+        })
       );
     }
 

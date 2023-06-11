@@ -10,21 +10,31 @@ import { WEEKDAY_DICT } from "../../../helpers/constants.ts";
 interface ISummaryProps {
   weekday: WeekDayIndex;
   focusMinutes: number;
+  isNoData?: boolean;
 }
 
-export const Summary = ({ weekday, focusMinutes }: ISummaryProps) => (
+export const Summary = ({
+  weekday,
+  focusMinutes,
+  isNoData = false,
+}: ISummaryProps) => (
   <>
     <Heading as="h2">{WEEKDAY_DICT[weekday]}</Heading>
     <Indent size={15} />
     <TextEl textLineHeight={28}>
-      Вы работали над задачами в течение{" "}
-      <TextEl
-        textWeight={700}
-        textLineHeight={28}
-        className={styles.weekDayFocusTime}
-      >
-        {formatTime(focusMinutes, { genitiveCase: true })}
-      </TextEl>
+      {isNoData && "Нет данных"}
+      {!isNoData && (
+        <TextEl>
+          Вы работали над задачами в течение{" "}
+          <TextEl
+            textWeight={700}
+            textLineHeight={28}
+            className={styles.weekDayFocusTime}
+          >
+            {formatTime(focusMinutes, { genitiveCase: true })}
+          </TextEl>
+        </TextEl>
+      )}
     </TextEl>
   </>
 );
