@@ -1,5 +1,5 @@
-import { caseByNum } from "./caseByNum.ts";
-import { exhaustiveCheck } from "./exhaustiveCheck.ts";
+import { caseByNum } from "../caseByNum.ts";
+import { exhaustiveCheck } from "../exhaustiveCheck.ts";
 import { toast } from "sonner";
 
 type TimeNameSizes =

@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import type { RootState } from "./store.ts";
 import type { WeekShift } from "../pages/Stats/WeekChanger";
-import { getCurrentWeekCornerDays } from "../helpers/js/getCurrentWeekCornerDays.ts";
+import { getCurrentWeekCornerDays } from "../helpers/js/dateAndTime/getCurrentWeekCornerDays.ts";
 import {
   MILLISECONDS_IN_DAY,
   MILLISECONDS_IN_WEEK,
@@ -37,7 +37,13 @@ const statsAdapter = createEntityAdapter<IStatNote>({
   sortComparer: (a, b) => b.createdAt - a.createdAt,
 });
 
-const initialState = statsAdapter.getInitialState();
+interface IStatsState {
+  isSundayFirstWeekday: boolean;
+}
+
+const initialState = statsAdapter.getInitialState<IStatsState>({
+  isSundayFirstWeekday: false,
+});
 
 const statsSlice = createSlice({
   name: "stats",
@@ -49,10 +55,13 @@ const statsSlice = createSlice({
         payload: { ...statsNote, createdAt: Date.now() },
       }),
     },
+    toggleWeekdayStart: (state) => {
+      state.isSundayFirstWeekday = !state.isSundayFirstWeekday;
+    },
   },
 });
 
-export const { addStatNote } = statsSlice.actions;
+export const { addStatNote, toggleWeekdayStart } = statsSlice.actions;
 
 export const { selectAll: selectAllStatistic } = statsAdapter.getSelectors(
   (state: RootState) => state.stats
@@ -85,10 +94,18 @@ export const selectTodayStats = (state: RootState) => {
   );
 };
 
+export const selectIsSundayFirstWeekday = (state: RootState) =>
+  state.stats.isSundayFirstWeekday;
+
 export const selectWeekStats = createSelector(
-  [selectAllStatistic, (_, weekShift: WeekShift) => weekShift],
-  (stats, weekShift) => {
-    const { firstWeekDayDate } = getCurrentWeekCornerDays();
+  [
+    selectAllStatistic,
+    (_, weekShift: WeekShift) => weekShift,
+    selectIsSundayFirstWeekday,
+  ],
+
+  (stats, weekShift, isSundayFirstWeekday) => {
+    const { firstWeekDayDate } = getCurrentWeekCornerDays(isSundayFirstWeekday);
 
     const firstWeekDayTimestampWithShift =
       firstWeekDayDate.getTime() - MILLISECONDS_IN_WEEK * Math.abs(weekShift);

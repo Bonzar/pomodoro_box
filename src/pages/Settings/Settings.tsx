@@ -20,6 +20,10 @@ import {
   selectInstructionsVisibility,
   toggleInstructionsVisibility,
 } from "../../store/tasksSlice.ts";
+import {
+  selectIsSundayFirstWeekday,
+  toggleWeekdayStart,
+} from "../../store/statsSlice.ts";
 
 interface ISettingsItemProps {
   name: string;
@@ -83,6 +87,8 @@ export const Settings = () => {
 
   const instructionsVisible = useAppSelector(selectInstructionsVisibility);
 
+  const isWeekdayStartOnSunday = useAppSelector(selectIsSundayFirstWeekday);
+
   const timerSettingsList: ListItem<typeof TimerSettingsItem>[] = useMemo(
     () =>
       [
@@ -128,11 +134,21 @@ export const Settings = () => {
       <List list={timerSettingsList} divider={divider} />
       {divider}
       <Button
-        className={styles.instructionsSetting}
+        className={styles.toggleButtonSetting}
         btnColor="red"
         onClick={() => dispatch(toggleInstructionsVisibility())}
       >
         {instructionsVisible ? "Скрыть инструкции" : "Показать инструкции"}
+      </Button>
+      {divider}
+      <Button
+        className={styles.toggleButtonSetting}
+        btnColor="red"
+        onClick={() => dispatch(toggleWeekdayStart())}
+      >
+        {isWeekdayStartOnSunday
+          ? "Начинать неделю с понедельника"
+          : "Начинать неделю с воскресенья"}
       </Button>
     </div>
   );
