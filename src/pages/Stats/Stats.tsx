@@ -10,16 +10,15 @@ import { useAppSelector } from "../../store/hooks.ts";
 import { selectWeekStats } from "../../store/statsSlice.ts";
 import { useMemo, useState } from "react";
 import { joinStats } from "./joinStats.ts";
-import { getTodayWeekDayIndex } from "../../helpers/js/getTodayWeekDayIndex.ts";
-import type { WeekDayIndex } from "../../helpers/constants.ts";
+import { useTodayWeekdayIndex } from "../../hooks/useTodayWeekdayIndex.ts";
 import { MILLISECONDS_IN_MINUTE } from "../../helpers/constants.ts";
-import { formatTime } from "../../helpers/js/formatTime.ts";
+import { formatTime } from "../../helpers/js/dateAndTime/formatTime.ts";
 
 export const Stats = () => {
   const [weekShift, setWeekShift] = useState<WeekShift>(0);
-  const [weekDaySelected, setWeekDaySelected] = useState<WeekDayIndex>(
-    getTodayWeekDayIndex()
-  );
+
+  const todayWeekDayIndex = useTodayWeekdayIndex();
+  const [weekDaySelected, setWeekDaySelected] = useState(todayWeekDayIndex);
 
   const weekStats = useAppSelector((state) =>
     selectWeekStats(state, weekShift)

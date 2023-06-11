@@ -8,29 +8,28 @@ import { Divider } from "../../../components/ui/Divider";
 import { useAppSelector } from "../../../store/hooks.ts";
 import { selectWeekStats } from "../../../store/statsSlice.ts";
 import type { WeekShift } from "../WeekChanger";
-import { formatTime } from "../../../helpers/js/formatTime.ts";
+import { formatTime } from "../../../helpers/js/dateAndTime/formatTime.ts";
 import { useMemo } from "react";
 import { joinStats } from "../joinStats.ts";
 import { selectTimer } from "../../../store/timerSlice.ts";
 import type { WeekDayIndex } from "../../../helpers/constants.ts";
-import {
-  MILLISECONDS_IN_MINUTE,
-  WEEKDAY_SHORT_DICT,
-} from "../../../helpers/constants.ts";
+import { MILLISECONDS_IN_MINUTE } from "../../../helpers/constants.ts";
+import { useWeekdayDict } from "../../../hooks/useWeekdayDict.ts";
 
-const weekDays = Object.values(WEEKDAY_SHORT_DICT)
-  .map(
-    pipe(
-      objOf("children"),
-      mergeLeft({ as: TextEl, textLineHeight: 28 }),
-      assocKeyAsChildren
+const getWeekDaysElements = (weekdayNames: string[]) =>
+  weekdayNames
+    .map(
+      pipe(
+        objOf("children"),
+        mergeLeft({ as: TextEl, textLineHeight: 28 }),
+        assocKeyAsChildren
+      )
     )
-  )
-  .map((item, index) => ({
-    ...item,
-    style: { gridArea: `weekday-${index + 1}` },
-    className: styles.weekday,
-  }));
+    .map((item, index) => ({
+      ...item,
+      style: { gridArea: `weekday-${index + 1}` },
+      className: styles.weekday,
+    }));
 
 const getLegendNamesElements = (legendNames: string[]) => {
   const legendElements = legendNames
@@ -121,6 +120,9 @@ export const Graphic = ({
 
     return getLegendNamesElements(legendNames.reverse());
   }, [oneGraphicSegmentMinutes]);
+
+  const weekdaysDict = useWeekdayDict(true);
+  const weekDays = getWeekDaysElements(Object.values(weekdaysDict));
 
   const graphicColumns = weekDays.map((_, index) => {
     const { focusTime, pauseTime } = joinStats(weekStats[index]);

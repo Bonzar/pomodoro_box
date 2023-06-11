@@ -1,9 +1,10 @@
 import { getTodayWeekDayIndex } from "./getTodayWeekDayIndex.ts";
 
-export const getCurrentWeekCornerDays = () => {
+export const getCurrentWeekCornerDays = (isSundayFirstWeekday: boolean) => {
   const today = new Date();
 
-  const firstDayOfCurrentWeekInMonth = today.getDate() - getTodayWeekDayIndex();
+  const firstDayOfCurrentWeekInMonth =
+    today.getDate() - getTodayWeekDayIndex(isSundayFirstWeekday);
   const lastDayOfCurrentWeekInMonth = firstDayOfCurrentWeekInMonth + 7;
 
   const firstWeekDayDate = new Date(

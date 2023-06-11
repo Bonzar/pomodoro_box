@@ -3,7 +3,7 @@ import { Divider } from "../../../../components/ui/Divider";
 import { TextEl } from "../../../../components/ui/TextEl";
 import { Indent } from "../../../../components/ui/Indent";
 import { TaskItem } from "./TaskItem";
-import { formatTime } from "../../../../helpers/js/formatTime.ts";
+import { formatTime } from "../../../../helpers/js/dateAndTime/formatTime.ts";
 import { useAppSelector } from "../../../../store/hooks.ts";
 import { selectAllNotDeletedTasks } from "../../../../store/tasksSlice.ts";
 import { selectTimer } from "../../../../store/timerSlice.ts";
