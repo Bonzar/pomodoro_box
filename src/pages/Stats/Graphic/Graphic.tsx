@@ -21,21 +21,6 @@ import { useWeekdayDict } from "../../../hooks/useWeekdayDict.ts";
 import AnimateHeight from "react-animate-height";
 import { getOneGraphicSegmentMinutesMultipleOfFocusDuration } from "./getOneGraphicSegmentMinutesMultipleOfFocusDuration.ts";
 
-const getWeekDaysElements = (weekdayNames: string[]) =>
-  weekdayNames
-    .map(
-      pipe(
-        objOf("children"),
-        mergeLeft({ as: TextEl, textLineHeight: 28 }),
-        assocKeyAsChildren
-      )
-    )
-    .map((item, index) => ({
-      ...item,
-      style: { gridArea: `weekday-${index + 1}` },
-      className: styles.weekday,
-    }));
-
 const getLegendNamesElements = (legendNames: string[]) => {
   const legendElements = legendNames
     .map(
@@ -108,7 +93,27 @@ export const Graphic = ({
   }, [oneGraphicSegmentMinutes]);
 
   const weekdaysDict = useWeekdayDict(true);
-  const weekDays = getWeekDaysElements(Object.values(weekdaysDict));
+  const weekDays = useMemo(
+    () =>
+      Object.values(weekdaysDict)
+        .map(
+          pipe(
+            objOf("children"),
+            mergeLeft({ as: TextEl, textLineHeight: 28 }),
+            assocKeyAsChildren
+          )
+        )
+        .map((item, index) => ({
+          ...item,
+          style: { gridArea: `weekday-${index + 1}` },
+          className: getClassName([
+            styles.weekday,
+            index === selectedWeekDay && styles.weekdaySelected,
+          ]),
+          onClick: () => onSelectWeekDay(index as WeekDayIndex),
+        })),
+    [onSelectWeekDay, selectedWeekDay, weekdaysDict]
+  );
 
   const graphicColumns = weekDays.map((_, index) => {
     const { focusTime, breakTime } = joinStats(weekStats[index]);
