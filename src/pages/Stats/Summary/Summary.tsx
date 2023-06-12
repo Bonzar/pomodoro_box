@@ -9,12 +9,14 @@ import { useWeekdayDict } from "../../../hooks/useWeekdayDict.ts";
 interface ISummaryProps {
   weekday: WeekDayIndex;
   focusMinutes: number;
+  breakMinutes: number;
   isNoData?: boolean;
 }
 
 export const Summary = ({
   weekday,
   focusMinutes,
+  breakMinutes,
   isNoData = false,
 }: ISummaryProps) => {
   const weekdayDict = useWeekdayDict();
@@ -26,16 +28,29 @@ export const Summary = ({
       <TextEl textLineHeight={28}>
         {isNoData && "Нет данных"}
         {!isNoData && (
-          <TextEl>
-            Вы работали над задачами в течение{" "}
-            <TextEl
-              textWeight={700}
-              textLineHeight={28}
-              className={styles.weekDayFocusTime}
-            >
-              {formatTime(focusMinutes, { genitiveCase: true })}
+          <>
+            <TextEl>
+              Вы работали над задачами в течение{" "}
+              <TextEl
+                textWeight={700}
+                textLineHeight={28}
+                className={styles.weekDayFocusTime}
+              >
+                {formatTime(focusMinutes, { case: "genitive" })}
+              </TextEl>
+              ,{" "}
             </TextEl>
-          </TextEl>
+            <TextEl>
+              а также отдохнули{" "}
+              <TextEl
+                textWeight={700}
+                textLineHeight={28}
+                className={styles.weekDayFocusTime}
+              >
+                {formatTime(breakMinutes, { case: "accusative" })}
+              </TextEl>
+            </TextEl>
+          </>
         )}
       </TextEl>
     </>

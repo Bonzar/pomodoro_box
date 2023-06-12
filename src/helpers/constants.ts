@@ -15,3 +15,5 @@ export const SETTINGS_CHANGE_STEP = 5;
 export const SETTINGS_MIN_VALUE = 1;
 
 export const DELETE_TASK_ANIMATION_DURATION = 500;
+
+export const GRAPHIC_LEGEND_SEGMENTS_COUNT = 5;

@@ -68,7 +68,7 @@ export const TasksList = () => {
         <Indent size={19} />
         <TextEl textWeight={300} className={styles.predictedPomoTime}>
           {formatTime(predictedPomoSum * focusDuration, {
-            timeNameSize: "medium",
+            nameSize: "medium",
           })}
         </TextEl>
       </div>

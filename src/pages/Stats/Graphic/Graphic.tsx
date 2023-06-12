@@ -13,9 +13,28 @@ import { useMemo } from "react";
 import { joinStats } from "../joinStats.ts";
 import { selectTimer } from "../../../store/timerSlice.ts";
 import type { WeekDayIndex } from "../../../helpers/constants.ts";
-import { MILLISECONDS_IN_MINUTE } from "../../../helpers/constants.ts";
+import {
+  GRAPHIC_LEGEND_SEGMENTS_COUNT,
+  MILLISECONDS_IN_MINUTE,
+} from "../../../helpers/constants.ts";
 import { useWeekdayDict } from "../../../hooks/useWeekdayDict.ts";
 import AnimateHeight from "react-animate-height";
+import { getOneGraphicSegmentMinutesMultipleOfFocusDuration } from "./getOneGraphicSegmentMinutesMultipleOfFocusDuration.ts";
+
+const getWeekDaysElements = (weekdayNames: string[]) =>
+  weekdayNames
+    .map(
+      pipe(
+        objOf("children"),
+        mergeLeft({ as: TextEl, textLineHeight: 28 }),
+        assocKeyAsChildren
+      )
+    )
+    .map((item, index) => ({
+      ...item,
+      style: { gridArea: `weekday-${index + 1}` },
+      className: styles.weekday,
+    }));
 
 const getLegendNamesElements = (legendNames: string[]) => {
   const legendElements = legendNames
@@ -47,8 +66,6 @@ interface IGraphicProps {
   weekShift: WeekShift;
 }
 
-const GRAPHIC_LEGEND_SEGMENTS_COUNT = 5;
-
 export const Graphic = ({
   selectedWeekDay,
   onSelectWeekDay,
@@ -61,33 +78,16 @@ export const Graphic = ({
 
   const maxStatsValueMilliseconds = Math.max(
     ...weekStats.map((dayStats) => {
-      const { focusTime, pauseTime } = joinStats(dayStats);
-      return focusTime + pauseTime;
+      const { focusTime, breakTime } = joinStats(dayStats);
+
+      return focusTime + breakTime;
     })
   );
 
-  const getOneGraphicSegmentMinutesMultipleOfFocusDuration = (
-    maxStatsValueMilliseconds: number
-  ) => {
-    const segmentMinutes = Math.round(
-      Math.ceil(
-        maxStatsValueMilliseconds /
-          MILLISECONDS_IN_MINUTE /
-          focusDuration /
-          GRAPHIC_LEGEND_SEGMENTS_COUNT
-      ) * focusDuration
-    );
-
-    if (segmentMinutes === 0) {
-      return focusDuration;
-    }
-
-    return segmentMinutes;
-  };
-
   const oneGraphicSegmentMinutes =
     getOneGraphicSegmentMinutesMultipleOfFocusDuration(
-      maxStatsValueMilliseconds
+      maxStatsValueMilliseconds,
+      focusDuration
     );
 
   const legendNames = useMemo(() => {
@@ -99,7 +99,7 @@ export const Graphic = ({
     ) {
       legendNames.push(
         formatTime(oneGraphicSegmentMinutes * legendNameIndex, {
-          timeNameSize: { hours: "short", minutes: "medium" },
+          nameSize: { hours: "short", minutes: "medium" },
         })
       );
     }
@@ -108,32 +108,12 @@ export const Graphic = ({
   }, [oneGraphicSegmentMinutes]);
 
   const weekdaysDict = useWeekdayDict(true);
-  const weekDays = useMemo(
-    () =>
-      Object.values(weekdaysDict)
-        .map(
-          pipe(
-            objOf("children"),
-            mergeLeft({ as: TextEl, textLineHeight: 28 }),
-            assocKeyAsChildren
-          )
-        )
-        .map((item, index) => ({
-          ...item,
-          style: { gridArea: `weekday-${index + 1}` },
-          className: getClassName([
-            styles.weekday,
-            index === selectedWeekDay && styles.weekdaySelected,
-          ]),
-          onClick: () => onSelectWeekDay(index as WeekDayIndex),
-        })),
-    [onSelectWeekDay, selectedWeekDay, weekdaysDict]
-  );
+  const weekDays = getWeekDaysElements(Object.values(weekdaysDict));
 
   const graphicColumns = weekDays.map((_, index) => {
-    const { focusTime, pauseTime } = joinStats(weekStats[index]);
+    const { focusTime, breakTime } = joinStats(weekStats[index]);
 
-    const dayStatsTimerDuration = focusTime + pauseTime;
+    const dayStatsTimerDuration = focusTime + breakTime;
 
     const columnHeightPercentage = Math.round(
       (dayStatsTimerDuration /

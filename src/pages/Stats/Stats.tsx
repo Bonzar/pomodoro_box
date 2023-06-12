@@ -31,10 +31,10 @@ export const Stats = () => {
       return joinStats(selectedDayStats);
     }, [weekStats, weekDaySelected]);
 
+  const fullWorkTime = focusTime + breakTime;
+
   const focusStat =
-    focusTime + breakTime > 0
-      ? Math.round((focusTime / (focusTime + breakTime)) * 100)
-      : 0;
+    fullWorkTime > 0 ? Math.round((focusTime / fullWorkTime) * 100) : 0;
 
   const isNoData = [
     completedPomo,
@@ -57,6 +57,7 @@ export const Stats = () => {
         <Summary
           weekday={weekDaySelected}
           focusMinutes={Math.round(focusTime / MILLISECONDS_IN_MINUTE)}
+          breakMinutes={Math.round(breakTime / MILLISECONDS_IN_MINUTE)}
           isNoData={isNoData}
         />
       </div>
@@ -83,7 +84,7 @@ export const Stats = () => {
         <StatsIndicator
           name="Время на паузе"
           value={formatTime(Math.round(pauseTime / MILLISECONDS_IN_MINUTE), {
-            timeNameSize: "short-no-space",
+            nameSize: "short-no-space",
           })}
           color="lavender"
           icon="pauseStat"
