@@ -15,6 +15,7 @@ import { selectTimer } from "../../../store/timerSlice.ts";
 import type { WeekDayIndex } from "../../../helpers/constants.ts";
 import { MILLISECONDS_IN_MINUTE } from "../../../helpers/constants.ts";
 import { useWeekdayDict } from "../../../hooks/useWeekdayDict.ts";
+import AnimateHeight from "react-animate-height";
 
 const getLegendNamesElements = (legendNames: string[]) => {
   const legendElements = legendNames
@@ -124,8 +125,9 @@ export const Graphic = ({
             styles.weekday,
             index === selectedWeekDay && styles.weekdaySelected,
           ]),
+          onClick: () => onSelectWeekDay(index as WeekDayIndex),
         })),
-    [selectedWeekDay, weekdaysDict]
+    [onSelectWeekDay, selectedWeekDay, weekdaysDict]
   );
 
   const graphicColumns = weekDays.map((_, index) => {
@@ -141,21 +143,15 @@ export const Graphic = ({
         100
     );
 
-    const columnHeightProp =
-      columnHeightPercentage > 0 ? columnHeightPercentage + "%" : undefined;
-
     return (
-      <div
-        key={index}
+      <AnimateHeight
+        height={columnHeightPercentage > 0 ? `${columnHeightPercentage}%` : 5}
+        style={{ gridArea: `column-${index + 1}` }}
         className={getClassName([
           styles.column,
           index === selectedWeekDay && styles.columnSelected,
           dayStatsTimerDuration === 0 && styles.columnEmpty,
         ])}
-        style={{
-          gridArea: `column-${index + 1}`,
-          height: columnHeightProp,
-        }}
         onClick={() => onSelectWeekDay(index as WeekDayIndex)}
       />
     );
