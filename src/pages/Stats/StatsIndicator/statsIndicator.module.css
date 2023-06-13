@@ -3,6 +3,11 @@
   display: grid;
   grid-template-columns: 1fr auto;
   height: 100%;
+  transition: background-color 300ms ease;
+}
+
+.noData {
+  background-color: var(--gray-F4);
 }
 
 .value {
@@ -21,6 +26,11 @@
 .icon {
   grid-row: span 2;
   width: 10rem;
+  transition: color 300ms ease;
+}
+
+.noData .icon {
+  color: var(--gray-C4);
 }
 
 @media (--tablet-viewport) {
