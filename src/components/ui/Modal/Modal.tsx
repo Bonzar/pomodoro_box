@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { useRef } from "react";
-import styles from "./modal.module.css";
 import { createPortal } from "react-dom";
 import { useIsMounted } from "../../../hooks/useIsMounted.ts";
 import { useOutsideClick } from "../../../hooks/useOutsideClick.ts";
@@ -25,10 +24,5 @@ export function Modal({ children, onOutsideClick }: IModalProps) {
     throw new Error("Не найден элемент #modal-root для создания портала");
   }
 
-  return createPortal(
-    <div className={styles.modal} ref={ref}>
-      {children}
-    </div>,
-    modalRoot
-  );
+  return createPortal(children, modalRoot);
 }

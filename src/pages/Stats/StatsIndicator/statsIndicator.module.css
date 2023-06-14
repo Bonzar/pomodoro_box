@@ -1,6 +1,11 @@
 .indicatorWrapper {
   padding: var(--indent-25);
   height: 100%;
+  transition: background-color 300ms ease;
+}
+
+.noData {
+  background-color: var(--gray-F4);
 }
 
 .indicator {
@@ -30,6 +35,11 @@
   transform-style: preserve-3d;
   transform: translateY(-50%) translateZ(-1px);
   width: 10rem;
+  transition: color 300ms ease;
+}
+
+.noData .icon {
+  color: var(--gray-C4);
 }
 
 @media (--tablet-viewport) {
