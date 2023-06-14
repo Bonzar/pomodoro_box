@@ -54,8 +54,14 @@
 }
 
 .weekday {
-  z-index: 1;
+  transform-style: preserve-3d;
+  cursor: pointer;
   font-size: var(--font-size-16);
+  transition: color 150ms ease-out;
+}
+
+.weekdaySelected {
+  color: var(--red);
 }
 
 @media (--netbook-viewport) {
@@ -65,12 +71,14 @@
 }
 
 .column {
+  transform-style: preserve-3d;
+  transform: translateZ(1px);
   align-self: flex-end;
   width: 100%;
-  height: 0.5rem;
-  background-color: var(--red-light);
-  z-index: 1;
+  height: 100%;
   cursor: pointer;
+  background-color: var(--red-light);
+  transition: background-color 150ms ease-out;
 }
 
 .columnEmpty {
@@ -88,6 +96,8 @@
 }
 
 .footerBackground {
+  transform: translateZ(-1px);
+  transform-style: preserve-3d;
   width: 200%;
   height: 100%;
   grid-column: 1 / 8;
@@ -102,6 +112,8 @@
 }
 
 .gridLine {
+  transform-style: preserve-3d;
+  transform: translateZ(-1px);
   grid-column: 1 / 8;
   opacity: 0.2;
   width: 200%;
