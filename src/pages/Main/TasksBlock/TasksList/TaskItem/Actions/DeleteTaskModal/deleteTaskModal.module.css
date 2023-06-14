@@ -32,21 +32,3 @@
 .cancelBtn {
   text-decoration: underline;
 }
-
-.deleteModalEnter {
-  opacity: 0;
-}
-
-.deleteModalEnterActive {
-  opacity: 1;
-  transition: opacity 175ms ease;
-}
-
-.deleteModalExit {
-  opacity: 1;
-}
-
-.deleteModalExitActive {
-  opacity: 0;
-  transition: opacity 175ms ease-out;
-}
