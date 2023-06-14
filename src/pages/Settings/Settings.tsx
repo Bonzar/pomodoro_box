@@ -5,7 +5,7 @@ import { selectTimer, updateSettings } from "../../store/timerSlice.ts";
 import { Indent } from "../../components/ui/Indent";
 import { TextEl } from "../../components/ui/TextEl";
 import { ButtonCircle } from "../../components/ui/ButtonCircle";
-import { Heading } from "../../components/ui/Heading";
+import { Heading } from "../../components/ui/Header";
 import { Divider } from "../../components/ui/Divider";
 import type { ListItem } from "../../components/ui/List";
 import { List } from "../../components/ui/List";
@@ -49,13 +49,12 @@ const TimerSettingsItem = ({
       : timer[settingsProp] + SETTINGS_CHANGE_STEP;
 
   return (
-    <>
-      <span className={styles.timerDurationSettings__name}>
+    <div className={styles.parameter}>
+      <span className={styles.parameterName}>
         <Heading as={"p"}>{name}</Heading>
       </span>
 
       <ButtonCircle
-        className={styles.timerDurationSettings__decreaseBtn}
         btnType="minus"
         aria-label={`Уменьшить значение параметра ${name}`}
         onClick={() =>
@@ -63,17 +62,16 @@ const TimerSettingsItem = ({
         }
       />
 
-      <TextEl className={styles.timerDurationSettings__value}>{value}</TextEl>
+      <TextEl className={styles.value}>{value}</TextEl>
 
       <ButtonCircle
         btnType="plus"
-        className={styles.timerDurationSettings__increaseBtn}
         aria-label={`Увеличить значение параметра ${name}`}
         onClick={() =>
           dispatch(updateSettings({ [settingsProp]: increaseNewValue }))
         }
       />
-    </>
+    </div>
   );
 };
 
@@ -133,9 +131,7 @@ export const Settings = () => {
 
   return (
     <div className={styles.settings}>
-      <div className={styles.timerDurationSettings}>
-        <List list={timerSettingsList} divider={divider} />
-      </div>
+      <List list={timerSettingsList} divider={divider} />
       {divider}
       <Button
         className={styles.toggleButtonSetting}
