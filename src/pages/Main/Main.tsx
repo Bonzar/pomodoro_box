@@ -1,5 +1,5 @@
 import styles from "./main.module.css";
-import { Heading } from "../../components/ui/Header";
+import { Heading } from "../../components/ui/Heading";
 import { Indent } from "../../components/ui/Indent";
 import { Instructions } from "./Instructions";
 import { TasksBlock } from "./TasksBlock";

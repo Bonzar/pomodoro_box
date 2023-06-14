@@ -64,6 +64,12 @@
   color: var(--gray-99);
 }
 
+.addButton {
+  grid-area: addButton;
+  align-self: center;
+  justify-self: flex-start;
+}
+
 @media (prefers-color-scheme: dark) {
   .timerTaskDescribe {
     color: var(--color-var-white);
