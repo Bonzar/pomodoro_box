@@ -1,18 +1,6 @@
 .stats {
-  --stats__grid-cell-height--size-1: 17.9rem;
-  --stats__grid-cell-height--size-2: 26rem;
-  --stats__grid-row-size-1: minmax(
-    var(--stats__grid-cell-height--size-1),
-    auto
-  );
-  --stats__grid-row-size-2: minmax(
-    var(--stats__grid-cell-height--size-2),
-    auto
-  );
   display: grid;
-  grid-template-rows:
-    auto var(--stats__grid-row-size-1) var(--stats__grid-row-size-2)
-    repeat(4, var(--stats__grid-row-size-1));
+  grid-template-rows: auto auto 2fr repeat(4, 1fr);
   gap: var(--indent-32);
   grid-template-areas:
     "header"
@@ -27,9 +15,7 @@
 @media (--netbook-viewport) {
   .stats {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows:
-      auto var(--stats__grid-row-size-1) var(--stats__grid-row-size-2)
-      repeat(2, var(--stats__grid-row-size-1));
+    grid-template-rows: auto auto 2fr 1fr 1fr;
     gap: var(--indent-32);
     grid-template-areas:
       "header header"
@@ -43,14 +29,16 @@
 @media (--desktop-viewport) {
   .stats {
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows:
-      auto var(--stats__grid-row-size-2)
-      repeat(2, var(--stats__grid-row-size-1));
+    grid-template-rows: auto repeat(7, 1fr);
     gap: var(--indent-32);
     grid-template-areas:
       "header header header header header header header header header header header header"
       "weekDay weekDay weekDay graphic graphic graphic graphic graphic graphic graphic graphic graphic"
+      "weekDay weekDay weekDay graphic graphic graphic graphic graphic graphic graphic graphic graphic"
+      "weekDay weekDay weekDay graphic graphic graphic graphic graphic graphic graphic graphic graphic"
       "pomoCount pomoCount pomoCount graphic graphic graphic graphic graphic graphic graphic graphic graphic"
+      "pomoCount pomoCount pomoCount graphic graphic graphic graphic graphic graphic graphic graphic graphic"
+      "statFocus statFocus statFocus statFocus statPause statPause statPause statPause statStop statStop statStop statStop"
       "statFocus statFocus statFocus statFocus statPause statPause statPause statPause statStop statStop statStop statStop";
   }
 }
