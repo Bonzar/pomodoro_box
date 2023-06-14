@@ -90,11 +90,12 @@ export const Actions = ({ id, onEditClick }: IActionsProps) => {
       >
         <List list={actions} />
       </Dropdown>
-      <DeleteTaskModal
-        isOpen={isDeleteTaskModalOpen}
-        onClose={() => setIsDeleteTaskModalOpen(false)}
-        id={id}
-      />
+      {isDeleteTaskModalOpen && (
+        <DeleteTaskModal
+          onClose={() => setIsDeleteTaskModalOpen(false)}
+          id={id}
+        />
+      )}
     </>
   );
 };
