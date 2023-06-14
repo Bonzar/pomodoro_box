@@ -18,8 +18,22 @@ import {
   MILLISECONDS_IN_MINUTE,
 } from "../../../helpers/constants.ts";
 import { useWeekdayDict } from "../../../hooks/useWeekdayDict.ts";
-import AnimateHeight from "react-animate-height";
 import { getOneGraphicSegmentMinutesMultipleOfFocusDuration } from "./getOneGraphicSegmentMinutesMultipleOfFocusDuration.ts";
+
+const getWeekDaysElements = (weekdayNames: string[]) =>
+  weekdayNames
+    .map(
+      pipe(
+        objOf("children"),
+        mergeLeft({ as: TextEl, textLineHeight: 28 }),
+        assocKeyAsChildren
+      )
+    )
+    .map((item, index) => ({
+      ...item,
+      style: { gridArea: `weekday-${index + 1}` },
+      className: styles.weekday,
+    }));
 
 const getLegendNamesElements = (legendNames: string[]) => {
   const legendElements = legendNames
@@ -93,27 +107,7 @@ export const Graphic = ({
   }, [oneGraphicSegmentMinutes]);
 
   const weekdaysDict = useWeekdayDict(true);
-  const weekDays = useMemo(
-    () =>
-      Object.values(weekdaysDict)
-        .map(
-          pipe(
-            objOf("children"),
-            mergeLeft({ as: TextEl, textLineHeight: 28 }),
-            assocKeyAsChildren
-          )
-        )
-        .map((item, index) => ({
-          ...item,
-          style: { gridArea: `weekday-${index + 1}` },
-          className: getClassName([
-            styles.weekday,
-            index === selectedWeekDay && styles.weekdaySelected,
-          ]),
-          onClick: () => onSelectWeekDay(index as WeekDayIndex),
-        })),
-    [onSelectWeekDay, selectedWeekDay, weekdaysDict]
-  );
+  const weekDays = getWeekDaysElements(Object.values(weekdaysDict));
 
   const graphicColumns = weekDays.map((_, index) => {
     const { focusTime, breakTime } = joinStats(weekStats[index]);
@@ -128,15 +122,21 @@ export const Graphic = ({
         100
     );
 
+    const columnHeightProp =
+      columnHeightPercentage > 0 ? columnHeightPercentage + "%" : undefined;
+
     return (
-      <AnimateHeight
-        height={columnHeightPercentage > 0 ? `${columnHeightPercentage}%` : 5}
-        style={{ gridArea: `column-${index + 1}` }}
+      <div
+        key={index}
         className={getClassName([
           styles.column,
           index === selectedWeekDay && styles.columnSelected,
           dayStatsTimerDuration === 0 && styles.columnEmpty,
         ])}
+        style={{
+          gridArea: `column-${index + 1}`,
+          height: columnHeightProp,
+        }}
         onClick={() => onSelectWeekDay(index as WeekDayIndex)}
       />
     );
