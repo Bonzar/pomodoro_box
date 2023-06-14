@@ -31,11 +31,14 @@ export const StatsIndicator = ({
 
   return (
     <div
-      className={getClassName([styles.indicatorWrapper, isNoData && styles.noData])}
+      className={getClassName([
+        styles.indicatorWrapper,
+        isNoData && styles.noData,
+      ])}
       style={indicatorStyles}
     >
       <div className={styles.indicator}>
-        <Icon className={styles.icon} iconName={icon} style={iconStyles}/>
+        <Icon className={styles.icon} iconName={icon} style={iconStyles} />
         <Heading as="h2">{name}</Heading>
         <TextEl className={styles.value}>{value}</TextEl>
       </div>
