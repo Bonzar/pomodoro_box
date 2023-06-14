@@ -19,7 +19,7 @@
   top: 0;
   box-shadow: var(--shadow);
   background-color: var(--white);
-  z-index: 100;
+  z-index: 1000;
 }
 
 .navLink {
