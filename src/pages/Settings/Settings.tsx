@@ -49,12 +49,13 @@ const TimerSettingsItem = ({
       : timer[settingsProp] + SETTINGS_CHANGE_STEP;
 
   return (
-    <div className={styles.parameter}>
-      <span className={styles.parameterName}>
+    <>
+      <span className={styles.timerDurationSettings__name}>
         <Heading as={"p"}>{name}</Heading>
       </span>
 
       <ButtonCircle
+        className={styles.timerDurationSettings__decreaseBtn}
         btnType="minus"
         aria-label={`Уменьшить значение параметра ${name}`}
         onClick={() =>
@@ -62,16 +63,17 @@ const TimerSettingsItem = ({
         }
       />
 
-      <TextEl className={styles.value}>{value}</TextEl>
+      <TextEl className={styles.timerDurationSettings__value}>{value}</TextEl>
 
       <ButtonCircle
         btnType="plus"
+        className={styles.timerDurationSettings__increaseBtn}
         aria-label={`Увеличить значение параметра ${name}`}
         onClick={() =>
           dispatch(updateSettings({ [settingsProp]: increaseNewValue }))
         }
       />
-    </div>
+    </>
   );
 };
 
@@ -131,7 +133,9 @@ export const Settings = () => {
 
   return (
     <div className={styles.settings}>
-      <List list={timerSettingsList} divider={divider} />
+      <div className={styles.timerDurationSettings}>
+        <List list={timerSettingsList} divider={divider} />
+      </div>
       {divider}
       <Button
         className={styles.toggleButtonSetting}
