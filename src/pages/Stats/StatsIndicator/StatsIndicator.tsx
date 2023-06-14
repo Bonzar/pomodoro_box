@@ -22,20 +22,18 @@ export const StatsIndicator = ({
 }: IStatsIndicatorProps) => {
   return (
     <div
-      className={styles.indicatorWrapper}
+      className={styles.indicator}
       style={{
         backgroundColor: isNoData ? `var(--gray-F4)` : `var(--${color}-light)`,
       }}
     >
-      <div className={styles.indicator}>
-        <Icon
-          className={styles.icon}
-          iconName={icon}
-          iconColor={isNoData ? "gray-C4" : color}
-        />
-        <Heading as="h2">{name}</Heading>
-        <TextEl className={styles.value}>{value}</TextEl>
-      </div>
+      <Heading as="h2">{name}</Heading>
+      <TextEl className={styles.value}>{value}</TextEl>
+      <Icon
+        className={styles.icon}
+        iconName={icon}
+        iconColor={isNoData ? "gray-C4" : color}
+      />
     </div>
   );
 };

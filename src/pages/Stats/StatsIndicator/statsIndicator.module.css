@@ -1,20 +1,15 @@
-.indicatorWrapper {
-  padding: var(--indent-25);
-  height: 100%;
-}
-
 .indicator {
-  position: relative;
-  display: flex;
+  padding: var(--indent-25);
+  display: grid;
+  grid-template-columns: 1fr auto;
   height: 100%;
-  flex-flow: column nowrap;
-  justify-content: space-between;
-  transform-style: preserve-3d;
 }
 
 .value {
+  grid-row: 2 / 3;
   font-size: 4.8rem;
   line-height: 1.1875;
+  align-self: end;
 }
 
 @media (--netbook-viewport) {
@@ -24,11 +19,7 @@
 }
 
 .icon {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform-style: preserve-3d;
-  transform: translateY(-50%) translateZ(-1px);
+  grid-row: span 2;
   width: 10rem;
 }
 
