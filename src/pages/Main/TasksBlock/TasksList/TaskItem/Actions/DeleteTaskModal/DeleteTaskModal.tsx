@@ -39,9 +39,9 @@ export const DeleteTaskModal = ({
         }}
         unmountOnExit
       >
-        <div ref={ref} className={styles.deleteModal}>
-          <div className={styles.deleteModalWrapper} />
-          <div className={styles.deleteModalInner}>
+        <div ref={ref}>
+          <div className={styles.modalWrapper} />
+          <div className={styles.modal}>
             <button className={styles.closeBtn} onClick={onClose}>
               <Icon iconName="cross" iconColor="gray-C4" />
             </button>
