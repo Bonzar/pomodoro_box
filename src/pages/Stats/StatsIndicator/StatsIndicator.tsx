@@ -1,6 +1,6 @@
 import styles from "./statsIndicator.module.css";
 import type { TIcons } from "../../../assets/types/TIcons.ts";
-import { Heading } from "../../../components/ui/Header";
+import { Heading } from "../../../components/ui/Heading";
 import { TextEl } from "../../../components/ui/TextEl";
 import { Icon } from "../../../components/ui/Icon/Icon.tsx";
 import type { TColorActive } from "../../../assets/types/TColor.ts";
