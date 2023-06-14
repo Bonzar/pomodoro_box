@@ -1,4 +1,9 @@
-.modal {
+.deleteModal {
+  position: fixed;
+  z-index: 1000;
+}
+
+.deleteModalInner {
   position: fixed;
   display: flex;
   flex-flow: column nowrap;
@@ -13,7 +18,7 @@
   max-width: 90%;
 }
 
-.modalWrapper {
+.deleteModalWrapper {
   content: "";
   position: fixed;
   inset: 0;
