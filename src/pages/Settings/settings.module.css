@@ -12,6 +12,11 @@
   justify-items: center;
 }
 
+.divider {
+  grid-column: 1 / -1;
+  justify-self: stretch;
+}
+
 .timerDurationSettings__name {
   grid-column: 1 / -1;
   padding-bottom: var(--indent-19);
@@ -27,11 +32,6 @@
 
 .timerDurationSettings__increaseBtn {
   grid-column: 3 / 4;
-}
-
-.divider {
-  grid-column: 1 / -1;
-  justify-self: stretch;
 }
 
 .toggleButtonSetting {
