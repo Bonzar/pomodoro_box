@@ -1,15 +1,25 @@
-.indicator {
+.indicatorWrapper {
   padding: var(--indent-25);
-  display: grid;
-  grid-template-columns: 1fr auto;
   height: 100%;
+  transition: background-color 300ms ease;
+}
+
+.noData {
+  background-color: var(--gray-F4);
+}
+
+.indicator {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  transform-style: preserve-3d;
 }
 
 .value {
-  grid-row: 2 / 3;
   font-size: 4.8rem;
   line-height: 1.1875;
-  align-self: end;
 }
 
 @media (--netbook-viewport) {
@@ -19,8 +29,17 @@
 }
 
 .icon {
-  grid-row: span 2;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform-style: preserve-3d;
+  transform: translateY(-50%) translateZ(-1px);
   width: 10rem;
+  transition: color 300ms ease;
+}
+
+.noData .icon {
+  color: var(--gray-C4);
 }
 
 @media (--tablet-viewport) {
