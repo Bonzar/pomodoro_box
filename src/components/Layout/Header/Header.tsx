@@ -42,11 +42,7 @@ export const Header = () => (
           className={styles.navLink}
           aria-label="Страница статистики"
         >
-          <Icon
-            className={styles.navLinkIcon}
-            iconName="stats"
-            iconColor="red"
-          />
+          <Icon iconName="stats" iconColor="red" />
           <TextEl textColor="red" className={styles.navLinkText}>
             <Indent size={10} inline />
             Статистка
