@@ -21,11 +21,8 @@
 }
 
 .header {
-  position: sticky;
-  top: 0;
   box-shadow: var(--shadow);
   background-color: var(--white);
-  z-index: 1000;
 }
 
 .navLink {
@@ -35,17 +32,6 @@
 }
 
 .navLinkIcon {
-  width: 2rem;
-  height: 2rem;
-}
-
-@media (--netbook-viewport) {
-  .navLinkText {
-    display: initial;
-  }
-
-  .navLinkIcon {
-    width: 1.6rem;
-    height: 1.6rem;
-  }
+  width: 1.6rem;
+  height: 1.6rem;
 }
