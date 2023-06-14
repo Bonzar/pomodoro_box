@@ -1,6 +1,6 @@
 import styles from "./statsIndicator.module.css";
 import type { TIcons } from "../../../assets/types/TIcons.ts";
-import { Heading } from "../../../components/ui/Heading";
+import { Heading } from "../../../components/ui/Header";
 import { TextEl } from "../../../components/ui/TextEl";
 import { Icon } from "../../../components/ui/Icon/Icon.tsx";
 import type { TColorActive } from "../../../assets/types/TColor.ts";
@@ -22,18 +22,20 @@ export const StatsIndicator = ({
 }: IStatsIndicatorProps) => {
   return (
     <div
-      className={styles.indicator}
+      className={styles.indicatorWrapper}
       style={{
         backgroundColor: isNoData ? `var(--gray-F4)` : `var(--${color}-light)`,
       }}
     >
-      <Heading as="h2">{name}</Heading>
-      <TextEl className={styles.value}>{value}</TextEl>
-      <Icon
-        className={styles.icon}
-        iconName={icon}
-        iconColor={isNoData ? "gray-C4" : color}
-      />
+      <div className={styles.indicator}>
+        <Icon
+          className={styles.icon}
+          iconName={icon}
+          iconColor={isNoData ? "gray-C4" : color}
+        />
+        <Heading as="h2">{name}</Heading>
+        <TextEl className={styles.value}>{value}</TextEl>
+      </div>
     </div>
   );
 };
