@@ -5,7 +5,7 @@ import { selectTimer, updateSettings } from "../../store/timerSlice.ts";
 import { Indent } from "../../components/ui/Indent";
 import { TextEl } from "../../components/ui/TextEl";
 import { ButtonCircle } from "../../components/ui/ButtonCircle";
-import { Heading } from "../../components/ui/Heading";
+import { Heading } from "../../components/ui/Header";
 import { Divider } from "../../components/ui/Divider";
 import type { ListItem } from "../../components/ui/List";
 import { List } from "../../components/ui/List";

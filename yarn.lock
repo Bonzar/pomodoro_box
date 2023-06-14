@@ -5324,11 +5324,9 @@ __metadata:
     prettier: 2.8.8
     ramda: ^0.29.0
     react: ^18.2.0
-    react-animate-height: ^3.1.1
     react-dom: ^18.2.0
     react-redux: ^8.0.5
     react-router-dom: ^6.11.2
-    react-swipeable: ^7.0.1
     react-transition-group: ^4.4.5
     redux: ^4.2.1
     redux-persist: ^6.0.0
@@ -5501,16 +5499,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-animate-height@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "react-animate-height@npm:3.1.1"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 0f22eb1d9c2d2fd650a462da3db5aabcbde5f62a828053f953e17f7e65118c04acfb035408ce89ee48dc8289fcee8503c7a64e353e5e9568ea7659ab950497ec
-  languageName: node
-  linkType: hard
-
 "react-dom@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
@@ -5597,15 +5585,6 @@ __metadata:
   peerDependencies:
     react: ">=16.8"
   checksum: e47f875dca70033a3b42704cb5ec076b60f9629a5cdc3be613707f3d5a5706123fb80301037455c285c6d5a1011b443e1784e0103969ebfac7071648d360c413
-  languageName: node
-  linkType: hard
-
-"react-swipeable@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "react-swipeable@npm:7.0.1"
-  peerDependencies:
-    react: ^16.8.3 || ^17 || ^18
-  checksum: 1cd19275c5608cb202ca7717afc73e336fb51d6ae4c9353ef409e1779dfb90f36ac4c06aa870d3d862f15fb439f82b96d41395738d04b8d2290aefc670fd6b5b
   languageName: node
   linkType: hard
 
