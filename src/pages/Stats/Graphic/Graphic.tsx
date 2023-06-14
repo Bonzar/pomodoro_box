@@ -144,10 +144,10 @@ export const Graphic = ({
 
   return (
     <div className={styles.graphic}>
-      <List list={legendNames} />
       {...graphicColumns}
-      <div className={styles.footerBackground} />
+      <List list={legendNames} />
       <List list={weekDays} />
+      <div className={styles.footerBackground} />
     </div>
   );
 };
