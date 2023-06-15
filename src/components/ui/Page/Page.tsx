@@ -2,7 +2,7 @@ import styles from "./page.module.css";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { useLocation, useOutlet } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { useSwipeContext } from "../../../context/swipeContext.tsx";
+import { useNavigateSwipeContext } from "../../../context/navigateSwipeContext.tsx";
 
 const animationClassnamesMap = {
   enter: styles.pageEnter,
@@ -16,13 +16,13 @@ export const Page = () => {
   const currentOutlet = useOutlet();
   const location = useLocation();
 
-  const isSwiping = useSwipeContext();
+  const isNavigateSwipe = useNavigateSwipeContext();
 
-  const [isNoAnimation, setIsNoAnimation] = useState(isSwiping);
+  const [isNoAnimation, setIsNoAnimation] = useState(isNavigateSwipe);
 
   useEffect(() => {
-    setIsNoAnimation(isSwiping);
-  }, [isSwiping]);
+    setIsNoAnimation(isNavigateSwipe);
+  }, [isNavigateSwipe]);
 
   if (isNoAnimation) {
     return <div ref={ref}>{currentOutlet}</div>;
