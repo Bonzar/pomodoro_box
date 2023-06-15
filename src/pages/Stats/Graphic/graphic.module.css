@@ -2,17 +2,17 @@
   overflow: hidden;
   height: 100%;
   display: grid;
-  padding-inline: calc(var(--indent-19) + var(--indent-15));
-  grid-template-columns: repeat(7, 1fr);
+  padding-inline: var(--indent-19) var(--indent-10);
+  grid-template-columns: repeat(7, 1fr) auto;
   grid-template-rows: 0.5fr repeat(4, 1fr) 0.5fr 5.1rem;
   grid-template-areas:
-    "column-1 column-2 column-3 column-4 column-5 column-6 column-7"
-    "column-1 column-2 column-3 column-4 column-5 column-6 column-7"
-    "column-1 column-2 column-3 column-4 column-5 column-6 column-7"
-    "column-1 column-2 column-3 column-4 column-5 column-6 column-7"
-    "column-1 column-2 column-3 column-4 column-5 column-6 column-7"
-    "column-1 column-2 column-3 column-4 column-5 column-6 column-7"
-    "weekday-1 weekday-2 weekday-3 weekday-4 weekday-5 weekday-6 weekday-7";
+    "column-1 column-2 column-3 column-4 column-5 column-6 column-7 ."
+    "column-1 column-2 column-3 column-4 column-5 column-6 column-7 legendName-1"
+    "column-1 column-2 column-3 column-4 column-5 column-6 column-7 legendName-2"
+    "column-1 column-2 column-3 column-4 column-5 column-6 column-7 legendName-3"
+    "column-1 column-2 column-3 column-4 column-5 column-6 column-7 legendName-4"
+    "column-1 column-2 column-3 column-4 column-5 column-6 column-7 ."
+    "weekday-1 weekday-2 weekday-3 weekday-4 weekday-5 weekday-6 weekday-7 .";
   column-gap: var(--indent-15);
   justify-items: center;
   align-items: center;
@@ -20,6 +20,7 @@
 
 @media (--tablet-viewport) {
   .graphic {
+    padding-inline: calc(var(--indent-19) + var(--indent-15)) var(--indent-10);
     column-gap: var(--indent-19);
   }
 }
@@ -42,14 +43,28 @@
   }
 }
 
-.legendName {
+.legendName,
+.legendNameMobile {
   white-space: nowrap;
+}
+
+.legendName {
   display: none;
 }
 
-@media (--netbook-viewport) {
+.legendNameMobile {
+  transform: translateY(30%);
+  opacity: 0.5;
+  justify-self: flex-end;
+}
+
+@media (--tablet-viewport) {
   .legendName {
     display: initial;
+  }
+
+  .legendNameMobile {
+    display: none;
   }
 }
 
@@ -119,10 +134,15 @@
   width: 200%;
 }
 
+@media (--tablet-viewport) {
+  .gridLine {
+    justify-self: flex-end;
+  }
+}
+
 @media (--netbook-viewport) {
   .gridLine {
     grid-column: 1 / 9;
-    justify-self: flex-end;
   }
 }
 

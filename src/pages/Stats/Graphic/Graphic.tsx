@@ -4,7 +4,6 @@ import { TextEl } from "../../../components/ui/TextEl";
 import { List } from "../../../components/ui/List";
 import { mergeLeft, objOf, pipe } from "ramda";
 import { assocKeyAsChildren } from "../../../helpers/react/assocKeyAsChildren.ts";
-import { Divider } from "../../../components/ui/Divider";
 import { useAppSelector } from "../../../store/hooks.ts";
 import { selectWeekStats } from "../../../store/statsSlice.ts";
 import type { WeekShift } from "../WeekChanger";
@@ -20,29 +19,55 @@ import {
 import { useWeekdayDict } from "../../../hooks/useWeekdayDict.ts";
 import AnimateHeight from "react-animate-height";
 import { getOneGraphicSegmentMinutesMultipleOfFocusDuration } from "./getOneGraphicSegmentMinutesMultipleOfFocusDuration.ts";
+import { Divider } from "../../../components/ui/Divider";
+import { getRangeFromNumber } from "../../../helpers/js/getRangeFromNumber.ts";
 
-const getLegendNamesElements = (legendNames: string[]) => {
-  const legendElements = legendNames
-    .map(
-      pipe(
-        objOf("children"),
-        mergeLeft({ as: TextEl, textLineHeight: 33, textSize: 12 }),
-        assocKeyAsChildren
+const getLegendNamesElements = (oneGraphicSegmentMinutes: number) => {
+  const legendNames = [];
+  const legendNamesMobile = [];
+  for (
+    let legendNameIndex = GRAPHIC_LEGEND_SEGMENTS_COUNT - 1;
+    legendNameIndex > 0;
+    legendNameIndex--
+  ) {
+    legendNames.push(
+      formatTime(oneGraphicSegmentMinutes * legendNameIndex, {
+        nameSize: { hours: "short", minutes: "medium" },
+      })
+    );
+    legendNamesMobile.push(
+      formatTime(oneGraphicSegmentMinutes * legendNameIndex, {
+        nameSize: "short-no-space",
+      })
+    );
+  }
+
+  const getLegendNameElements = (legendNames: string[]) =>
+    legendNames
+      .map(
+        pipe(
+          objOf("children"),
+          mergeLeft({ as: TextEl, textLineHeight: 33, textSize: 12 }),
+          assocKeyAsChildren
+        )
       )
-    )
-    .map((item, index) => ({
-      ...item,
-      style: { gridArea: `legendName-${index + 1}` },
-      className: styles.legendName,
-    }));
+      .map((item, index) => ({
+        ...item,
+        style: { gridArea: `legendName-${index + 1}` },
+      }));
 
-  const legendGridRows = legendElements.map((_, index) => ({
-    as: Divider,
-    className: getClassName([styles.gridLine, styles[`gridLine-${index + 1}`]]),
-    key: legendElements[index].key + "_gridRow",
+  const legendNameElements = getLegendNameElements(legendNames).map((item) => ({
+    ...item,
+    className: styles.legendName,
   }));
+  const legendNameElementsMobile = getLegendNameElements(legendNamesMobile).map(
+    (item) => ({
+      ...item,
+      className: styles.legendNameMobile,
+    })
+  );
 
-  return [...legendElements, ...legendGridRows];
+  return [...legendNameElements, ...legendNameElementsMobile];
 };
 
 interface IGraphicProps {
@@ -76,21 +101,16 @@ export const Graphic = ({
     );
 
   const legendNames = useMemo(() => {
-    const legendNames = [];
-    for (
-      let legendNameIndex = 1;
-      legendNameIndex < GRAPHIC_LEGEND_SEGMENTS_COUNT;
-      legendNameIndex++
-    ) {
-      legendNames.push(
-        formatTime(oneGraphicSegmentMinutes * legendNameIndex, {
-          nameSize: { hours: "short", minutes: "medium" },
-        })
-      );
-    }
-
-    return getLegendNamesElements(legendNames.reverse());
+    return getLegendNamesElements(oneGraphicSegmentMinutes);
   }, [oneGraphicSegmentMinutes]);
+
+  const legendGridRows = getRangeFromNumber(
+    GRAPHIC_LEGEND_SEGMENTS_COUNT - 1
+  ).map((_, index) => ({
+    as: Divider,
+    className: getClassName([styles.gridLine, styles[`gridLine-${index + 1}`]]),
+    key: legendNames[index].key + "_gridRow",
+  }));
 
   const weekdaysDict = useWeekdayDict(true);
   const weekDays = useMemo(
@@ -145,6 +165,7 @@ export const Graphic = ({
   return (
     <div className={styles.graphic}>
       <List list={legendNames} />
+      <List list={legendGridRows} />
       {...graphicColumns}
       <div className={styles.footerBackground} />
       <List list={weekDays} />
