@@ -6,7 +6,7 @@ import { Provider as ReduxProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { App } from "./App.tsx";
 import { Toaster } from "sonner";
-import { SwipeProvider } from "./context/swipeContext.tsx";
+import { NavigateSwipeProvider } from "./context/navigateSwipeContext.tsx";
 
 const { persistor, store } = createStore();
 
@@ -16,9 +16,9 @@ createRoot(document.getElementById("root") as HTMLElement).render(
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter basename="pomodoro_box">
           <Toaster />
-          <SwipeProvider>
+          <NavigateSwipeProvider>
             <App />
-          </SwipeProvider>
+          </NavigateSwipeProvider>
         </BrowserRouter>
       </PersistGate>
     </ReduxProvider>
