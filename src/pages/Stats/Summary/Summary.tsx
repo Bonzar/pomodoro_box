@@ -41,7 +41,7 @@ export const Summary = ({
               ,{" "}
             </TextEl>
             <TextEl>
-              а также отдохнули{" "}
+              за это время вы отдохнули{" "}
               <TextEl
                 textWeight={700}
                 textLineHeight={28}
