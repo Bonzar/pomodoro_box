@@ -66,17 +66,17 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --black: var(--color-var-white);
-    --white: var(--color-var-black);
+    --white: hsl(0, 0%, 20%);
 
-    --gray-F5: hsl(0, 0%, 29%);
-    --gray-F4: hsl(0, 0%, 29%);
-    --gray-EC: hsl(0, 0%, 26%);
-    --gray-E6: hsl(0, 0%, 24%);
-    --gray-E4: hsl(0, 0%, 23%);
-    --gray-E3: hsl(0, 0%, 22%);
-    --gray-DE: hsl(0, 0%, 20%);
-    --gray-C4: hsl(0, 0%, 12%);
-    --gray-99: hsl(0, 0%, 10%);
+    --gray-F5: hsl(0, 0%, 24%);
+    --gray-F4: hsl(0, 0%, 26%);
+    --gray-EC: hsl(0, 0%, 28%);
+    --gray-E6: hsl(0, 0%, 30%);
+    --gray-E4: hsl(0, 0%, 32%);
+    --gray-E3: hsl(0, 0%, 34%);
+    --gray-DE: hsl(0, 0%, 36%);
+    --gray-C4: hsl(0, 0%, 48%);
+    --gray-99: hsl(0, 0%, 80%);
 
     --green-light: var(--color-var-green-light);
     --green: var(--color-var-green);
@@ -86,13 +86,8 @@
     --red: var(--color-var-red);
     --red-dark: var(--color-var-red-dark);
 
-    --orange: var(--color-var-orange-light);
-    --orange-light: var(--color-var-orange);
-
-    --lavender: var(--color-var-lavender-light);
-    --lavender-light: var(--color-var-lavender);
-
-    --blue: var(--color-var-blue-light);
-    --blue-light: var(--color-var-blue);
+    --orange-light: #997033;
+    --lavender-light: #605b8f;
+    --blue-light: #3d6b7b;
   }
 }
