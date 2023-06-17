@@ -1,0 +1,10 @@
+.divider {
+  grid-column: 1 / -1;
+  justify-self: stretch;
+}
+
+@media (--netbook-viewport) {
+  .divider {
+    padding-inline: var(--indent-10);
+  }
+}

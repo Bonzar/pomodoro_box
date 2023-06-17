@@ -4,6 +4,7 @@ import {
   endTimer,
   resumeTimer,
   selectTimer,
+  setNotificationPermission,
   startTimer,
   stopTimer,
 } from "../../../store/timerSlice.ts";
@@ -26,8 +27,10 @@ import { deleteTaskThank } from "../../../store/deleteTaskThank.ts";
 import {
   requestNotificationPermission,
   withNotificationPermission,
-} from "../../../helpers/js/withNotificationPermission.ts";
+} from "../../../helpers/js/notificationApi.ts";
 import logoIconSrc from "../../../assets/icons/logo.svg";
+import { useNotificationCallback } from "../../../hooks/useNotificationCallback.ts";
+import { useDisableNotificationsToast } from "../../../hooks/useDisableNotificationsToast.ts";
 
 export const useTimer = () => {
   const dispatch = useAppDispatch();
@@ -37,6 +40,7 @@ export const useTimer = () => {
   const {
     state,
     type: timerType,
+    longBreakFrequency,
     startPointAt,
     stoppedAt,
     runningAt,
@@ -47,7 +51,10 @@ export const useTimer = () => {
   const { completedPomo, stopsCount } = joinStats(todayStats);
 
   const isTypeFocus = timerType === "FOCUS";
-  const isLongBreak = !isTypeFocus && (completedPomo + stopsCount) % 4 === 0;
+  const isLongBreak =
+    !isTypeFocus &&
+    longBreakFrequency !== 0 &&
+    (completedPomo + stopsCount) % longBreakFrequency === 0;
 
   const isTypeFocusAndTaskExist = isTypeFocus && currentTask?.id;
 
@@ -109,8 +116,27 @@ export const useTimer = () => {
 
   const [timeString, setTimeString] = useState(getCurrentTime());
 
+  const showDisableNotificationsToast = useDisableNotificationsToast();
+
   const handleLeftButtonClick = () => {
-    requestNotificationPermission();
+    withNotificationPermission((browserPermission) => {
+      switch (browserPermission) {
+        case "default":
+          requestNotificationPermission((newPermission) => {
+            dispatch(setNotificationPermission(newPermission));
+          });
+          break;
+        case "denied":
+          if (timer.notificationPermission !== browserPermission) {
+            showDisableNotificationsToast();
+          }
+          break;
+        case "granted":
+          break;
+        default:
+          exhaustiveCheck(browserPermission);
+      }
+    });
 
     switch (state) {
       case "IDLE":
@@ -196,6 +222,16 @@ export const useTimer = () => {
     dispatch(addTimeToTimer());
   };
 
+  const showTimerNotification = useNotificationCallback(
+    () =>
+      new Notification("Pomodoro_box", {
+        body: isTypeFocus
+          ? "Помидор завершен, пора отдохнуть!"
+          : "Перерыв завершен, пора поработать!",
+        icon: logoIconSrc,
+      })
+  );
+
   // update current time string
   useEffect(() => {
     if (state === "RUN") {
@@ -223,15 +259,7 @@ export const useTimer = () => {
             toast.error("Отсутствует время запуска таймера!");
           }
 
-          withNotificationPermission(
-            () =>
-              new Notification("Pomodoro_box", {
-                body: isTypeFocus
-                  ? "Помидор завершен, пора отдохнуть!"
-                  : "Перерыв завершен, пора поработать!",
-                icon: logoIconSrc,
-              })
-          );
+          showTimerNotification();
 
           dispatch(endTimer());
         }
@@ -248,6 +276,7 @@ export const useTimer = () => {
     getCurrentTime,
     isTypeFocus,
     runningAt,
+    showTimerNotification,
     startPointAt,
     state,
     timerDurationMilliseconds,

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "./store.ts";
 import {
   MILLISECONDS_IN_MINUTE,
-  SETTINGS_MIN_VALUE,
+  RANGE_SETTING_DEFAULT_MIN_VALUE,
 } from "../helpers/constants.ts";
 import { exhaustiveCheck } from "../helpers/js/exhaustiveCheck.ts";
 import { toast } from "sonner";
@@ -16,16 +16,23 @@ interface ITimerControlFields {
   stoppedAt: number | null; // timestamp
 }
 
-export interface ITimerSettings {
+export interface ITimerDurationSettings {
   focusDuration: number; // min
   breakDurationShort: number; // min
   breakDurationLong: number; // min
   addTimeDuration: number; // min
+  longBreakFrequency: number; // count
 }
 
-type ITimer = ITimerControlFields & ITimerSettings;
+interface ITimerOtherSettings {
+  notificationPermission: NotificationPermission;
+}
 
-const initialState: ITimer = {
+export type ITimer = ITimerControlFields &
+  ITimerDurationSettings &
+  ITimerOtherSettings;
+
+export const initialState: ITimer = {
   type: "FOCUS",
   state: "IDLE",
   startPointAt: null,
@@ -35,6 +42,8 @@ const initialState: ITimer = {
   breakDurationShort: 5,
   breakDurationLong: 20,
   addTimeDuration: 1,
+  longBreakFrequency: 4,
+  notificationPermission: "default",
 };
 
 const timerSlice = createSlice({
@@ -86,21 +95,36 @@ const timerSlice = createSlice({
 
       state.type = isTypeFocus ? "BREAK" : "FOCUS";
     },
-    updateSettings: (state, action: PayloadAction<Partial<ITimerSettings>>) => {
+    updateSettings: (
+      state,
+      action: PayloadAction<Partial<ITimerDurationSettings>>
+    ) => {
       for (const [propName, newValue] of Object.entries(action.payload)) {
-        const settingProp = propName as keyof ITimerSettings;
+        const settingProp = propName as keyof ITimerDurationSettings;
 
         switch (settingProp) {
           case "focusDuration":
           case "addTimeDuration":
           case "breakDurationLong":
           case "breakDurationShort":
-            state[settingProp] = newValue > 0 ? newValue : SETTINGS_MIN_VALUE;
+            state[settingProp] =
+              newValue >= RANGE_SETTING_DEFAULT_MIN_VALUE
+                ? newValue
+                : RANGE_SETTING_DEFAULT_MIN_VALUE;
+            break;
+          case "longBreakFrequency":
+            state[settingProp] = newValue > 0 ? newValue : 0;
             break;
           default:
             exhaustiveCheck(settingProp);
         }
       }
+    },
+    setNotificationPermission: (
+      state,
+      action: PayloadAction<NotificationPermission>
+    ) => {
+      state.notificationPermission = action.payload;
     },
   },
 });
@@ -112,8 +136,12 @@ export const {
   endTimer,
   addTimeToTimer,
   updateSettings,
+  setNotificationPermission,
 } = timerSlice.actions;
 
 export const selectTimer = (state: RootState) => state.timer;
+
+export const selectNotificationPermission = (state: RootState) =>
+  state.timer.notificationPermission;
 
 export const timerSliceReducer = timerSlice.reducer;

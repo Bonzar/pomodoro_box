@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
+  createMigrate,
   FLUSH,
   PAUSE,
   PERSIST,
@@ -11,8 +12,35 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { reducer } from "./reducer.ts";
+import { initialState } from "./timerSlice.ts";
 
-const persistConfig = { key: "root", storage };
+const persistConfig = {
+  version: 1,
+  key: "root",
+  storage,
+  migrate: createMigrate(
+    {
+      1: (state) => {
+        if (
+          state &&
+          "timer" in state &&
+          typeof state.timer === "object" &&
+          state.timer !== null
+        ) {
+          return {
+            ...state,
+            timer: {
+              ...state.timer,
+              longBreakFrequency: initialState.longBreakFrequency,
+              notificationPermission: initialState.notificationPermission,
+            },
+          };
+        }
+      },
+    },
+    { debug: false }
+  ),
+};
 const persistedReducer = persistReducer(
   persistConfig,
   combineReducers(reducer)

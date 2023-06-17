@@ -1,0 +1,53 @@
+.timerDurationSettings {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  column-gap: var(--indent-32);
+  align-items: center;
+  justify-items: center;
+}
+
+.name {
+  grid-column: 1 / -1;
+  padding-bottom: var(--indent-19);
+}
+
+.decreaseBtn {
+  grid-column: 1 / 2;
+}
+
+.value {
+  grid-column: 2 / 3;
+}
+
+.increaseBtn {
+  grid-column: 3 / 4;
+}
+
+.divider {
+  grid-column: 1 / -1;
+  justify-self: stretch;
+}
+
+@media (--tablet-viewport) {
+  .timerDurationSettings {
+    grid-template-columns: repeat(4, auto);
+  }
+
+  .name {
+    grid-column: 1 / 2;
+    justify-self: flex-start;
+    padding-bottom: unset;
+  }
+
+  .decreaseBtn {
+    grid-column: 2 / 3;
+  }
+
+  .value {
+    grid-column: 3 / 4;
+  }
+
+  .increaseBtn {
+    grid-column: 4 / 5;
+  }
+}
