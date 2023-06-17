@@ -15,6 +15,7 @@ import { exhaustiveCheck } from "../../../helpers/js/exhaustiveCheck.ts";
 import { useCallback, useEffect, useState } from "react";
 import { addStatNote, selectTodayStats } from "../../../store/statsSlice.ts";
 import {
+  MAX_PAUSE_DURATION_FOR_SAVING_STATS,
   MILLISECONDS_IN_MINUTE,
   MILLISECONDS_IN_SECOND,
 } from "../../../helpers/constants.ts";
@@ -138,7 +139,10 @@ export const useTimer = () => {
 
         const duration = Date.now() - stoppedAt;
 
-        dispatch(addStatNote({ type: "PAUSE", duration }));
+        if (duration <= MAX_PAUSE_DURATION_FOR_SAVING_STATS) {
+          dispatch(addStatNote({ type: "PAUSE", duration }));
+        }
+
         break;
       }
       default:
