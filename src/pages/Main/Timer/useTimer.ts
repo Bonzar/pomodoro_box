@@ -31,6 +31,7 @@ import {
 import logoIconSrc from "../../../assets/icons/logo.svg";
 import { useNotificationCallback } from "../../../hooks/useNotificationCallback.ts";
 import { useDisableNotificationsToast } from "../../../hooks/useDisableNotificationsToast.ts";
+import notificationSoundSrc from "../../../assets/sounds/notificationSound.wav";
 
 export const useTimer = () => {
   const dispatch = useAppDispatch();
@@ -222,15 +223,22 @@ export const useTimer = () => {
     dispatch(addTimeToTimer());
   };
 
-  const showTimerNotification = useNotificationCallback(
-    () =>
-      new Notification("Pomodoro_box", {
-        body: isTypeFocus
-          ? "Помидор завершен, пора отдохнуть!"
-          : "Перерыв завершен, пора поработать!",
-        icon: logoIconSrc,
-      })
-  );
+  const showTimerNotification = useNotificationCallback(() => {
+    new Audio(notificationSoundSrc).play().catch((error) => {
+      if (typeof error === "string") {
+        toast.error(error);
+      } else {
+        console.error(error);
+      }
+    });
+
+    new Notification("Pomodoro_box", {
+      body: isTypeFocus
+        ? "Помидор завершен, пора отдохнуть!"
+        : "Перерыв завершен, пора поработать!",
+      icon: logoIconSrc,
+    });
+  });
 
   // update current time string
   useEffect(() => {
