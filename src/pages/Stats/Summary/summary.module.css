@@ -1,3 +1,4 @@
 .weekDayFocusTime {
   color: var(--red);
+  white-space: nowrap;
 }
