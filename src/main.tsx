@@ -14,7 +14,7 @@ createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter basename="pomodoro_box">
+        <BrowserRouter basename="/pomodoro_box/">
           <AppToaster />
           <NavigateSwipeProvider>
             <App />
