@@ -1,71 +1,22 @@
 .settings {
   margin: 0 auto;
-  width: fit-content;
+  max-width: 800px;
   text-align: center;
-}
-
-.timerDurationSettings {
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: auto 1fr auto;
   column-gap: var(--indent-32);
   align-items: center;
   justify-items: center;
 }
 
-.timerDurationSettings__name {
-  grid-column: 1 / -1;
-  padding-bottom: var(--indent-19);
-}
-
-.timerDurationSettings__decreaseBtn {
-  grid-column: 1 / 2;
-}
-
-.timerDurationSettings__value {
-  grid-column: 2 / 3;
-}
-
-.timerDurationSettings__increaseBtn {
-  grid-column: 3 / 4;
-}
-
-.divider {
-  grid-column: 1 / -1;
-  justify-self: stretch;
-}
-
-.toggleButtonSetting {
-  width: 100%;
-}
-
 @media (--tablet-viewport) {
   .settings {
-    text-align: left;
+    grid-template-columns: 1fr 1.5fr 1fr;
   }
+}
 
-  .timerDurationSettings {
-    grid-template-columns: repeat(4, auto);
-  }
-
-  .timerDurationSettings__name {
-    grid-column: 1 / 2;
-    justify-self: flex-start;
-    padding-bottom: unset;
-  }
-
-  .timerDurationSettings__decreaseBtn {
-    grid-column: 2 / 3;
-  }
-
-  .timerDurationSettings__value {
-    grid-column: 3 / 4;
-  }
-
-  .timerDurationSettings__increaseBtn {
-    grid-column: 4 / 5;
-  }
-
-  .divider {
-    padding-inline: var(--indent-10);
+@media (--netbook-viewport) {
+  .settings {
+    grid-template-columns: 2.5fr auto 1fr auto;
   }
 }
