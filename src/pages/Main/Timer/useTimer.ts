@@ -223,6 +223,7 @@ export const useTimer = () => {
     dispatch(addTimeToTimer());
   };
 
+
   const showTimerNotification = useNotificationCallback(() => {
     new Audio(notificationSoundSrc).play().catch((error) => {
       if (typeof error === "string") {
