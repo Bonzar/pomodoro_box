@@ -31,10 +31,8 @@ Explore the Pomodoro_box application by accessing the live version: [Try it Out]
 
 ## Screenshots
 
-<img src="./public/screenshots/main-desktop.png" width="72%" alt="Screenshot - main page - desktop"/>
-<img src="./public/screenshots/main-mobile.png" width="25%" alt="Screenshot - main page - mobile"/>
-<img src="./public/screenshots/stats-desktop.png" width="72%" alt="Screenshot - stats page - desktop"/>
-<img src="./public/screenshots/stats-mobile.png" width="25%" alt="Screenshot - stats page - mobile"/>
+<img src="./public/screenshots/main-desktop.png" width="72%" alt="Screenshot - main page - desktop"/><img src="./public/screenshots/main-mobile.png" width="25%" alt="Screenshot - main page - mobile"/>
+<img src="./public/screenshots/stats-desktop.png" width="72%" alt="Screenshot - stats page - desktop"/><img src="./public/screenshots/stats-mobile.png" width="25%" alt="Screenshot - stats page - mobile"/>
 
 ## Getting Started
 
