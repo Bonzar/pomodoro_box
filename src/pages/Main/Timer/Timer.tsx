@@ -1,16 +1,14 @@
 import styles from "./timer.module.css";
 import { TextEl } from "../../../components/ui/TextEl";
 import { Indent } from "../../../components/ui/Indent";
-import { Button } from "../../../components/ui/Button";
+import { LeftTimerButton } from "./LeftTimerButton";
+import { RightTimerButton } from "./RightTimerButton";
 import { getClassName } from "../../../helpers/react/getClassName.ts";
-import { useTimer } from "./useTimer.ts";
-import { ButtonCircle } from "../../../components/ui/ButtonCircle";
+import { useTimer } from "./hooks/useTimer.ts";
+import { AddTimeButton } from "./AddTimeButton/AddTimeButton.tsx";
 
 export const Timer = () => {
   const {
-    handleLeftButtonClick,
-    handleAddTimeButtonClick,
-    handleRightButtonClick,
     timeString,
     currentTask,
     timerType: type,
@@ -70,33 +68,12 @@ export const Timer = () => {
         </TextEl>
 
         <div className={styles.actions}>
-          <Button
-            className={styles.actionsBtn}
-            btnColor="green"
-            onClick={handleLeftButtonClick}
-            btnFilled
-          >
-            {state === "IDLE" && "Старт"}
-            {state === "RUN" && "Пауза"}
-            {state === "PAUSE" && "Продолжить"}
-          </Button>
-          <Button
-            className={styles.actionsBtn}
-            btnColor="red"
-            onClick={handleRightButtonClick}
-            disabled={state === "IDLE"}
-          >
-            {state === "IDLE" && (type === "FOCUS" ? "Стоп" : "Пропустить")}
-            {state === "RUN" && (type === "FOCUS" ? "Стоп" : "Пропустить")}
-            {state === "PAUSE" && (type === "FOCUS" ? "Сделано" : "Пропустить")}
-          </Button>
+          <LeftTimerButton className={styles.actionsBtn} state={state} />
+          <RightTimerButton className={styles.actionsBtn} state={state} />
         </div>
 
-        <ButtonCircle
-          aria-label="Добавить время к таймеру"
-          btnType="plus"
+        <AddTimeButton
           className={styles.addButton}
-          onClick={handleAddTimeButtonClick}
           disabled={state === "IDLE"}
         />
       </div>
